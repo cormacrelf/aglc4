@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "test": "jest --watchAll --noStackTrace"
+  },
+  "devDependencies": {
+    "jest": "^23.6.0",
+    "jest-csl": "^0.0.1",
+    "jest-watch-typeahead": "^0.2.0"
+  }
+}

@@ -1,0 +1,84 @@
+- describe: "1.1 General Rules > General Format of Footnotes"
+  tests:
+    - it: "1.1.3 Multiple Sources in Footnotes > are delimited by semicolons"
+      format: text
+      sequence:
+        - cluster:
+          - { id: "PlainCiteA" }
+          - { id: "PlainCiteB" }
+      expect:
+        - PlainCiteA; PlainCiteB.
+
+    - it: "1.1.3 Multiple Sources in Footnotes > can be delimited by full stops if necessary"
+      format: text
+      mode: doc
+      meta:
+        doc: >
+          If you wish to introduce a new set of cites with a different signal
+          (Cf/See also/etc) and therefore a full stop, then you need to insert
+          individual citations. 
+        pandoc: >
+          You can use an explicit footnote `like so.^[Cf @citeA. See also @citeB.]`
+        zotero: >
+          You can create an explicit footnote, and add cites individually.
+
+    - it: "1.1.6 Pinpoint page"
+      format: text
+      single: { id: 'PlainCiteA', label: 'page', locator: '13 [28]' }
+      expect: PlainCiteA 13 [28].
+      meta:
+        pandoc: >
+          Use `[@citekey 13 [28]]`.
+        zotero: >
+          Enter a Page locator as `13 [28]`.
+
+    - it: "1.1.6 Pinpoint footnote"
+      format: text
+      single: { id: "PlainCiteA", label: '', locator: '13 n 4' }
+      expect: PlainCiteA 13 n 4.
+      meta:
+        pandoc: >
+          Newer versions of `pandoc-citeproc` support the `[@citekey{delimited
+          locator}]` syntax. Use it with `[@citekey{13 n 4}]`
+
+- describe: "1.4 General Rules > Subsequent References"
+  tests:
+    - it: "1.4.2 should use (n Footnote Number) for { legal case or legislation }"
+      format: text
+      sequence:
+        - cluster: [{ id: "CaseA" }]
+        - cluster: [{ id: "CaseB" }]
+        - cluster: [{ id: "CaseA" }]
+      expect:
+        - CaseA.
+        - CaseB.
+        - CaseA (n 1).
+
+    - it: "1.4.2 should use (n Footnote Number) for { legal case or legislation } with short title"
+    - it: "1.4.2 should include author last name in subsequent for secondary sources"
+    - it: "1.4.2 should include author last name AND { title or short title } in subsequent for secondary sources"
+    - it: "1.4.3 should produce ibid for immediately subsequent legislation"
+      sequence:
+        - cluster:
+          - { prefix: "See, eg, ", id: "criminalCode1995", label: "section", locator: "123", suffix: " suffix" }
+        - cluster:
+          - { id: "criminalCode1995", label: "section", locator: "123" }
+        - cluster:
+          - { id: "criminalCode1995", label: "section", locator: "189" }
+      expect:
+        - See, eg, <i>Criminal Code Act 1995</i> (Cth) s 123 (‘<i>Criminal Code</i>’) suffix.
+        - Ibid.
+        - Ibid s 189.
+
+- describe: "4 General Rules for Citing Secondary Sources"
+  tests:
+    - it: "4.1.1 should join initials with no spaces or full stops"
+      single: { id: "ellicott2008" }
+      expect: >
+        RJ Ellicott, ‘The Autochthonous Expedient and the Federal Court’
+        (2008) 82(10) <i>Australian Law Journal</i> 700.
+
+# - describe: "5. Journal Articles"
+
+# - <i>He Kaw Teh v The Queen</i> (1985) 157 CLR 523; <i>Smith v The Queen</i> (2001) 206 CLR 650.
+
