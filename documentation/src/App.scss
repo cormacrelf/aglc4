@@ -1,0 +1,152 @@
+@import "primer/index.scss";
+@import "primer-markdown/index.scss";
+
+pre {
+    font-size: 14px;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.anchor {
+    float: left;
+    padding-right: 4px;
+    margin-left: -20px;
+}
+
+h2 .anchor { margin-top: -8px; }
+
+h1 .anchor svg,
+h2 .anchor svg,
+h3 .anchor svg,
+h4 .anchor svg,
+h5 .anchor svg,
+h6 .anchor svg {
+  visibility: hidden;
+}
+h1:hover .anchor svg,
+h2:hover .anchor svg,
+h3:hover .anchor svg,
+h4:hover .anchor svg,
+h5:hover .anchor svg,
+h6:hover .anchor svg,
+h1 .anchor:focus svg,
+h2 .anchor:focus svg,
+h3 .anchor:focus svg,
+h4 .anchor:focus svg,
+h5 .anchor:focus svg,
+h6 .anchor:focus svg {
+  visibility: visible;
+}
+
+.clearfix {
+    clear: both;
+    // overflow: hidden;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.fragment {
+    font-family: 'Baskerville', Georgia, serif;
+    font-size: 130%;
+}
+
+.UnderlineNav-actions {
+    min-width: 0;
+}
+.underline-header {
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+}
+
+.App-header {
+    .UnderlineNav-item { color: white; }
+    .UnderlineNav-item.selected { color: green; }
+}
+
+.example { }
+.failed { background: #fee4e4 }
+ins { background: #d8fcd8; }
+del { background: #ff0000; }
+
+.exgot { display: grid; grid-template-columns: minmax(100px, auto) 1fr; }
+
+.exgot>*:nth-child(1), 
+.exgot>*:nth-child(2) {
+    background: #dcffe4;
+    border-top: 1px dashed #999;
+    border-bottom: 1px dashed #999;
+}
+
+.exgot>*:nth-child(3), 
+.exgot>*:nth-child(4) {
+    background: #ffdce0;
+    border-bottom: 1px dashed #999;
+}
+
+// .App {
+//   display: flex;
+//   flex-direction: column;
+// }
+
+.App {
+  min-height: 100vh;
+}
+
+.App-body {
+  display: flex;
+  flex: 1;
+}
+
+.App-header {
+    // https://twitter.com/aglctweets
+    background: #16336c;
+}
+
+.App-content {
+  flex: 1;
+}
+
+.App-nav, .App-ads {
+  background: #e1e4e8;
+}
+
+.App-nav {
+  /* put the nav on the left */
+  order: -1;
+}
+
+.App,
+.App-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.App-nav {
+  order: -1;
+}
+
+@media (min-width: 768px) {
+  .App-body {
+      // display: grid;
+      // grid-template-columns: 18px 1fr;
+    flex-direction: row;
+    flex: 1;
+  }
+  .App-content {
+    flex: 1;
+  }
+  .App-nav, .App-ads {
+    /* 12em is the width of the columns */
+    flex: 0 0 16em;
+  }
+}
+
