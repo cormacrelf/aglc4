@@ -15,12 +15,12 @@ const renderCite = (cite: CiteItem) => {
   );
 }
 
-function intersperse <T, I>(arr: T[], sep: I): (T | I)[] {
-  return arr.reduce((a:(T | I)[],v:T) => [...a,v,sep],[]).slice(0,-1)
-}
+// export function intersperse <T, I>(arr: T[], sep: I): (T | I)[] {
+//   return arr.reduce((a:(T | I)[],v:T) => [...a,v,sep],[]).slice(0,-1)
+// }
 
 const renderCluster = (cites: CiteItem[]) => {
-  return intersperse(cites.map(renderCite), ';').map((x, i) => <span key={i}>{x}</span>);
+  return cites.map(renderCite).map((x, i) => <span key={i}>{x}</span>);
 }
 
 export const Cite = ({test}: { test: TestCase }) => {
@@ -29,9 +29,9 @@ export const Cite = ({test}: { test: TestCase }) => {
       {renderCite(test.single)}
     </Box>
   } else if (test.type === 'sequence') {
-    let str = test.sequence.map((s, i) => <div key={i}>{renderCluster(s.cluster)}</div>)
+    let clusters = test.sequence.map((s, i) => <div key={i}>{renderCluster(s.cluster)}</div>)
     return <Box mb={3} className="markdown-body">
-      {str}
+      {clusters}
     </Box>
   }
   return <></>

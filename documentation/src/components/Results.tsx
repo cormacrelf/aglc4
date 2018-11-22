@@ -1,145 +1,138 @@
 import React from 'react';
-import { TestUnit, TestCase, TestCaseSingle } from '../types';
-import { Box, Details, Button, Label } from '@primer/components';
+import { TestUnit, TestCase } from '../types';
+import { Box, Label } from '@primer/components';
 import Octicon, { Link } from '@githubprimer/octicons-react'
-import ReactMarkdown from 'react-markdown';
+import { Parsed, coalesceRules, coalesceChapters, coalesceParts, AGLCChapter, AGLCRuleGroup } from '../titles';
+
+import slugify from 'slugify';
+
 import { Cite } from './Cite';
+import { Diff } from './Diff';
+import { Item } from './Item';
+import { Meta } from './Meta';
 
-const Fragment = ({str}: {str: string}) => {
-  return <span className="fragment" dangerouslySetInnerHTML={{__html: str}}></span>
-}
-
-const Output = ({ data }: {data: string | Array<string>}) => {
-  if (Array.isArray(data)) {
-    return <Box is="ol" pl={3}>
-      { data.map((d, i) => <li key={i}><Fragment str={d} /></li>) }
-    </Box>;
-  } else {
-    return <Fragment str={data} />
-  }
-};
-
-const ExGot = ({ test }: { test: TestCase }) => {
-  if (test.type === 'stub' || test.type === 'doc') {
-    return <></>
-  }
-  if (test.passed) {
-    return <Box mb={3}><Output data={test.result} /></Box>;
-  }
-  return <Box className="exgot" mb={3}>
-    <span className="exgot--label">Expected</span>
-    <Output data={test.expect} />
-    <span className="exgot--label">Received</span>
-    <Output data={test.result} />
-  </Box>;
-};
-
-const ItemJSON = ({obj}:{obj:object}) => {
-  return <pre className="highlight">{JSON.stringify(obj, null, 2)}</pre>;
-}
-
-const Item = ({test}: {test: TestCaseSingle}) => {
-  return (
-    <Details mt={3} render={ ({open, toggle} : { open: boolean, toggle: Function }) => (
-      <>
-        <Button is="summary" onClick={toggle}>
-          {open ? 'Hide' : 'Show'} Zotero Entry
-        </Button>
-        <Box mt={3} className="markdown-body">
-          <ItemJSON obj={test.item} />
-        </Box>
-      </>
-    )} />
-  )
-}
-
-const PassFail = ({test}: {test:TestCase}) => {
+const Tags = ({test}: {test:TestCase}) => {
   if (test.type === 'stub') {
     return <Label bg="purple.4">stub</Label>
   }
   if (test.type === 'doc') {
-    return <Label bg="blue.4">documentation only</Label>
+    return <Label bg="blue.4">doc only</Label>
   }
   return test.passed
     ? <Label bg="green.3" color="gray.8">passed</Label>
     : <Label bg="red.4">failed</Label>
 }
 
-const DocBlock = ({doc, label}: { doc?: string, label?: string }) => {
-  if (!doc) return <></>;
-  return <Box bg="gray.0">
-    { label && <Label m={0} bg="blue.1" color="gray.9">{label}</Label> }
-    <Box className="markdown-body" p={1}>
-      <ReactMarkdown source={doc} />
+const Title = ({ rule, rest }: { rule: string, rest: string }) => {
+  return <>
+    <Label id={rule} size="xl" color="gray.8" bg="gray.2">{rule}</Label>
+    {" "}
+    <span>{rest}</span>
+  </>
+}
+
+const OneTest = ({ title, test }: { title: string, test: TestCase }) => {
+  const item = test.type === 'single'
+    ? <Item test={test} />
+    : null;
+  if (test.type==='single' || test.type==='sequence' || test.meta)
+    return (
+      <div className="Box-body spacer">
+        <h4>{title} <Tags test={test}/></h4>
+        <Cite test={test} />
+        <Diff test={test} />
+        <Meta test={test} />
+        { item }
+      </div>
+    )
+  else return null;
+}
+
+const Group = ({ group }: { group: AGLCRuleGroup }) => {
+  const { groupRule, groupTitle, tests } = group;
+
+  const slug = slugify(groupRule + " " + groupTitle);
+
+  return <div className="Box">
+    {/* TODO: make slug links to these with a id so people can link to examples */}
+    <div className="Box-header">
+      <h4 className="Box-title" id={slug}>
+        <a className="anchor" href={'#' + slug}>
+          <Octicon><Link x={6}/></Octicon>
+        </a>
+        {" "}
+        <Title rule={groupRule} rest={groupTitle} />
+      </h4>
+    </div>
+    { tests.map(e =>
+      <OneTest
+        key={e.parsed.rest}
+        test={e.content}
+        title={e.parsed.rest} />
+      ) }
+  </div>
+}
+
+const Unit = ({ parsedUnit } : { parsedUnit: Parsed<TestUnit> }) => {
+  const { parsed, content: unit } = parsedUnit;
+  let groups = coalesceRules(unit.tests).map((group, i) => {
+    return <Box key={group.groupRule} mt={i===0 ? 0 : 3}>
+      <Group group={group} />
+    </Box>
+  })
+  const slug = slugify(parsed.rule + " " + parsed.rest);
+  return (
+    <Box p={4} className="unit">
+      <Box className="unit-header">
+        <h2 id={slug}>
+          <Title rule={parsed.rule} rest={parsed.rest} />
+          <a className="anchor" href={'#' + slug}>
+            <Octicon><Link x={6}/></Octicon>
+          </a>
+        </h2>
+      </Box>
+      <Box p={4} className="unit-body">
+        {groups}
+      </Box>
+    </Box>
+  )
+}
+
+export const Chapter = ({chapter}: { chapter: AGLCChapter }) => {
+  const { chapterNumber, chapterTitle, units } = chapter;
+  let chapLink = "chapter-" + chapterNumber; // perma
+  return <Box p={4} className="unit">
+    <Box className="unit-header">
+      <h2 id={chapLink}>
+        <Title rule={""+chapterNumber} rest={chapterTitle} />
+        <a className="anchor" href={'#' + chapLink}>
+          <Octicon><Link x={6}/></Octicon>
+        </a>
+      </h2>
+    </Box>
+    <Box p={4} className="unit-body">
+    { units.map(e =>
+      <Unit
+        key={e.parsed.rest}
+        parsedUnit={e}
+      />
+      ) }
     </Box>
   </Box>
 }
 
-const Meta = ({test}: {test: TestCase}) => {
-  if (!test.meta) return <></>;
-  let coalesce = !test.meta.jurisM && test.meta.zotero;
-  return <>
-    <DocBlock doc={test.meta.doc} />
-    <DocBlock doc={test.meta.pandoc} label="Pandoc" />
-    <DocBlock doc={test.meta.zotero} label={ coalesce ? "Zotero/Juris-M" : "Zotero" } />
-    <DocBlock doc={test.meta.jurisM} label={ "Juris-M" } />
-  </>
-}
-
-const Example = ({test}: {test: TestCase}) => {
-  const item = test.type === 'single'
-    ? <Item test={test} />
-    : null;
-  return <div className="Box">
-    {/* TODO: make slug links to these with a id so people can link to examples */}
-    <div className="Box-header">
-      <h4 className="Box-title" id={test.slug}>
-        <a className="anchor" href={'#' + test.slug}>
-          <Octicon><Link x={6}/></Octicon>
-        </a>
-        <ParsedTitle title={test.it} />
-        {" "}<PassFail test={test} />
-      </h4>
-    </div>
-    { (test.type==='single' || test.type==='sequence' || test.meta || item) &&  
-    <div className="Box-body">
-      <Cite test={test} />
-      <ExGot test={test} />
-      <Meta test={test} />
-      { item }
-    </div> }
-  </div>
-}
-
-const ParsedTitle = ({ title }: { title: string }) => {
-  let matches = title.match(/^((?:\d+\.)*\d+)\.? (.+)/)
-  if (!matches) { return <span>{ title }</span> }
-  let rule = matches[1];
-  let rest = matches[2];
-  return <><Label size="xl" color="gray.8" bg="gray.2">{rule}</Label> <span>{rest}</span></>
-}
-
 export const Results = ({units}: {units: TestUnit[]}) => {
+  let chapters = coalesceChapters(units);
+  let _parts = coalesceParts(chapters);
+  let parts = _parts.map((part, i) => {
+    return <Box key={part.partTitle} mt={i===0 ? 0 : 3}>
+      <h1>{part.partTitle}</h1>
+      { part.chapters.map((ch) => <Chapter key={ch.chapterNumber} chapter={ch} />) }
+    </Box>
+  })
   return (
     <div className="App-content">
-      { units.length > 0
-        ? units.map(unit => (
-        <Box p={4} key={unit.describe} className="unit">
-          <Box className="unit-header">
-            <h2 id={unit.slug}>
-              <ParsedTitle title={unit.describe} />
-              <a className="anchor" href={'#' + unit.slug}>
-                <Octicon><Link x={6}/></Octicon>
-              </a>
-            </h2>
-          </Box>
-          <Box p={4} className="unit-body">
-            { unit.tests.map((test, i) => <Box key={test.it} mt={i===0 ? 0 : 3}><Example test={test} /></Box>) }
-          </Box>
-        </Box>
-        ))
-      : null }
+      {parts}
     </div>
   )
 }
-

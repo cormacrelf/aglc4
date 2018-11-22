@@ -1,6 +1,6 @@
-- describe: "1.1 General Rules > General Format of Footnotes"
+- describe: "1.1 General Format of Footnotes"
   tests:
-    - it: "1.1.3 Multiple Sources in Footnotes > are delimited by semicolons"
+    - it: "1.1.3 Multiple Sources in Footnotes > Delimited by semicolons"
       format: text
       sequence:
         - cluster:
@@ -9,7 +9,7 @@
       expect:
         - PlainCiteA; PlainCiteB.
 
-    - it: "1.1.3 Multiple Sources in Footnotes > can be delimited by full stops if necessary"
+    - it: "1.1.3 Multiple Sources in Footnotes > Delimited by full stops for new signals"
       format: text
       mode: doc
       meta:
@@ -22,7 +22,7 @@
         zotero: >
           You can create an explicit footnote, and add cites individually.
 
-    - it: "1.1.6 Pinpoint page"
+    - it: "1.1.6 Pinpoint References > Page with paragraph"
       format: text
       single: { id: 'PlainCiteA', label: 'page', locator: '13 [28]' }
       expect: PlainCiteA 13 [28].
@@ -32,7 +32,7 @@
         zotero: >
           Enter a Page locator as `13 [28]`.
 
-    - it: "1.1.6 Pinpoint footnote"
+    - it: "1.1.6 Pinpoint References > Footnotes"
       format: text
       single: { id: "PlainCiteA", label: '', locator: '13 n 4' }
       expect: PlainCiteA 13 n 4.
@@ -43,7 +43,7 @@
 
 - describe: "1.4 General Rules > Subsequent References"
   tests:
-    - it: "1.4.2 should use (n Footnote Number) for { legal case or legislation }"
+    - it: "1.4.1 General Rule > (n FN) for { legal case or legislation }"
       format: text
       sequence:
         - cluster: [{ id: "CaseA" }]
@@ -54,9 +54,10 @@
         - CaseB.
         - CaseA (n 1).
 
-    - it: "1.4.2 should use (n Footnote Number) for { legal case or legislation } with short title"
-    - it: "1.4.2 should include author last name in subsequent for secondary sources"
-    - it: "1.4.2 should include author last name AND { title or short title } in subsequent for secondary sources"
+    - it: "1.4.1 (n FN) for { legal case or legislation } with short title"
+    - it: "1.4.1 should include author last name in subsequent for secondary sources"
+    - it: "1.4.1 should include author last name AND { title or short title } in subsequent for secondary sources"
+
     - it: "1.4.3 should produce ibid for immediately subsequent legislation"
       sequence:
         - cluster:
@@ -70,9 +71,11 @@
         - Ibid.
         - Ibid s 189.
 
-- describe: "4 General Rules for Citing Secondary Sources"
+# General Secondary
+
+- describe: "4.1 Author"
   tests:
-    - it: "4.1.1 should join initials with no spaces or full stops"
+    - it: "4.1.1 General Rule > should join initials with no spaces or full stops"
       single: { id: "ellicott2008" }
       expect: >
         RJ Ellicott, ‘The Autochthonous Expedient and the Federal Court’

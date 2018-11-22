@@ -1,6 +1,3 @@
-const React = require('react');
-const ReactDOMServer = require('react-dom/server');
-// import Diff from 'react-stylable-diff';
 const fs = require('fs');
 const path = require('path');
 const { cslTestResults } = require('jest-csl');
