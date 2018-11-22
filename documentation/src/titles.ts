@@ -1,9 +1,10 @@
+import slugify from 'slugify';
 import groupBy from './groupBy';
 import { TestUnit, TestCase } from './types';
 
 export interface ParsedTitle {
   disambiguate: string;
-  rule: string;
+  ruleId: string;
   major: number;
   minor: number;
   sub: number;
@@ -13,11 +14,11 @@ export interface ParsedTitle {
 
 export const parseTitle = (title: string): ParsedTitle => {
   let matches = title.match(/^((?:\d+\.)*\d+)\.? (?:(.+) > )?(.+)/)
-  if (!matches) { return { disambiguate: title, rule: "", major: 0, minor: 0, sub: 0, section: "", rest: title } }
-  let rule = matches[1];
+  if (!matches) { return { disambiguate: title, ruleId: "", major: 0, minor: 0, sub: 0, section: "", rest: title } }
+  let ruleId = matches[1];
   let section = matches[2];
   let rest = matches[3];
-  return { disambiguate: rule + " " + section, rule, ...parseRule(rule), section, rest };
+  return { disambiguate: ruleId + " " + section, ruleId, ...parseRule(ruleId), section, rest };
 }
 
 export function parseRule(rule: string) {
@@ -29,52 +30,78 @@ export function parseRule(rule: string) {
 }
 
 export type Parsed<T> = { parsed: ParsedTitle; content: T };
-interface Part {
+export interface AGLCPart { // Part III
   partTitle: string;
+  slug: string;
   chapters: AGLCChapter[];
 }
-export interface AGLCChapter {
+export interface AGLCChapter { // 4
   chapterNumber: number;
   chapterTitle: string;
-  units: Parsed<TestUnit>[]
+  slug: string;
+  units: AGLCUnit[]
 }
-export interface AGLCRuleGroup {
-  groupTitle: string;
-  groupRule: string;
+export interface AGLCUnit { // 4.1
+  parsed: ParsedTitle;
+  slug: string;
+  rules: AGLCRule[];
+}
+export interface AGLCRule { // 4.1.3
+  ruleTitle: string;
+  ruleId: string;
+  slug: string;
   tests: Parsed<TestCase>[];
 }
 
-export function coalesceParts(chapters: AGLCChapter[]): Part[] {
-  let ts = chapters.map(ch => ({ partTitle: chapterToPart(ch.chapterNumber), chapter: ch }));
-  let gs: Map<string, { part: string, chapter: AGLCChapter }[]> = groupBy(ts, (t: any) => t.partTitle);
-  return [...gs.entries()].map(([partTitle, es]) => {
-    return { partTitle, chapters: es.map(e => e.chapter) }
+export function unitsToTree(flatUnits: TestUnit[]) {
+  let units: AGLCUnit[] = flatUnits.map(u => {
+    const parsed = parseTitle(u.describe);
+    // ignores section
+    const slug = slugify(parsed.ruleId + " " + parsed.rest);
+    const rules = coalesceRules(u.tests);
+    return { parsed, slug, rules, }
+  });
+  let chapters = coalesceChapters(units);
+  let parts = coalesceParts(chapters);
+  return parts;
+}
+
+export function coalesceParts(flatChapters: AGLCChapter[]): AGLCPart[] {
+  let gs: Map<string, AGLCChapter[]> =
+    groupBy(flatChapters, (c: AGLCChapter) => chapterToPart(c.chapterNumber));
+  return [...gs.entries()].map(([partTitle, chapters]) => {
+    const slug = slugify(partTitle);
+    return { partTitle, chapters, slug, }
   });
 }
 
-export function coalesceChapters(units: TestUnit[]): AGLCChapter[] {
-  let ts = units.map(t => ({ parsed: parseTitle(t.describe), content: t }));
-  let gs: Map<number, Parsed<TestUnit>[]> = groupBy(ts, (t: Parsed<TestUnit>) => t.parsed.major) 
+export function coalesceChapters(flatUnits: AGLCUnit[]): AGLCChapter[] {
+  let gs = groupBy(flatUnits, (t: AGLCUnit) => t.parsed.major);
   return [...gs.entries()].map(([key, units]) => {
-    if (units.length === 0) throw new Error("impossible; groupBy doesn't return empty groups")
+    if (units.length === 0) throw new Error("impossible; groupBy doesn't return empty groups");
+    const chapterTitle = chapterMap[key];
+    const slug = slugify("" + key + " " + chapterTitle);
     return {
       chapterNumber: key,
       chapterTitle: chapterMap[key],
-      units: units,
+      slug,
+      units,
     };
   });
 }
 
-export function coalesceRules(tests: TestCase[]): AGLCRuleGroup[] {
+export function coalesceRules(tests: TestCase[]): AGLCRule[] {
   let ts: Parsed<TestCase>[] = tests.map(t => ({ parsed: parseTitle(t.it), content: t }));
-  let gs: Map<string, Parsed<TestCase>[]> = groupBy(ts, (t: Parsed<TestCase>) => t.parsed.rule);
+  let gs: Map<string, Parsed<TestCase>[]> = groupBy(ts, (t: Parsed<TestCase>) => t.parsed.ruleId);
   return [...gs.entries()].map(([_, cases]) => {
     if (cases.length === 0) throw new Error("impossible; groupBy doesn't return empty groups")
-    let first = cases[0].parsed;
+    const first = cases[0].parsed;
+    const slug = slugify(first.ruleId + " " + first.section);
     return {
-      groupTitle: first.section,
-      groupRule: first.rule,
+      ruleTitle: first.section,
+      ruleId: first.ruleId,
       tests: cases,
+      slug
     };
   });
 }
@@ -122,4 +149,3 @@ function chapterToPart(chapter: number) {
   if (chapter < 27) { return "Part V - Foreign Domestic Sources" };
   return "";
 }
-
