@@ -3,9 +3,7 @@
     - it: "1.1.3 Multiple Sources in Footnotes > Delimited by semicolons"
       format: text
       sequence:
-        - cluster:
-          - { id: "PlainCiteA" }
-          - { id: "PlainCiteB" }
+        - [{ id: "PlainCiteA" }, { id: "PlainCiteB" }]
       expect:
         - PlainCiteA; PlainCiteB.
 
@@ -18,9 +16,9 @@
           (Cf/See also/etc) and therefore a full stop, then you need to insert
           individual citations. 
         pandoc: >
-          You can use an explicit footnote `like so.^[Cf @citeA. See also @citeB.]`
+          Use an explicit footnote `like so.^[Cf @citeA. See also @citeB.]`
         zotero: >
-          You can create an explicit footnote, and add cites individually.
+          Create a footnote, and add cites individually.
 
     - it: "1.1.6 Pinpoint References > Page with paragraph"
       format: text
@@ -43,29 +41,38 @@
 
 - describe: "1.4 General Rules > Subsequent References"
   tests:
-    - it: "1.4.1 General Rule > (n FN) for { legal case or legislation }"
+
+    - it: "1.4.1 General Rule > (n FN) for secondary sources"
       format: text
       sequence:
-        - cluster: [{ id: "CaseA" }]
-        - cluster: [{ id: "CaseB" }]
-        - cluster: [{ id: "CaseA" }]
+        - [{ id: "PlainCiteA" }]
+        - [{ id: "PlainCiteB" }]
+        - [{ id: "PlainCiteA" }]
+      expect:
+        - PlainCiteA.
+        - PlainCiteB.
+        - PlainCiteA (n 1).
+
+    - it: "1.4.1 General Rule > (n FN) for {legal_case or legislation}"
+      format: text
+      sequence:
+        - [{ id: "CaseA" }]
+        - [{ id: "CaseB" }]
+        - [{ id: "CaseA" }]
       expect:
         - CaseA.
         - CaseB.
         - CaseA (n 1).
 
-    - it: "1.4.1 (n FN) for { legal case or legislation } with short title"
-    - it: "1.4.1 should include author last name in subsequent for secondary sources"
-    - it: "1.4.1 should include author last name AND { title or short title } in subsequent for secondary sources"
+    - it: "1.4.1 General Rule > (n FN) for {legal_case or legislation} with short title"
+    - it: "1.4.1 General Rule > should include author last name in subsequent for secondary sources"
+    - it: "1.4.1 General Rule > should include author last name AND { title or short title } in subsequent for secondary sources"
 
-    - it: "1.4.3 should produce ibid for immediately subsequent legislation"
+    - it: "1.4.3 Ibid > for immediately subsequent legislation"
       sequence:
-        - cluster:
-          - { prefix: "See, eg, ", id: "criminalCode1995", label: "section", locator: "123", suffix: " suffix" }
-        - cluster:
-          - { id: "criminalCode1995", label: "section", locator: "123" }
-        - cluster:
-          - { id: "criminalCode1995", label: "section", locator: "189" }
+        - [{ prefix: "See, eg, ", id: "criminalCode1995", label: "section", locator: "123", suffix: " suffix" }]
+        - [{ id: "criminalCode1995", label: "section", locator: "123" }]
+        - [{ id: "criminalCode1995", label: "section", locator: "189" }]
       expect:
         - See, eg, <i>Criminal Code Act 1995</i> (Cth) s 123 (‘<i>Criminal Code</i>’) suffix.
         - Ibid.

@@ -1,6 +1,5 @@
 module.exports = {
-  // csl: "./src/aglc4.csl",
-  csl: "/Users/cormac/Zotero/styles/australian-guide-to-legal-citation.csl",
+  csl: "./src/aglc4.csl",
   jurisdictionDirs: ["./src"],
   libraries: ["./corpus.json"],
   suites: ["./test/core/*.yaml", "./test/csl-m/*.yaml"]
