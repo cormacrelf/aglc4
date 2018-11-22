@@ -29,7 +29,7 @@ export const Cite = ({test}: { test: TestCase }) => {
       {renderCite(test.single)}
     </Box>
   } else if (test.type === 'sequence') {
-    let clusters = test.sequence.map((s, i) => <div key={i}>{renderCluster(s.cluster)}</div>)
+    let clusters = test.sequence.map((s, i) => <div key={i}>{renderCluster(s)}</div>)
     return <Box mb={3} className="markdown-body">
       {clusters}
     </Box>

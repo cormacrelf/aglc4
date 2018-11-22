@@ -15,9 +15,9 @@ export interface ParsedTitle {
 export const parseTitle = (title: string): ParsedTitle => {
   let matches = title.match(/^((?:\d+\.)*\d+)\.? (?:(.+) > )?(.+)/)
   if (!matches) { return { disambiguate: title, ruleId: "", major: 0, minor: 0, sub: 0, section: "", rest: title } }
-  let ruleId = matches[1];
-  let section = matches[2];
-  let rest = matches[3];
+  let ruleId = matches[1] || "";
+  let section = matches[2] || "";
+  let rest = matches[3] || "";
   return { disambiguate: ruleId + " " + section, ruleId, ...parseRule(ruleId), section, rest };
 }
 
@@ -142,10 +142,10 @@ export const chapterMap: {[k: number]: string} = {
 
 function chapterToPart(chapter: number) {
   if (chapter < 1) { return "" }
-  if (chapter < 2) { return "Part I - General Rules" };
-  if (chapter < 4) { return "Part II - Domestic Sources" };
-  if (chapter < 8) { return "Part III - Secondary Sources" };
-  if (chapter < 15) { return "Part IV - International Materials" };
-  if (chapter < 27) { return "Part V - Foreign Domestic Sources" };
+  if (chapter < 2) { return "Part I – General Rules" };
+  if (chapter < 4) { return "Part II – Domestic Sources" };
+  if (chapter < 8) { return "Part III – Secondary Sources" };
+  if (chapter < 15) { return "Part IV – International Materials" };
+  if (chapter < 27) { return "Part V – Foreign Domestic Sources" };
   return "";
 }

@@ -31,9 +31,7 @@ export interface TestCaseSingle extends TestCaseBase {
   result: string;
   item: object;
 }
-export interface CiteCluster {
-  cluster: Array<CiteItem>;
-}
+export type CiteCluster = Array<CiteItem>;
 export interface TestCaseSequence extends TestCaseBase {
   type: 'sequence';
   sequence: Array<CiteCluster>;

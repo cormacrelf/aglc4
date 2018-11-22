@@ -9,6 +9,61 @@ pre {
     font-size: 14px;
 }
 
+.scrollspy-current {
+    background: rgba(22, 51, 108, 0.05);
+    // border-left: 1px solid #000;
+}
+
+.nav-rule.scrollspy-current {
+    font-weight: 700;
+}
+.nav-rule {
+    font-size: 11px;
+}
+
+.nav-part {
+    padding: 4px 10px;
+}
+
+.part-header, .chapter-header, .unit-header {
+    border-bottom: 1px solid #eee;
+}
+
+$chapter-sticky: 24px * 1.5 + 8px;
+$unit-sticky: 34px;
+.chapter-header {
+    position: sticky; top: 0; z-index: 10;
+}
+.unit-header {
+    position: sticky; top: $chapter-sticky; z-index: 9;
+}
+
+.offset-anchor {
+    display: block;
+    position: relative;
+    top: -($chapter-sticky + $unit-sticky);
+    visibility: hidden;
+}
+
+.unit>.offset-anchor {
+    top: -($chapter-sticky);
+}
+
+.rule-group>.offset-anchor {
+    top: -($chapter-sticky + $unit-sticky + 16px);
+}
+
+.scrollspy .scrollspy .scrollspy {
+    padding-left: 10px;
+}
+.scrollspy {
+    font-size: 12px;
+}
+ul.scrollspy > li {
+    list-style: none;
+    // padding-left: 4px;
+}
+
 a {
     color: inherit;
     text-decoration: none;
@@ -21,7 +76,8 @@ a {
     margin-left: -20px;
 }
 
-h2 .anchor { margin-top: -8px; }
+h2 .anchor { margin-top: -6px; }
+h3 .anchor { margin-top: -4px; }
 
 h1 .anchor svg,
 h2 .anchor svg,
@@ -77,7 +133,15 @@ h6 .anchor:focus svg {
 }
 
 .example { }
-.failed { background: #fee4e4 }
+
+.doc-label {
+    display: block;
+}
+
+.failed {
+    background: #fff7f7;
+}
+
 ins { background: #d8fcd8; }
 del { background: #ff0000; }
 
@@ -150,7 +214,13 @@ del { background: #ff0000; }
   }
   .App-nav, .App-ads {
     /* 12em is the width of the columns */
-    flex: 0 0 16em;
+    flex: 0 0 18em;
   }
+}
+
+.nav-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
 }
 

@@ -16,7 +16,7 @@ const DocBlock = ({doc, label}: { doc?: string, label?: string }) => {
     </Box>
   }
   return <Box bg="gray.0">
-    { label && <Label m={0} bg="blue.1" color="gray.9">{label}</Label> }
+    { label && <Label m={0} style={{display: "block"}} className="doc-label" bg="blue.1" color="gray.9">{label}</Label> }
     <Box p={2}>
       <Markdown source={doc} />
     </Box>

@@ -43,7 +43,7 @@ export class TestResultsView extends Component<{ results: TestUnit[], title: str
         <TitlePortal title={this.props.title} />
         <Results parts={parts} />
         {/* drill-down mode: set filterBasedOn={matches} */}
-        <Nav names={filterNames} filterBasedOn={searchMatches} setSearch={this.setSearch} clickFilter={this.clickFilter} units={matches} />
+        <Nav names={filterNames} filterBasedOn={searchMatches} setSearch={this.setSearch} clickFilter={this.clickFilter} parts={parts} />
       </>
     );
   }

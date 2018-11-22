@@ -1,10 +1,8 @@
 import React from 'react';
-import { TestUnit, TestCase } from '../types';
+import { TestCase } from '../types';
 import { Box, Label } from '@primer/components';
 import Octicon, { Link } from '@githubprimer/octicons-react'
-import { Parsed, AGLCPart, AGLCChapter, AGLCUnit, AGLCRule } from '../titles';
-
-import slugify from 'slugify';
+import { AGLCPart, AGLCChapter, AGLCUnit, AGLCRule } from '../titles';
 
 import { Cite } from './Cite';
 import { Diff } from './Diff';
@@ -16,7 +14,8 @@ const Tags = ({test}: {test:TestCase}) => {
     return <Label bg="purple.4">stub</Label>
   }
   if (test.type === 'doc') {
-    return <Label bg="blue.4">doc only</Label>
+    return null;
+    // return <Label bg="blue.4">doc only</Label>
   }
   return test.passed
     ? <Label bg="green.3" color="gray.8">passed</Label>
@@ -31,28 +30,43 @@ const Title = ({ rule, rest }: { rule: string, rest: string }) => {
   </>
 }
 
+const testFailed = (test: TestCase) => {
+  return !test.passed && (test.type !== 'doc' && test.type !== 'stub')
+}
+
+const testBg = (test: TestCase) => {
+  if (testFailed(test)) return 'red.0';
+  if (test.type === 'doc') return 'blue.0';
+}
+
 const OneTest = ({ title, test }: { title: string, test: TestCase }) => {
   const item = test.type === 'single'
     ? <Item test={test} />
     : null;
+  if (test.type === 'stub') {
+    return <div className="Box-body spacer">
+        <h4>{title} <Tags test={test}/></h4>
+    </div>
+  }
   if (test.type==='single' || test.type==='sequence' || test.meta)
     return (
-      <div className="Box-body spacer">
+      <Box bg={testBg(test)} className={"Box-body spacer" + (testFailed(test) ? ' failed' : '')}>
         <h4>{title} <Tags test={test}/></h4>
         <Cite test={test} />
         <Diff test={test} />
         <Meta test={test} />
         { item }
-      </div>
+      </Box>
     )
   else return null;
 }
 
-const Group = ({ rule }: { rule: AGLCRule }) => {
+const Rule = ({ rule }: { rule: AGLCRule }) => {
   const { ruleTitle, ruleId, tests, slug } = rule;
-  return <div className="Box">
-    <div className="Box-header">
-      <h4 className="Box-title" id={slug}>
+  return <div id={slug + "-block"} className="Box rule-group">
+    <a id={slug} className="offset-anchor"></a>
+    <div className="Box-header rule-group-header">
+      <h4 className="Box-title">
         <a className="anchor" href={'#' + slug}>
           <Octicon><Link x={6}/></Octicon>
         </a>
@@ -73,18 +87,19 @@ const Unit = ({ unit } : { unit: AGLCUnit }) => {
   const { parsed, rules, slug } = unit;
   let groups = rules.map((rule, i) => {
     return <Box key={rule.ruleId} mt={i===0 ? 0 : 3}>
-      <Group rule={rule} />
+      <Rule rule={rule} />
     </Box>
   });
   return (
-    <Box p={4} className="unit">
-      <Box className="unit-header">
-        <h2 id={slug}>
+    <Box className="unit" id={slug + "-block"}>
+      <a id={slug} className="offset-anchor"></a>
+      <Box pb={1} pt={1} {...stretch(4, 0)} bg="gray.0" className="unit-header">
+        <h3>
           <Title rule={parsed.ruleId} rest={parsed.rest} />
           <a className="anchor" href={'#' + slug}>
             <Octicon><Link x={6}/></Octicon>
           </a>
-        </h2>
+        </h3>
       </Box>
       <Box p={4} className="unit-body">
         {groups}
@@ -93,19 +108,26 @@ const Unit = ({ unit } : { unit: AGLCUnit }) => {
   )
 }
 
-export const Chapter = ({chapter}: { chapter: AGLCChapter }) => {
-  const { chapterNumber, chapterTitle, units } = chapter;
-  let chapLink = "chapter-" + chapterNumber; // perma
-  return <Box p={4} className="unit">
-    <Box className="unit-header">
-      <h2 id={chapLink}>
+const stretch = (edge: number, pi: number) => ({
+  pl: edge + pi,
+  ml: -edge,
+  mr: -edge,
+  pr: edge + pi,
+});
+
+const Chapter = ({chapter}: { chapter: AGLCChapter }) => {
+  const { slug, chapterNumber, chapterTitle, units } = chapter;
+  return <Box className="chapter" id={slug + "-block"}>
+    <a id={slug} className="offset-anchor"></a>
+    <Box pt={1} pb={1} {...stretch(4, 0)} bg="gray.0" className="chapter-header">
+      <h2>
         <Title rule={""+chapterNumber} rest={chapterTitle} />
-        <a className="anchor" href={'#' + chapLink}>
+        <a className="anchor" href={'#' + slug}>
           <Octicon><Link x={6}/></Octicon>
         </a>
       </h2>
     </Box>
-    <Box p={4} className="unit-body">
+    <Box className="chapter-body">
     { units.map(u => <Unit key={u.parsed.rest} unit={u} />) }
     </Box>
   </Box>
@@ -113,8 +135,11 @@ export const Chapter = ({chapter}: { chapter: AGLCChapter }) => {
 
 export const Results = ({parts}: {parts: AGLCPart[]}) => {
   let _parts = parts.map((part, i) => {
-    return <Box key={part.partTitle} mt={i===0 ? 0 : 3}>
-      <h1>{part.partTitle}</h1>
+    return <Box p={4} key={part.partTitle} id={part.slug + "-block"} className="part">
+      <a id={part.slug} className="offset-anchor"></a>
+      <Box pb={0} {...stretch(4, 0)} className="part-header">
+        <h1>{part.partTitle}</h1>
+      </Box>
       { part.chapters.map((ch) => <Chapter key={ch.chapterNumber} chapter={ch} />) }
     </Box>
   })
