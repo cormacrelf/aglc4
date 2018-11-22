@@ -1,6 +1,6 @@
 import React from 'react';
 import { TestCase } from '../types';
-import { Box, Label } from '@primer/components';
+import { Box, Label, Heading } from '@primer/components';
 import Octicon, { Link } from '@githubprimer/octicons-react'
 import { AGLCPart, AGLCChapter, AGLCUnit, AGLCRule } from '../titles';
 
@@ -8,19 +8,7 @@ import { Cite } from './Cite';
 import { Diff } from './Diff';
 import { Item } from './Item';
 import { Meta } from './Meta';
-
-const Tags = ({test}: {test:TestCase}) => {
-  if (test.type === 'stub') {
-    return <Label bg="purple.4">stub</Label>
-  }
-  if (test.type === 'doc') {
-    return null;
-    // return <Label bg="blue.4">doc only</Label>
-  }
-  return test.passed
-    ? <Label bg="green.3" color="gray.8">passed</Label>
-    : <Label bg="red.4">failed</Label>
-}
+import { Tags } from './Tags';
 
 const Title = ({ rule, rest }: { rule: string, rest: string }) => {
   return <>
@@ -39,7 +27,7 @@ const testBg = (test: TestCase) => {
   if (test.type === 'doc') return 'blue.0';
 }
 
-const OneTest = ({ title, test }: { title: string, test: TestCase }) => {
+export const OneTest = ({ title, test }: { title: string, test: TestCase }) => {
   const item = test.type === 'single'
     ? <Item test={test} />
     : null;
@@ -61,18 +49,18 @@ const OneTest = ({ title, test }: { title: string, test: TestCase }) => {
   else return null;
 }
 
-const Rule = ({ rule }: { rule: AGLCRule }) => {
+export const Rule = ({ rule }: { rule: AGLCRule }) => {
   const { ruleTitle, ruleId, tests, slug } = rule;
   return <div id={slug + "-block"} className="Box rule-group">
     <a id={slug} className="offset-anchor"></a>
     <div className="Box-header rule-group-header">
-      <h4 className="Box-title">
+      <Heading is="h4" fontSize={2} className="Box-title">
         <a className="anchor" href={'#' + slug}>
           <Octicon><Link x={6}/></Octicon>
         </a>
         {" "}
         <Title rule={ruleId} rest={ruleTitle} />
-      </h4>
+      </Heading>
     </div>
     { tests.map(e =>
       <OneTest
@@ -83,7 +71,7 @@ const Rule = ({ rule }: { rule: AGLCRule }) => {
   </div>
 }
 
-const Unit = ({ unit } : { unit: AGLCUnit }) => {
+export const Unit = ({ unit } : { unit: AGLCUnit }) => {
   const { parsed, rules, slug } = unit;
   let groups = rules.map((rule, i) => {
     return <Box key={rule.ruleId} mt={i===0 ? 0 : 3}>
@@ -115,7 +103,7 @@ const stretch = (edge: number, pi: number) => ({
   pr: edge + pi,
 });
 
-const Chapter = ({chapter}: { chapter: AGLCChapter }) => {
+export const Chapter = ({chapter}: { chapter: AGLCChapter }) => {
   const { slug, chapterNumber, chapterTitle, units } = chapter;
   return <Box className="chapter" id={slug + "-block"}>
     <a id={slug} className="offset-anchor"></a>
@@ -143,8 +131,7 @@ export const Results = ({parts}: {parts: AGLCPart[]}) => {
       { part.chapters.map((ch) => <Chapter key={ch.chapterNumber} chapter={ch} />) }
     </Box>
   })
-  return (
-    <div className="App-content">
+  return ( <div className="App-content">
       {_parts}
     </div>
   )

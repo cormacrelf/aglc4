@@ -1,14 +1,9 @@
 import React from 'react';
 import { TestCase } from '../types';
 import { Box, Label } from '@primer/components';
-import ReactMarkdown from 'react-markdown';
+import { Markdown } from './Markdown';
 
-const Markdown = (props: any) =>
-    <Box className="markdown-body">
-      <ReactMarkdown {...props} />
-    </Box>
-
-const DocBlock = ({doc, label}: { doc?: string, label?: string }) => {
+export const DocBlock = ({doc, label}: { doc?: string, label?: string }) => {
   if (!doc) return <></>;
   if (!label) {
     return <Box>

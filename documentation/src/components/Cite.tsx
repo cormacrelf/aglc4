@@ -2,15 +2,20 @@ import React from 'react';
 import { TestCase, CiteItem } from '../types'
 import { Box, Label } from '@primer/components';
 
-const renderCite = (cite: CiteItem) => {
+const RenderCite = ({cite}: {cite: CiteItem}) => {
   const { prefix, id, label, locator, suffix } = cite;
   let _label = (str: string, bg = "gray.2", fg = "gray.9") => <Label bg={bg} color={fg}>{str}</Label>;
-  return (<>
-    { prefix && _label(prefix) }{" "}
-    { id && _label('@' + cite.id, 'yellow.2', 'gray.9') }{" "}
-    { label && _label(label) }{" "}
-    { locator && _label(locator) }{" "}
-    { suffix && _label(suffix) }
+  return (
+    <>
+      { prefix && _label(prefix) }
+      { id && " "}
+      { id && _label('@' + cite.id, 'yellow.2', 'gray.9') }
+      { locator && " "}
+      { locator && _label(label || 'page') }
+      { locator && " "}
+      { locator && _label(locator) }
+      { suffix && " "}
+      { suffix && _label(suffix) }
     </>
   );
 }
@@ -20,13 +25,17 @@ const renderCite = (cite: CiteItem) => {
 // }
 
 const renderCluster = (cites: CiteItem[]) => {
-  return cites.map(renderCite).map((x, i) => <span key={i}>{x}</span>);
+  return cites.map((x, i) => <RenderCite cite={x} key={i} />);
+}
+
+export const CiteCluster = ({ cites }: { cites: CiteItem[] }) => {
+  return <span>{ renderCluster(cites) }</span>
 }
 
 export const Cite = ({test}: { test: TestCase }) => {
   if (test.type === 'single') {
     return <Box mb={3} className="markdown-body">
-      {renderCite(test.single)}
+      <RenderCite cite={test.single} />
     </Box>
   } else if (test.type === 'sequence') {
     let clusters = test.sequence.map((s, i) => <div key={i}>{renderCluster(s)}</div>)

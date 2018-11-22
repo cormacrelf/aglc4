@@ -4,18 +4,16 @@ import { Box, Flex, UnderlineNav, Tooltip } from '@primer/components';
 import { TestUnit } from './types';
 import { TestResultsView } from './components/TestResultsView';
 import aglcLogo from './aglc-logo.jpg';
-import { Markdown } from './components/Markdown';
 import {BrowserRouter, Route, NavLink, Switch, Redirect} from 'react-router-dom';
 import asyncProps from './asyncProps';
 
 // /* eslint-disable import/no-webpack-loader-syntax */
-// import Content from '!babel-loader!@mdx-js/loader!./Readme.mdx';
-// <Content />
+import Content from './components/Readme.mdx';
 
 const Readme = () => {
   return (
-    <Box p={4}>
-      <Markdown source={"readme"} />
+    <Box p={4} className="markdown-body readme" maxWidth="800px">
+      <Content />
     </Box>
   )
 }

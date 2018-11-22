@@ -1,5 +1,4 @@
 @import "primer/index.scss";
-@import "primer-markdown/index.scss";
 
 .Box-body.spacer > :not(:last-child) {
     margin-bottom: 16px;
@@ -224,3 +223,10 @@ del { background: #ff0000; }
     top: 0;
 }
 
+h4.Box-title {
+    margin: 0;
+}
+
+.Box-body *:first-child {
+    margin-top: 0;
+}
