@@ -29,7 +29,7 @@ const testBg = (test: TestCase) => {
 
 export const OneTest = ({ title, test }: { title: string, test: TestCase }) => {
   const item = test.type === 'single'
-    ? <Item test={test} />
+    ? <Item citeId={test.single.id} />
     : null;
   if (test.type === 'stub') {
     return <div className="Box-body spacer">
@@ -121,7 +121,9 @@ export const Chapter = ({chapter}: { chapter: AGLCChapter }) => {
   </Box>
 }
 
-export const Results = ({parts}: {parts: AGLCPart[]}) => {
+import { LibraryContext } from './LibraryContext';
+
+export const Results = ({parts, library}: {parts: AGLCPart[], library: { [k: string]: any }}) => {
   let _parts = parts.map((part, i) => {
     return <Box p={4} key={part.partTitle} id={part.slug + "-block"} className="part">
       <a id={part.slug} className="offset-anchor"></a>
@@ -131,8 +133,11 @@ export const Results = ({parts}: {parts: AGLCPart[]}) => {
       { part.chapters.map((ch) => <Chapter key={ch.chapterNumber} chapter={ch} />) }
     </Box>
   })
-  return ( <div className="App-content">
-      {_parts}
-    </div>
+  return (
+    <LibraryContext.Provider value={library}>
+      <div className="App-content">
+        {_parts}
+      </div>
+    </LibraryContext.Provider>
   )
 }

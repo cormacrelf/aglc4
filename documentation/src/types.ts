@@ -1,3 +1,13 @@
+export interface TestResults {
+  library: Library;
+  units: TestUnit[];
+}
+
+type LibraryItem = any;
+
+export interface Library {
+  [k: string]: LibraryItem;
+}
 
 export interface CiteItem {
   id: string;

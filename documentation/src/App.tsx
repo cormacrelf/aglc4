@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.scss';
 import { Box, Flex, UnderlineNav, Tooltip } from '@primer/components';
-import { TestUnit } from './types';
+import { TestResults } from './types';
 import { TestResultsView } from './components/TestResultsView';
 import aglcLogo from './aglc-logo.jpg';
 import {BrowserRouter, Route, NavLink, Switch, Redirect} from 'react-router-dom';
@@ -20,7 +20,7 @@ const Readme = () => {
 
 const AsyncResults = ({ title, results }: { title: string, results: Promise<{ default: any }> }) => {
   const AsyncRes = asyncProps(TestResultsView, {
-    results: results.then(r => r.default as TestUnit[])
+    results: results.then(r => r.default as TestResults)
   })
   return <AsyncRes title={title} />
 }

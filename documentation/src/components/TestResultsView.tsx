@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { TestUnit } from '../types';
 import { runFilter, getFilter } from '../filters';
 import { Nav } from './Nav';
 import { Results } from './Results';
 import { TitlePortal } from './TitlePortal';
 import { unitsToTree } from '../titles';
+import { TestResults } from '../types';
 
-export class TestResultsView extends Component<{ results: TestUnit[], title: string }, { filterNames: Set<string>, search: string }> {
+export class TestResultsView extends Component<{ results: TestResults, title: string }, { filterNames: Set<string>, search: string }> {
 
-  constructor(props: {results: TestUnit[], title: string}) {
+  constructor(props: { results: TestResults, title: string }) {
     super(props);
     this.state = { filterNames: new Set(), search: "" };
     this.clickFilter = this.clickFilter.bind(this);
@@ -35,13 +35,13 @@ export class TestResultsView extends Component<{ results: TestUnit[], title: str
 
   render() {
     const { filterNames } = this.state;
-    const searchMatches = runFilter(this.props.results, test => this.state.search == "" || new RegExp(this.state.search).test(test.it));
+    const searchMatches = runFilter(this.props.results.units, test => this.state.search == "" || new RegExp(this.state.search).test(test.it));
     const matches = runFilter(searchMatches, getFilter(filterNames));
     const parts = unitsToTree(matches);
     return (
       <>
         <TitlePortal title={this.props.title} />
-        <Results parts={parts} />
+        <Results parts={parts} library={this.props.results.library} />
         {/* drill-down mode: set filterBasedOn={matches} */}
         <Nav names={filterNames} filterBasedOn={searchMatches} setSearch={this.setSearch} clickFilter={this.clickFilter} parts={parts} />
       </>

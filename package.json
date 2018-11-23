@@ -1,6 +1,9 @@
 {
+  "license": "UNLICENSED",
+  "private": true,
   "scripts": {
-    "test": "jest --watchAll --noStackTrace"
+    "test": "jest --watchAll --noStackTrace",
+    "doc-results": "jest-csl results --includeLibrary ./test/configurations/*.test.js"
   },
   "devDependencies": {
     "jest": "^23.6.0",
