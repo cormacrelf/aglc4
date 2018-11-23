@@ -1,4 +1,16 @@
+import React from 'react';
 import { AGLCRule, parseTitle } from '../titles';
+import { Rule } from './Results';
+import { LibraryContext } from './LibraryContext';
+import { Library } from '../types';
+export const demoLibrary: Library = {
+  'citekey': {
+    author: { first: 'John', last: 'Doe' },
+    title: "Miscellaneous Writings",
+    issued: { "year": 2001 }
+  }
+};
+
 export const demoRule: AGLCRule = {
   ruleTitle: 'Rule Title',
   ruleId: '1.2.3',
@@ -13,15 +25,14 @@ export const demoRule: AGLCRule = {
         expect: 'Expected result',
         result: 'Expected result',
         passed: true,
-        item: {},
         slug: 'slug',
-        meta: {
-          doc: `Yeah mate`
+        doc: {
+          main: `Yeah mate`
         }
       }
     },
     {
-      parsed: parseTitle('1.2.3 Rule Title > Test case'),
+      parsed: parseTitle('1.2.3 Rule Title > Second test case'),
       content: {
         it: '1.2.3 Rule Title > Second test case ',
         type: 'single',
@@ -31,10 +42,16 @@ export const demoRule: AGLCRule = {
         passed: false,
         item: {},
         slug: 'slug',
-        meta: {
-          doc: `Yeah mate`
+        doc: {
+          main: `Yeah mate`
         }
       }
     }
   ]
 };
+
+export const DemoRule = () => (
+  <LibraryContext.Provider value={demoLibrary}>
+    <Rule rule={demoRule} />
+  </LibraryContext.Provider>
+)

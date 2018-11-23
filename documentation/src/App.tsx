@@ -32,11 +32,14 @@ const CSLResults = () => {
     />;
 }
 
+import { IsJurisMContext } from './components/LibraryContext';
+
 const JurisMResults = () => {
-  return <AsyncResults
-    title="Extended CSL-M for use with Juris-M"
-    results={ import('./results-jurisM.json') }
-    />;
+  return <IsJurisMContext.Provider value={true}>
+    <AsyncResults
+      title="Extended CSL-M for use with Juris-M"
+      results={ import('./results-jurisM.json') } />
+  </IsJurisMContext.Provider>;
 }
 
 const App = () => {
@@ -47,7 +50,7 @@ const App = () => {
           <img width={100} src={aglcLogo} />
           <h1>AGLC 4 Automated Citation Guide</h1>
         </Flex>
-        <Box is="header" p={3} pt={0}>
+        <Box is="header" bg={"#d6e3ff"}>
           <UnderlineNav
             align="right"
             label="CSL or CSL-M"

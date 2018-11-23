@@ -16,17 +16,17 @@ export interface CiteItem {
   prefix?: string;
   suffix?: string;
 }
+export interface DocSection {
+  label: string;
+  content: string;
+}
 export interface TestCaseBase {
   it: string;
   passed: boolean;
   slug: string;
   format?: 'text' | 'html';
-  meta?: {
-    doc?: string,
-    pandoc?: string
-    zotero?: string
-    jurisM?: string
-  }
+  doc?: string | Array<DocSection>;
+  meta?: any;
 }
 export interface TestCaseStub extends TestCaseBase {
   type: 'stub';

@@ -28,15 +28,16 @@ const testBg = (test: TestCase) => {
 }
 
 export const OneTest = ({ title, test }: { title: string, test: TestCase }) => {
+  let hint = test && test.meta && test.meta.jmHint || undefined;
   const item = test.type === 'single'
-    ? <Item citeId={test.single.id} />
+    ? <Item citeId={test.single.id} hint={hint} />
     : null;
   if (test.type === 'stub') {
     return <div className="Box-body spacer">
         <h4>{title} <Tags test={test}/></h4>
     </div>
   }
-  if (test.type==='single' || test.type==='sequence' || test.meta)
+  if (test.type==='single' || test.type==='sequence' || test.doc)
     return (
       <Box bg={testBg(test)} className={"Box-body spacer" + (testFailed(test) ? ' failed' : '')}>
         <h4>{title} <Tags test={test}/></h4>

@@ -35,7 +35,7 @@ export class TestResultsView extends Component<{ results: TestResults, title: st
 
   render() {
     const { filterNames } = this.state;
-    const searchMatches = runFilter(this.props.results.units, test => this.state.search == "" || new RegExp(this.state.search).test(test.it));
+    const searchMatches = runFilter(this.props.results.units, test => this.state.search == "" || new RegExp(this.state.search.toLowerCase()).test(test.it.toLowerCase()));
     const matches = runFilter(searchMatches, getFilter(filterNames));
     const parts = unitsToTree(matches);
     return (

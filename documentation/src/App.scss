@@ -168,6 +168,9 @@ del { background: #ff0000; }
   min-height: 100vh;
 }
 
+.App-nav {
+}
+
 .App-body {
   display: flex;
   flex: 1;
@@ -221,6 +224,9 @@ del { background: #ff0000; }
     position: -webkit-sticky;
     position: sticky;
     top: 0;
+    // height only applies when it's in 'fixed' mode, because usually flex defines it
+    height: 100vh;
+    overflow-y: auto;
 }
 
 h4.Box-title {

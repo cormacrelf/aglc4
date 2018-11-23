@@ -8,9 +8,7 @@ export function mapReduce<T, A>(units: TestUnit[], mapper: (t: TestCase) => T, r
 }
 
 export const filterMap: { [k: string]: TestFilter } = {
-  'doc': t => t.meta && (
-    t.meta.doc || t.meta.pandoc || t.meta.zotero || t.meta.jurisM
-  ) && true || false,
+  'doc': t => t.doc && true || false,
   'stub': t => t.type === 'stub',
   'single': t => t.type === 'single',
   'sequence': t => t.type === 'sequence',

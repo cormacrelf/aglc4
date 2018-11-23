@@ -5,7 +5,7 @@ import { Diff } from './Diff';
 import { DocBlock } from './Meta';
 import { Tag } from './Tags';
 import { Rule, OneTest } from './Results';
-import { demoRule } from './Readme-data';
+import { DemoRule } from './Readme-data';
 
 # How to use this guide
 
@@ -14,12 +14,15 @@ import { demoRule } from './Readme-data';
 </p>
 
 <p><DocBlock label="pandoc" doc="yeah" /></p>
-<Rule rule={demoRule} />
+
+<p>
+  <DemoRule />
+</p>
 
 | Tag                   | Meaning         |
 | --------------------- | --------------- |
-| <Tag type="passed" /> | The CSL got the correct output, down to italics and curly quotation marks. |
-| <Tag type="failed" /> | The CSL got it wrong. A diff will be shown. |
+| <Tag type="passed" /> | The CSL produces the correct output, down to italics and curly quotation marks. |
+| <Tag type="failed" /> | The CSL gets it wrong. A diff will be shown. Be careful using the CSL in this way. |
 | <Tag type="stub" />   | There was an empty test defined. |
 
 ## Cite clusters
