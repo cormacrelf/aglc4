@@ -3,8 +3,7 @@ import { Box, Details, Button, Label } from '@primer/components';
 import { LibraryContext } from './LibraryContext';
 
 import _inverted from '../inverted.json';
-const { docTypes, allFields: _allFields } = _inverted as any;
-const allFields = new Set(_allFields);
+const { docTypes } = _inverted as any;
 
 function getDocType(obj: any, hint?: string) {
   let doctype = obj.type;
@@ -41,7 +40,6 @@ function getDocType(obj: any, hint?: string) {
 }
 
 const ItemJSON = React.memo(({obj, hint}:{obj: any, hint?: string}) => {
-  let keys = Object.keys(obj).filter(k => k !== 'type' && k !== 'id');
   let { filtered, docType } = getDocType(obj, hint);
   if (!docType) {return <></>};
   return <div className="markdown-body">

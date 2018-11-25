@@ -8,61 +8,61 @@
         - PlainCiteA; PlainCiteB.
 
     - it: "1.1.3 Multiple Sources in Footnotes > Delimited by full stops for new signals"
-      format: text
-      mode: doc
-      meta:
-        doc: >
+      doc:
+        - >
           If you wish to introduce a new set of cites with a different signal
           (Cf/See also/etc) and therefore a full stop, then you need to insert
-          individual citations. 
-        pandoc: >
-          Use an explicit footnote `like so.^[Cf @citeA. See also @citeB.]`
-        zotero: >
-          Create a footnote, and add cites individually.
+          individual citations.
+        - label: Pandoc
+          content: Use an explicit footnote `like so.^[Cf @citeA. See also @citeB.]`
+        - label: word
+          content: Create a footnote, and add cites individually.
 
     - it: "1.1.6 Pinpoint References > Page with paragraph"
       format: text
       single: { id: 'PlainCiteA', label: 'page', locator: '13 [28]' }
       expect: PlainCiteA 13 [28].
-      meta:
-        pandoc: >
-          Use `[@citekey 13 [28]]`.
-        zotero: >
-          Enter a Page locator as `13 [28]`.
+      doc:
+        - label: pandoc
+          content: Use `[@citekey 13 [28]]`.
+        - label: word
+          content: Enter a Page locator as `13 [28]`.
 
     - it: "1.1.6 Pinpoint References > Footnotes"
       format: text
       single: { id: "PlainCiteA", label: '', locator: '13 n 4' }
       expect: PlainCiteA 13 n 4.
-      meta:
-        pandoc: >
-          Newer versions of `pandoc-citeproc` support the `[@citekey{delimited
-          locator}]` syntax. Use it with `[@citekey{13 n 4}]`
+      doc:
+        - label: pandoc
+          content: >
+            Newer versions of `pandoc-citeproc` support the `[@citekey{delimited
+            locator}]` syntax. Use it with `[@citekey{13 n 4}]`
 
 - describe: "1.4 General Rules > Subsequent References"
   tests:
 
     - it: "1.4.1 General Rule > (n FN) for secondary sources"
       format: text
+      macro: SupraNote
       sequence:
         - [{ id: "PlainCiteA" }]
         - [{ id: "PlainCiteB" }]
         - [{ id: "PlainCiteA" }]
       expect:
-        - PlainCiteA.
-        - PlainCiteB.
-        - PlainCiteA (n 1).
+        - ""
+        - ""
+        - "(n 1)"
 
     - it: "1.4.1 General Rule > (n FN) for {legal_case or legislation}"
-      format: text
+      macro: SupraNote
       sequence:
         - [{ id: "CaseA" }]
         - [{ id: "CaseB" }]
         - [{ id: "CaseA" }]
       expect:
-        - CaseA.
-        - CaseB.
-        - CaseA (n 1).
+        - ""
+        - ""
+        - "(n 1)"
 
     - it: "1.4.1 General Rule > (n FN) for {legal_case or legislation} with short title"
     - it: "1.4.1 General Rule > should include author last name in subsequent for secondary sources"

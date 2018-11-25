@@ -1,0 +1,30 @@
+- describe: "1.11 Dates and Time"
+  tests:
+    - it: "1.11.1 Full Dates > should render a full date for issued"
+      macro: FullDateIssued
+      single: { id: 'dateTest:1.11.1' }
+      expect: "1 July 2018"
+    - it: "1.11.1 Full Dates > should render a full date for issued, partial"
+      macro: FullDateIssued
+      single: { id: 'dateTest:1.11.1:partial' }
+      expect: "July 2018"
+
+    - it: "1.11.1 Full Dates > should handle spans in same month: 21–22"
+      macro: FullDateIssued
+      single: { id: 'DateRangeTest2018' }
+      expect: "1–5 July 2018" # en dash
+
+    - it: "1.11.1 Full Dates > should handle spans over dates in two months: 1 July – 5 August"
+      macro: FullDateIssued
+      single: { id: 'DateRangeTestMonth2018' }
+      expect: "1 July – 5 August 2018" # en dash
+      doc:
+        - This is a citeproc-js bug. [Juris-M/citeproc-js#91](https://github.com/Juris-M/citeproc-js/issues/91).
+
+    - it: "1.11.1 Full Dates > should handle spans in over two day-less months: July – August"
+      macro: FullDateIssued
+      single: { id: 'DateRangeTestMonthOnly2018' }
+      expect: "July – August 2018" # en dash
+      doc:
+        - This is a citeproc-js bug. [Juris-M/citeproc-js#91](https://github.com/Juris-M/citeproc-js/issues/91).
+

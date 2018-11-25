@@ -1,0 +1,28 @@
+[
+  {
+    "id": "dateTest:1.11.1",
+    "type": "legal_case",
+    "issued": {
+      "year": 2018,
+      "month": 7,
+      "day": 1
+    }
+  },
+  {
+    "id": "dateTest:1.11.1:partial",
+    "type": "legal_case",
+    "issued": {
+      "year": 2018,
+      "month": 7
+    }
+  },
+  {
+    "id": "dateTest:1.11.1:span-day",
+    "type": "legal_case",
+    "issued": {
+      "year": 2018,
+      "month": 7,
+      "day": "1-5"
+    }
+  }
+]

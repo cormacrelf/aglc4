@@ -26,28 +26,36 @@ in Vim or similar jump-to-next-occurrence features in other editors.
   <locale>
     <style-options skip-words="about,above,across,afore,after,against,along,alongside,amid,amidst,among,amongst,anenst,apropos,apud,around,as,aside,astride,at,athwart,atop,barring,before,behind,below,beneath,beside,besides,between,beyond,but,by,circa,despite,down,during,except,for,forenenst,from,given,in,inside,into,lest,like,modulo,near,next,notwithstanding,of,off,on,onto,out,over,per,plus,pro,qua,sans,since,than,through,thru,throughout,thruout,till,to,toward,towards,under,underneath,until,unto,up,upon,versus,vs.,v.,vs,v,via,vis-à-vis,with,within,without,according to,ahead of,apart from,as for,as of,as per,as regards,aside from,back to,because of,close to,due to,except for,far from,inside of,instead of,near to,next to,on to,out from,out of,outside of,prior to,pursuant to,rather than,regardless of,such as,that of,up to,where as,or,yet,so,for,and,nor,a,an,the,de,d',von,van,c,et,ca,is,this,that" jurisdiction-preference="aglc4"/>
     <terms>
-      <term name="and" form="symbol">&amp;</term>
+      <term name="note">
+        <single>n</single>
+        <multiple>nn</single>
+      </term>
       <term name="article">article</term>
-      <term name="director">director</term>
-      <term form="short" name="director">dir.</term>
       <term form="short" name="article">
         <single>art</single>
         <multiple>arts</multiple>
       </term>
+      <term form="short" name="part">
+        <single>pt</single>
+        <multiple>pts</multiple>
+      </term>
+      <term name="chapter">
+        <single>ch</single>
+        <multiple>chs</multiple>
+      </term>
+
+      <term name="and" form="symbol">&amp;</term>
+      <term name="director">director</term>
+      <term form="short" name="director">dir.</term>
       <term name="rule"/>
       <term name="title">title</term>
       <term form="short" name="title">tit.</term>
-      <term form="short" name="chapter">ch.</term>
       <term form="short" name="column">col.</term>
       <term form="short" name="figure">fig.</term>
       <term form="short" name="issue">no.</term>
       <term form="short" name="line">
         <single>l.</single>
         <multiple>ll.</multiple>
-      </term>
-      <term form="short" name="note">
-        <single>n.</single>
-        <multiple>nn.</multiple>
       </term>
       <term form="short" name="opus">op.</term>
       <term form="short" name="page">
@@ -90,14 +98,38 @@ in Vim or similar jump-to-next-occurrence features in other editors.
       <term name="ordinal-12">th</term>
       <term name="ordinal-13">th</term>
 
-      <term name="month-09" form="short">Sept.</term>
+      <term name="year-range-delimiter">&#x2013;</term>
     </terms>
     <date form="text">
-      <date-part form="short" name="month" suffix=" "/>
-      <date-part form="numeric" name="day" suffix=", "/>
-      <date-part name="year"/>
+        <!-- x2013 is en-dash -->
+        <date-part name="day" form="numeric" range-delimiter="&#x2013;" suffix=" " />
+        <date-part name="month" form="long" range-delimiter=" MONTH_DELIM " suffix=" " />
+        <date-part name="year" form="numeric" range-delimiter=" &#x2013; "/>
     </date>
   </locale>
+
+  <macro name="SupraNote">
+    <!-- (n 3) -->
+    <text prefix="(" term="note" suffix=" " />
+    <!-- you cannot put ) suffix on this, it gets converted to ] (???) -->
+    <text variable="first-reference-note-number"/>
+    <text value=")" />
+  </macro>
+
+  <macro name="FullDateIssued">
+    <!-- Rule 1.11.1 -->
+    <date variable="issued" form="text" />
+  </macro>
+  <macro name="FullDateAvailable">
+    <date variable="available" form="text" />
+  </macro>
+
+  <macro name="YearIssued">
+    <!-- Rule 1.11.1 -->
+    <date variable="issued" form="text" />
+  </macro>
+
+  <!-- INDIGO HOLDOVERS -->
 
   <macro name="StdAuthorityFull">
     <group delimiter=" ">
