@@ -37,17 +37,15 @@ export const OneTest = ({ title, test }: { title: string, test: TestCase }) => {
         <h4>{title} <Tags test={test}/></h4>
     </div>
   }
-  if (test.type==='single' || test.type==='sequence' || test.doc)
-    return (
-      <Box bg={testBg(test)} className={"Box-body spacer" + (testFailed(test) ? ' failed' : '')}>
-        <h4>{title} <Tags test={test}/></h4>
-        <Cite test={test} />
-        <Diff test={test} />
-        <Meta test={test} />
-        { item }
-      </Box>
-    )
-  else return null;
+  return (
+    <Box bg={testBg(test)} className={"Box-body spacer" + (testFailed(test) ? ' failed' : '')}>
+      <h4>{title} <Tags test={test}/></h4>
+      <Cite test={test} />
+      <Diff test={test} />
+      <Meta test={test} />
+      { item }
+    </Box>
+  )
 }
 
 export const Rule = ({ rule }: { rule: AGLCRule }) => {

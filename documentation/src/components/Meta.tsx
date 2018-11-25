@@ -3,6 +3,7 @@ import { TestCase } from '../types';
 import { Box, Label } from '@primer/components';
 import { Markdown } from './Markdown';
 import { IsJurisMContext } from './LibraryContext';
+import { FieldList } from './Item';
 
 const WrappedDoc = (props: any) =>
   <IsJurisMContext.Consumer
@@ -37,26 +38,25 @@ export const DocBlock = ({doc, label, isJurisM }: { doc?: string, label?: string
 }
 
 export const Meta = ({test}: {test: TestCase}) => {
-  const { doc } = test;
-  if (!doc) return <></>;
-  if (typeof doc === 'string') {
-    return <WrappedDoc doc={doc} label="main" />
-  }
-  if (Array.isArray(doc)) {
-    return <>{
-      doc.map((d, i) => {
-        let _d: string;
-        let _l: string;
-        if (typeof d === 'object') {
-          _l = d['label'];
-          _d = d['content'];
-          } else {
-            _l = 'main';
-            _d = d;
-          }
-        return <WrappedDoc key={i} doc={_d} label={_l} />
-      })
-    }</>;
-  }
-  return <></>
+  const { meta, doc } = test;
+  let hint = meta && meta.jmHint || undefined;
+  let fields = meta && meta.fields || undefined;
+  let type = meta && meta.type || undefined;
+  if (!doc && !meta) return <></>;
+  return <>
+    { fields && <FieldList fields={fields} type={type} hint={hint} />}
+    { typeof doc === 'string' && <WrappedDoc doc={doc} label="main" /> }
+    { Array.isArray(doc) && doc.map((d, i) => {
+      let _d: string;
+      let _l: string;
+      if (typeof d === 'object') {
+        _l = d['label'];
+        _d = d['content'];
+        } else {
+          _l = 'main';
+          _d = d;
+        }
+      return <WrappedDoc key={i} doc={_d} label={_l} />
+    })
+  }</>;
 }

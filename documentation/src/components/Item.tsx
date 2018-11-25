@@ -5,11 +5,9 @@ import { LibraryContext, ZoteroOrJurisM } from './LibraryContext';
 import _inverted from '../inverted.json';
 const { docTypes } = _inverted as any;
 
-function getDocType(obj: any, hint?: string) {
-  let doctype = obj.type;
-  let options = docTypes[doctype] as any[];
+function getDocType(type: string, keys: Array<string>, hint?: string) {
+  let options = docTypes[type] as any[];
   if (!options) return { filtered: [], docType: null };
-  let keys = Object.keys(obj).filter(k => k !== 'type' && k !== 'id');
   let allFieldsOnOptions = new Set();
   options.forEach(o => Object.keys(o.fields).map(f => allFieldsOnOptions.add(f)));
   let filtered = keys.filter(k => allFieldsOnOptions.has(k));
@@ -83,8 +81,50 @@ const FormatFieldValue = ({ type, value }: { type: FieldType, value: any}) => {
   }
 }
 
+type FieldMod = {
+  prefix?: string;
+  suffix?: string;
+  'font-style'?: 'italic';
+  field: string;
+}
+
+export const FieldList = ({ type, fields, hint }: {
+  type: string,
+  fields: Array<string | FieldMod>,
+  hint?: string
+}) => {
+  return <div>
+    { fields.map((f, i) => {
+      let keys = fields.map(f => {
+        if (typeof f === 'object') return f.field;
+        return f;
+      });
+      let {  docType } = getDocType(type, keys, hint);
+      let _f: FieldMod;
+      if (typeof f === "string") {
+        _f = { prefix: " ", suffix: " ", field: f };
+      } else {
+        _f = f;
+      }
+      let jurisField = docType.fields[_f.field];
+      let content = jurisField && jurisField.jmField || _f.field;
+      return (
+        <>{_f.prefix}
+          <Label
+            bg="gray.2"
+            color="gray.9"
+            style={{'font-style': _f['font-style']}}>
+            { content }
+          </Label>
+        {_f.suffix}</>
+        )
+      }) }
+  </div>
+}
+
 const ItemJSON = React.memo(({obj, hint}:{obj: any, hint?: string}) => {
-  let { filtered, docType } = getDocType(obj, hint);
+  let keys = Object.keys(obj).filter(k => k !== 'type' && k !== 'id');
+  let { filtered, docType } = getDocType(obj.type, keys, hint);
   if (!docType) {return <></>};
   return <div className="markdown-body">
     <table>

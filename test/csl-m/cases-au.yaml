@@ -17,17 +17,45 @@
       macro: juris-main
       single: { id: 'HotHoldings2002' }
       expect: "(2002) 210 CLR 438"
+      meta:
+        type: legal_case
+        fields:
+          - { prefix: '(', field: 'issued', suffix: ')' }
+          - volume
+          - container-title
+          - page
     - it: "2.2.1 Year and Volume > square braces if organised by year"
       macro: juris-main
       single: { id: 'KingKing1974' }
       expect: "[1974] Qd R 253"
+      meta:
+        type: legal_case
+        fields:
+          - { prefix: '[', field: 'issued', suffix: ']' }
+          - container-title
+          - page
     - it: "2.2.1 Year and Volume > square braces AND volume if more than one report published for a year"
       macro: juris-main
       single: { id: 'RoweMcCartney1976' }
       expect: "[1976] 2 NSWLR 72"
+      meta:
+        type: legal_case
+        fields:
+          - { prefix: '[', field: 'issued', suffix: ']' }
+          - collection-number
+          - container-title
+          - page
       doc:
         - label: Note
           content: "That's not a volume number. That's a `Year as Vol.`!"
+
+# TODO:
+#
+# Unreported is using 'container-title' and 'publisher' as a replacement for 'authority'.
+# Because Juris-M needs to have all its courts predefined at
+# https://github.com/fbennett/legal-resource-registry
+#
+# nvim citeproc-js/src/util_names_render.js +997
 
 - describe: "2.3 Unreported Cases"
   tests:
@@ -35,9 +63,12 @@
       macro: juris-main
       single: { id: "QuarmbyKeating2009" }
       expect: "[2009] TASCC 80"
-      doc: >
-        Treat these like reported cases, but use the 'unique court identifier'
-        instead of a real reporter.
+      meta:
+        type: legal_case
+        fields:
+          - { prefix: '[', field: 'issued', suffix: ']' }
+          - container-title
+          - number
 
     - it: "2.3.1 Decisions with a Medium Neutral Citation > Full citation"
       single: { id: "QuarmbyKeating2009" }
@@ -47,6 +78,12 @@
       macro: juris-main
       single: { id: "hampeljBartonChibber1989" }
       expect: "(Supreme Court of Victoria, Hampel J, 29 June 1989)"
+      meta:
+        type: legal_case
+        fields:
+          - { prefix: '(', field: 'container-title', suffix: ', ' }
+          - { field: 'author', suffix: ', ' }
+          - { field: 'issued', suffix: ')' }
 
     - it: "2.3.2 Decisions without a Medium Neutral Citation > full citation"
       single: { id: "hampeljBartonChibber1989" }
@@ -56,6 +93,12 @@
       macro: juris-main
       single: { id: "proceeding" }
       expect: "(Federal Court of Australia, VID725/2014, commenced 3 December 2014)"
+      meta:
+        type: legal_case
+        fields:
+          - { prefix: '(', field: 'publisher', suffix: ', ' }
+          - { field: 'number', suffix: ', ' }
+          - { field: 'publication-date', suffix: ')' }
 
     - it: "2.3.3 Proceedings > Full citation"
       single: { id: "proceeding" }
@@ -72,6 +115,12 @@
     - it: "2.3.4 Court Orders > Full citation"
       single: { id: "burleyjSeikoEpsonCorporation" }
       expect: "Order of Burley J in <i>Seiko Epson Corporation v Calidad Pty Ltd</i> (Federal Court of Australia, NSD1519/2004, 21 December 2016)."
-
-
+      meta:
+        type: legal_case
+        fields:
+          - { prefix: 'Order of ', field: 'author', suffix: ' in ' }
+          - { field: 'title', suffix: ' ', font-style: 'italic' }
+          - { prefix: '(', field: 'publisher', suffix: ', ' }
+          - { field: 'number', suffix: ', ' }
+          - { field: 'publication-date', suffix: ')' }
 
