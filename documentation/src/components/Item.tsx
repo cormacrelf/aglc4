@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Details, Button, Label } from '@primer/components';
-import { LibraryContext } from './LibraryContext';
+import { LibraryContext, ZoteroOrJurisM } from './LibraryContext';
 
 import _inverted from '../inverted.json';
 const { docTypes } = _inverted as any;
@@ -39,24 +39,66 @@ function getDocType(obj: any, hint?: string) {
   return { filtered, docType: null };
 }
 
+type FieldType = "name" | "text" | "date" | "numeric";
+type Field = {
+  type: FieldType;
+  jmField: string;
+}
+const pad4 = (n: Number) => ("0000" + n).slice(-4)
+const pad2 = (n: Number) => ("00" + n).slice(-2)
+
+const isodate = (y: number, m: number, d: number) => {
+  let year = y && pad4(y) || '';
+  let month = m && ('-' + pad2(m)) || '';
+  let day = m && d && ('-' + pad2(d)) || '';
+  return year + month + day;
+}
+
+const FormatName = ({ name }: { name: any }) => {
+  if (name.literal) {
+    return <Label outline>{name.literal}</Label>;
+  } else {
+    return <span><Label outline>{name.family}</Label>, <Label outline>{name.given}</Label></span>
+  }
+}
+
+const FormatFieldValue = ({ type, value }: { type: FieldType, value: any}) => {
+  if (type === 'text' || type === "numeric") {
+    return <Label outline>{value}</Label>;
+  } else if (type === "name" && Array.isArray(value)) {
+    return <div>{value.map((v, i) => <FormatName key={i} name={v} />)}</div>;
+  } else if (type === "date") {
+    let parts = value['date-parts'];
+    console.log(value);
+    if (parts && parts.length > 0 && typeof parts[0] === "number") {
+      return <Label outline>{isodate(parts[0], parts[1], parts[2])}</Label>;
+    } else if (parts && parts.length > 0 && Array.isArray(parts[0])) {
+      return <Label outline>{parts.map((p: any) => isodate(p[0], p[1], p[2])).join('/')}</Label>;
+    } else {
+      const end = isodate(value.year_end, value.month_end, value.day_end);
+      return <Label outline>{isodate(value.year, value.month, value.day) + (end && ('/' + end) || '')}</Label>
+    }
+  } else {
+    return <Label outline>{JSON.stringify(value)}</Label>
+  }
+}
+
 const ItemJSON = React.memo(({obj, hint}:{obj: any, hint?: string}) => {
   let { filtered, docType } = getDocType(obj, hint);
   if (!docType) {return <></>};
   return <div className="markdown-body">
     <table>
       <tbody>
-        <tr><td><Label>Document Type</Label></td><td>{docType.jmDoc}</td></tr>
+        <tr><td><Label bg="gray.2" color="gray.9">Document Type</Label></td><td>{docType.jmDoc}</td></tr>
         { filtered.filter(k => k !== 'type').map((k) => {
           if (!docType.fields[k]) return <tr key={k}></tr>
-            return <tr key={k}><td><Label>{docType.fields[k].jmField}</Label></td>
-              <td>{JSON.stringify(obj[k])}</td></tr>
+          const field = docType.fields[k];
+          return <tr key={k}><td><Label bg="gray.2" color="gray.9">{field.jmField}</Label></td>
+              <td><FormatFieldValue value={obj[k]} type={field.type} /></td></tr>
         })}
       </tbody>
     </table>
   </div>
-  // return <pre className="highlight">{
-  //   JSON.stringify(obj, null, 2)
-  // }</pre>;
 })
 
 export const Item = ({citeId, hint}: {citeId: string, hint?: string}) => {
@@ -65,7 +107,7 @@ export const Item = ({citeId, hint}: {citeId: string, hint?: string}) => {
       <LibraryContext.Consumer>
         { library => (<>
           <Button is="summary" onClick={toggle}>
-            {open ? 'Hide' : 'Show'} Zotero Entry
+            {open ? 'Hide' : 'Show'} <ZoteroOrJurisM /> Entry
           </Button>
           <Box mt={3} className="markdown-body">
             <ItemJSON obj={library[citeId]} hint={hint} />

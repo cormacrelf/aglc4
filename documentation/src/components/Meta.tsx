@@ -4,6 +4,11 @@ import { Box, Label } from '@primer/components';
 import { Markdown } from './Markdown';
 import { IsJurisMContext } from './LibraryContext';
 
+const WrappedDoc = (props: any) =>
+  <IsJurisMContext.Consumer
+    children={(value) => <DocBlock {...props} isJurisM={value} />}
+  />;
+
 export const DocBlock = ({doc, label, isJurisM }: { doc?: string, label?: string, isJurisM?: boolean }) => {
   if (!doc) return <></>;
   if (!label || label === "main") {
@@ -30,11 +35,6 @@ export const DocBlock = ({doc, label, isJurisM }: { doc?: string, label?: string
     </Box>
   </Box>
 }
-
-const WrappedDoc = (props: any) =>
-  <IsJurisMContext.Consumer
-    children={(value) => <DocBlock {...props} isJurisM={value} />}
-  />;
 
 export const Meta = ({test}: {test: TestCase}) => {
   const { doc } = test;

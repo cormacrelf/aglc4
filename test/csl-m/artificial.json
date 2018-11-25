@@ -1,6 +1,6 @@
 [
   {
-    "id": "dateTest:1.11.1",
+    "id": "dateTest",
     "type": "legal_case",
     "issued": {
       "year": 2018,
@@ -9,7 +9,7 @@
     }
   },
   {
-    "id": "dateTest:1.11.1:partial",
+    "id": "dateTest:partial",
     "type": "legal_case",
     "issued": {
       "year": 2018,
@@ -17,12 +17,12 @@
     }
   },
   {
-    "id": "dateTest:1.11.1:span-day",
+    "id": "dateTest:time",
     "type": "legal_case",
     "issued": {
       "year": 2018,
       "month": 7,
-      "day": "1-5"
+      "day": 1
     }
   }
 ]

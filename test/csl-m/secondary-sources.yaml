@@ -1,0 +1,9 @@
+- describe: "7.16 Social Media Posts"
+  tests:
+    - it: "7.16 Social Media Posts > Tweet"
+      single: { id: TweetShoehorned }
+      mode: skip
+      expect: "@s_m_stephenson (Scott Stephenson) (Twitter, 27 August 2017, 9:37pm AEST) &lt;https://twitter.com/s_m_stephenson/status/887169425551441921&gt;."
+      doc:
+        - >
+          This is really non-standard, but it can be done. Specify

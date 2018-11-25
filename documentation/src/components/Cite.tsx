@@ -4,7 +4,8 @@ import { Box, Label } from '@primer/components';
 
 const RenderCite = ({cite}: {cite: CiteItem}) => {
   const { prefix, id, label, locator, suffix } = cite;
-  let _label = (str: string, bg = "gray.2", fg = "gray.9") => <Label bg={bg} color={fg}>{str}</Label>;
+  let _label = (str: string, bg?: string, fg?: string) =>
+    <Label outline={!bg && !fg} bg={bg} color={fg}>{str}</Label>;
   return (
     <>
       { prefix && _label(prefix) }

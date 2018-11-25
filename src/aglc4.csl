@@ -24,8 +24,16 @@ in Vim or similar jump-to-next-occurrence features in other editors.
 
  -->
   <locale>
-    <style-options skip-words="about,above,across,afore,after,against,along,alongside,amid,amidst,among,amongst,anenst,apropos,apud,around,as,aside,astride,at,athwart,atop,barring,before,behind,below,beneath,beside,besides,between,beyond,but,by,circa,despite,down,during,except,for,forenenst,from,given,in,inside,into,lest,like,modulo,near,next,notwithstanding,of,off,on,onto,out,over,per,plus,pro,qua,sans,since,than,through,thru,throughout,thruout,till,to,toward,towards,under,underneath,until,unto,up,upon,versus,vs.,v.,vs,v,via,vis-à-vis,with,within,without,according to,ahead of,apart from,as for,as of,as per,as regards,aside from,back to,because of,close to,due to,except for,far from,inside of,instead of,near to,next to,on to,out from,out of,outside of,prior to,pursuant to,rather than,regardless of,such as,that of,up to,where as,or,yet,so,for,and,nor,a,an,the,de,d',von,van,c,et,ca,is,this,that" jurisdiction-preference="aglc4"/>
+    <style-options skip-words="parte,about,above,across,afore,after,against,along,alongside,amid,amidst,among,amongst,anenst,apropos,apud,around,as,aside,astride,at,athwart,atop,barring,before,behind,below,beneath,beside,besides,between,beyond,but,by,circa,despite,down,during,except,for,forenenst,from,given,in,inside,into,lest,like,modulo,near,next,notwithstanding,of,off,on,onto,out,over,per,plus,pro,qua,sans,since,than,through,thru,throughout,thruout,till,to,toward,towards,under,underneath,until,unto,up,upon,versus,vs.,v.,vs,v,via,vis-à-vis,with,within,without,according to,ahead of,apart from,as for,as of,as per,as regards,aside from,back to,because of,close to,due to,except for,far from,inside of,instead of,near to,next to,on to,out from,out of,outside of,prior to,pursuant to,rather than,regardless of,such as,that of,up to,where as,or,yet,so,for,and,nor,a,an,the,de,d',von,van,c,et,ca,is,this,that" jurisdiction-preference="aglc4"/>
     <terms>
+      <term name="page">
+        <single></single>
+        <multiple></single>
+      </term>
+      <term name="page" form="short">
+        <single></single>
+        <multiple></single>
+      </term>
       <term name="note">
         <single>n</single>
         <multiple>nn</single>
@@ -126,7 +134,19 @@ in Vim or similar jump-to-next-occurrence features in other editors.
 
   <macro name="YearIssued">
     <!-- Rule 1.11.1 -->
-    <date variable="issued" form="text" />
+    <date variable="issued" date-parts="year" form="text" />
+  </macro>
+
+  <!-- CASES -->
+  <macro name="CaseYearRoundOrSquare">
+    <choose>
+      <if variable="volume">
+        <text macro="YearIssued" prefix="(" suffix=")" />
+      </if>
+      <else>
+        <text macro="YearIssued" prefix="[" suffix="]" />
+      </else>
+    </choose>
   </macro>
 
   <!-- INDIGO HOLDOVERS -->
@@ -1216,7 +1236,6 @@ in Vim or similar jump-to-next-occurrence features in other editors.
             <group delimiter=", ">
               <text macro="StdPatentDetail"/>
               <group delimiter=" ">
-                <text term="at"/>
                 <text macro="StdLocatorParagraphBracket"/>
               </group>
             </group>
@@ -1235,7 +1254,6 @@ in Vim or similar jump-to-next-occurrence features in other editors.
             <group delimiter=", ">
               <text macro="StdPatentDetail"/>
               <group delimiter=" ">
-                <text term="at"/>
                 <text macro="StdLocatorParagraphBracket"/>
               </group>
             </group>
@@ -1244,7 +1262,6 @@ in Vim or similar jump-to-next-occurrence features in other editors.
             <group delimiter=", ">
               <text macro="StdPatentFirst"/>
               <group delimiter=" ">
-                <text term="at"/>
                 <text macro="StdLocatorParagraphBracket"/>
               </group>
             </group>
@@ -1363,9 +1380,6 @@ in Vim or similar jump-to-next-occurrence features in other editors.
   <macro name="StdLocatorNonPageLabelAt">
     <group delimiter=" ">
       <choose>
-        <if locator="page">
-          <text term="at"/>
-        </if>
         <else>
           <label form="short" variable="locator"/>
         </else>
@@ -1466,7 +1480,6 @@ in Vim or similar jump-to-next-occurrence features in other editors.
         <number variable="page-first"/>
       </group>
       <group delimiter=" " is-parallel="false">
-        <text value="at"/>
         <number variable="page-first"/>
       </group>
     </group>
@@ -1487,9 +1500,6 @@ in Vim or similar jump-to-next-occurrence features in other editors.
         </group>
         <group delimiter=" ">
           <choose>
-            <if locator="page">
-              <text term="at"/>
-            </if>
             <else>
               <label form="short" variable="locator"/>
             </else>
@@ -1613,7 +1623,6 @@ in Vim or similar jump-to-next-occurrence features in other editors.
                       </if>
                     </choose>
                     <group delimiter=" ">
-                      <text term="at"/>
                       <group delimiter=" ">
                         <group delimiter=", ">
                           <number variable="page-first"/>
@@ -1627,7 +1636,6 @@ in Vim or similar jump-to-next-occurrence features in other editors.
                       </group>
                     </group>
                   </group>
-                  <text macro="UsNewspaperCaseAuthority"/>
                 </group>
               </if>
               <else-if>
@@ -1692,7 +1700,6 @@ in Vim or similar jump-to-next-occurrence features in other editors.
         <choose>
           <if match="all" type="report" has-day="issued">
             <group delimiter=" ">
-              <text value="at"/>
               <number variable="page-first"/>
             </group>
             <text macro="StdLocatorNonPageLabel"/>
@@ -1768,6 +1775,9 @@ in Vim or similar jump-to-next-occurrence features in other editors.
     </choose>
   </macro>
 
+  <macro name="juris-pretitle">
+    <text value=""/>
+  </macro>
   <macro name="juris-title">
     <text value=""/>
   </macro>
@@ -1805,7 +1815,7 @@ in Vim or similar jump-to-next-occurrence features in other editors.
     <text value=""/>
   </macro>
   <macro name="at-locator-label">
-    <text value="at"/>
+    <text value=""/>
   </macro>
 
   <macro name="JurisM">
@@ -1814,7 +1824,6 @@ in Vim or similar jump-to-next-occurrence features in other editors.
         <group delimiter=" ">
           <text term="ibid" font-style="italic"/>
           <group delimiter=" ">
-            <text value="at"/>
             <group require="empty-label">
               <text macro="juris-locator" label-form="symbol"/>
             </group>
@@ -1922,20 +1931,11 @@ in Vim or similar jump-to-next-occurrence features in other editors.
         <!-- full form -->
         <group delimiter=", ">
           <group delimiter=" ">
-            <group delimiter=", ">
-              <choose>
-                <if type="hearing">
-                  <text macro="juris-title" font-style="italic"/>
-                </if>
-                <else-if type="report">
-                  <text macro="juris-title" font-variant="small-caps"/>
-                </else-if>
-                <else>
-                  <text macro="juris-title" font-style="italic"/>
-                </else>
-              </choose>
+            <group delimiter=" ">
+              <text macro="juris-pretitle" />
+              <text macro="juris-title"/>
               <group delimiter=" ">
-                <group delimiter=", ">
+                <group delimiter=" ">
                   <choose>
                     <if>
                       <conditions match="all">
@@ -1956,7 +1956,6 @@ in Vim or similar jump-to-next-occurrence features in other editors.
                     </else>
                   </choose>
                   <group delimiter=" " require="empty-label">
-                    <text value="at"/>
                     <text macro="juris-locator" label-form="symbol"/>
                   </group>
                   <group require="comma-safe">

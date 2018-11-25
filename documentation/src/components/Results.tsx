@@ -23,7 +23,7 @@ const testFailed = (test: TestCase) => {
 }
 
 const testBg = (test: TestCase) => {
-  if (testFailed(test)) return 'red.0';
+  // if (testFailed(test)) return 'red.0';
   if (test.type === 'doc') return 'blue.0';
 }
 

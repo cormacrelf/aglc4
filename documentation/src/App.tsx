@@ -50,7 +50,7 @@ const App = () => {
           <img width={100} src={aglcLogo} />
           <h1>AGLC 4 Automated Citation Guide</h1>
         </Flex>
-        <Box is="header" bg={"#d6e3ff"}>
+        <Box is="header" bg={"#e6edfb"}>
           <UnderlineNav
             align="right"
             label="CSL or CSL-M"

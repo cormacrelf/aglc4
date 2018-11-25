@@ -18,5 +18,16 @@
   {"id":"CaseB","type":"legal_case","title":"CaseB","jurisdiction":"au"},
   {"id":"DateRangeTest2018","type":"book","title":"DateRangeTest","issued":{"date-parts":[[2018,7,1],[2018,7,5]]}},
   {"id":"DateRangeTestMonth2018","type":"article-newspaper","title":"DateRangeTestMonth","issued":{"date-parts":[[2018,7,1],[2018,8,5]]}},
-  {"id":"DateRangeTestMonthOnly2018","type":"book","title":"DateRangeTestMonthOnly","issued":{"date-parts":[[2018,7],[2018,8]]}}
+  {"id":"DateRangeTestMonthOnly2018","type":"book","title":"DateRangeTestMonthOnly","issued":{"date-parts":[[2018,7],[2018,8]]}},
+  {"id":"VideoRecording2017","type":"motion_picture","title":"VideoRecording","dimensions":"00:00:08","issued":{"date-parts":[[2017,7,17]]}},
+  {"id":"TweetShoehorned","type":"webpage","container-title":"Twitter, 27 August 2017, 9:37pm AEST","URL":"https://twitter.com/s_m_stephenson/status/887169425551441921","author":[{"literal":"@s_m_stephenson (Scott Stephenson)"}]},
+  {"id":"PeriodsNoPeriods","type":"legal_case","title":"Periods v. No Periods","jurisdiction":"au"},
+  {"id":"LowerCaseTitle","type":"legal_case","title":"Lower case v title Case ABC","jurisdiction":"au"},
+  {"id":"HotHoldings2002","type":"legal_case","title":"Hot Holdings Pty Ltd v Creasy","container-title":"CLR","page":"438","volume":"210","jurisdiction":"au","issued":{"date-parts":[[2002]]}},
+  {"id":"RoweMcCartney1976","type":"legal_case","title":"Rowe v McCartney","container-title":"NSWLR","collection-number":"2","page":"72","jurisdiction":"au","issued":{"date-parts":[[1976]]}},
+  {"id":"KingKing1974","type":"legal_case","title":"King v King","container-title":"Qd R","page":"253","jurisdiction":"au","issued":{"date-parts":[[1974]]}},
+  {"id":"QuarmbyKeating2009","type":"legal_case","title":"Quarmby v Keating","container-title":"TASCC","number":"80","jurisdiction":"au","issued":{"date-parts":[[2009]]}},
+  {"id":"hampeljBartonChibber1989","type":"legal_case","title":"Barton v Chibber","container-title":"Supreme Court of Victoria","jurisdiction":"au","author":[{"literal":"Hampel J"}],"issued":{"date-parts":[[1989,6,29]]}},
+  {"id":"proceeding","type":"legal_case","title":"Australian Competition and Consumer Commission v Olex Australia Pty Ltd","publisher":"Federal Court of Australia","number":"VID725/2014","jurisdiction":"au","publication-date":{"date-parts":[["2014",12,3]]}},
+  {"id":"burleyjSeikoEpsonCorporation","type":"legal_case","title":"Seiko Epson Corporation v Calidad Pty Ltd","publisher":"Federal Court of Australia","number":"NSD1519/2004","jurisdiction":"au","author":[{"literal":"Burley J"}],"publication-date":{"date-parts":[["2016",12,21]]}}
 ]

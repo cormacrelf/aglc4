@@ -1,12 +1,13 @@
-- describe: "9.1 United Nations Materials > Constitutive Document"
-  tests:
-    - it: "9.1.1 should be here > try this out"
-      single: { id: "criminalCode1995" }
-      expect: Nawwww
-      abbreviations:
-        - jurisdiction: default
-          hereinafter:
-            criminalCode1995: Criminal Code AUS
+# - describe: "9.1 United Nations Materials > Constitutive Document"
+#   tests:
+#     - it: "9.1.1 should be here > try this out"
+#       single: { id: "criminalCode1995" }
+#       expect: Nawwww
+#       mode: skip
+#       abbreviations:
+#         - jurisdiction: default
+#           hereinafter:
+#             criminalCode1995: Criminal Code AUS
 
 - describe: "TODO: hereinafter"
   tests: []

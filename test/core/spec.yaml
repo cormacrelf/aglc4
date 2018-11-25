@@ -2,6 +2,7 @@
   tests:
     - it: "1.1.3 Multiple Sources in Footnotes > Delimited by semicolons"
       format: text
+      mode: skip
       sequence:
         - [{ id: "PlainCiteA" }, { id: "PlainCiteB" }]
       expect:
@@ -20,6 +21,7 @@
 
     - it: "1.1.6 Pinpoint References > Page with paragraph"
       format: text
+      mode: skip
       single: { id: 'PlainCiteA', label: 'page', locator: '13 [28]' }
       expect: PlainCiteA 13 [28].
       doc:
@@ -30,6 +32,7 @@
 
     - it: "1.1.6 Pinpoint References > Footnotes"
       format: text
+      mode: skip
       single: { id: "PlainCiteA", label: '', locator: '13 n 4' }
       expect: PlainCiteA 13 n 4.
       doc:
@@ -69,6 +72,7 @@
     - it: "1.4.1 General Rule > should include author last name AND { title or short title } in subsequent for secondary sources"
 
     - it: "1.4.3 Ibid > for immediately subsequent legislation"
+      mode: skip
       sequence:
         - [{ prefix: "See, eg, ", id: "criminalCode1995", label: "section", locator: "123", suffix: " suffix" }]
         - [{ id: "criminalCode1995", label: "section", locator: "123" }]
@@ -84,6 +88,7 @@
   tests:
     - it: "4.1.1 General Rule > should join initials with no spaces or full stops"
       single: { id: "ellicott2008" }
+      mode: skip
       expect: >
         RJ Ellicott, ‘The Autochthonous Expedient and the Federal Court’
         (2008) 82(10) <i>Australian Law Journal</i> 700.

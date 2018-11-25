@@ -1,0 +1,77 @@
+- describe: "2.1 Case Names"
+  tests:
+    - it: "2.1.1 Parties' Names: General Rule > should strip periods"
+      macro: juris-title
+      single: { id: "PeriodsNoPeriods" }
+      expect: "<i>Periods v No Periods</i>"
+
+    - it: "2.1.1 Parties' Names: General Rule >  should capitalise"
+      macro: juris-title
+      doc: >
+        CSL-M does not title-case anything with a Jurisdiction value. You must
+        keep your library capitalised correctly.
+
+- describe: "2.2 Reported Decisions"
+  tests:
+    - it: "2.2.1 Year and Volume > round braces if organised by volume"
+      macro: juris-main
+      single: { id: 'HotHoldings2002' }
+      expect: "(2002) 210 CLR 438"
+    - it: "2.2.1 Year and Volume > square braces if organised by year"
+      macro: juris-main
+      single: { id: 'KingKing1974' }
+      expect: "[1974] Qd R 253"
+    - it: "2.2.1 Year and Volume > square braces AND volume if more than one report published for a year"
+      macro: juris-main
+      single: { id: 'RoweMcCartney1976' }
+      expect: "[1976] 2 NSWLR 72"
+      doc:
+        - label: Note
+          content: "That's not a volume number. That's a `Year as Vol.`!"
+
+- describe: "2.3 Unreported Cases"
+  tests:
+    - it: "2.3.1 Decisions with a Medium Neutral Citation > looks like reported"
+      macro: juris-main
+      single: { id: "QuarmbyKeating2009" }
+      expect: "[2009] TASCC 80"
+      doc: >
+        Treat these like reported cases, but use the 'unique court identifier'
+        instead of a real reporter.
+
+    - it: "2.3.1 Decisions with a Medium Neutral Citation > Full citation"
+      single: { id: "QuarmbyKeating2009" }
+      expect: "<i>Quarmby v Keating</i> [2009] TASCC 80."
+
+    - it: "2.3.2 Decisions without a Medium Neutral Citation > looks like reported"
+      macro: juris-main
+      single: { id: "hampeljBartonChibber1989" }
+      expect: "(Supreme Court of Victoria, Hampel J, 29 June 1989)"
+
+    - it: "2.3.2 Decisions without a Medium Neutral Citation > full citation"
+      single: { id: "hampeljBartonChibber1989" }
+      expect: "<i>Barton v Chibber</i> (Supreme Court of Victoria, Hampel J, 29 June 1989)."
+
+    - it: "2.3.3 Proceedings > 'commenced'"
+      macro: juris-main
+      single: { id: "proceeding" }
+      expect: "(Federal Court of Australia, VID725/2014, commenced 3 December 2014)"
+
+    - it: "2.3.3 Proceedings > Full citation"
+      single: { id: "proceeding" }
+      expect: >
+        <i>Australian Competition and Consumer Commission v Olex Australia Pty
+        Ltd</i> (Federal Court of Australia, VID725/2014, commenced 3 December
+        2014).
+
+    - it: "2.3.4 Court Orders > 'Order of ... in'"
+      macro: juris-pretitle
+      single: { id: "burleyjSeikoEpsonCorporation" }
+      expect: "Order of Burley J in"
+
+    - it: "2.3.4 Court Orders > Full citation"
+      single: { id: "burleyjSeikoEpsonCorporation" }
+      expect: "Order of Burley J in <i>Seiko Epson Corporation v Calidad Pty Ltd</i> (Federal Court of Australia, NSD1519/2004, 21 December 2016)."
+
+
+
