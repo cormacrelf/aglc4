@@ -1406,7 +1406,7 @@ in Vim or similar jump-to-next-occurrence features in other editors.
         </group>
       </if>
       <else-if position="ibid">
-        <text font-style="italic" term="ibid"/>
+        <text term="ibid"/>
         <date variable="issued">
           <date-part name="year"/>
         </date>
@@ -1469,11 +1469,7 @@ in Vim or similar jump-to-next-occurrence features in other editors.
         <label form="short" variable="locator"/>
         <number label-form="short" variable="locator"/>
       </group>
-      <group delimiter=" ">
-        <text font-style="italic" value="supra"/>
-        <text value="note"/>
-        <text variable="first-reference-note-number"/>
-      </group>
+      <text macro="SupraNote"/>
       <group delimiter=" " is-parallel="true">
         <number variable="volume"/>
         <text variable="container-title"/>
@@ -1491,13 +1487,9 @@ in Vim or similar jump-to-next-occurrence features in other editors.
           <group delimiter=", ">
             <text macro="BabyblueAuthor"/>
             <text macro="BabyblueTitle"/>
-            <text font-style="italic" value="supra"/>
-          </group>
-          <group delimiter=" ">
-            <text term="note"/>
-            <text variable="first-reference-note-number"/>
           </group>
         </group>
+        <text macro="SupraNote"/>
         <group delimiter=" ">
           <choose>
             <else>
@@ -1839,6 +1831,7 @@ in Vim or similar jump-to-next-occurrence features in other editors.
       <else-if>
         <!-- short form -->
         <conditions match="any">
+          <condition match="all" position="subsequent"/>
           <condition match="all" position="near-note"/>
           <condition match="all" type="report" variable="title" position="far-note"/>
           <condition match="all" type="report" variable="committee" position="far-note"/>
@@ -1874,11 +1867,7 @@ in Vim or similar jump-to-next-occurrence features in other editors.
                   <condition match="all" type="legal_case" variable="document-name"/>
                 </conditions>
                 <group delimiter=", ">
-                  <group delimiter=" ">
-                    <text value="supra" font-style="italic"/>
-                    <text term="note"/>
-                    <text variable="first-reference-note-number"/>
-                  </group>
+                  <text macro="SupraNote" />
                   <group delimiter=" ">
                     <text value="at"/>
                     <group require="empty-label">

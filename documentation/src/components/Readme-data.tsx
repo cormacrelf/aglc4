@@ -26,9 +26,7 @@ export const demoRule: AGLCRule = {
         result: 'Expected result',
         passed: true,
         slug: 'slug',
-        doc: {
-          main: `Yeah mate`
-        }
+        doc: [""]
       }
     },
     {
@@ -40,11 +38,8 @@ export const demoRule: AGLCRule = {
         expect: 'Expected result',
         result: 'Actual result',
         passed: false,
-        item: {},
         slug: 'slug',
-        doc: {
-          main: `Yeah mate`
-        }
+        doc: [""]
       }
     }
   ]

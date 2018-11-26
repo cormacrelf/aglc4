@@ -25,7 +25,7 @@ export interface TestCaseBase {
   passed: boolean;
   slug: string;
   format?: 'text' | 'html';
-  doc?: string | Array<DocSection>;
+  doc?: string | Array<string | DocSection>;
   meta?: any;
 }
 export interface TestCaseStub extends TestCaseBase {
@@ -39,7 +39,6 @@ export interface TestCaseSingle extends TestCaseBase {
   single: CiteItem;
   expect: string;
   result: string;
-  item: object;
 }
 export type CiteCluster = Array<CiteItem>;
 export interface TestCaseSequence extends TestCaseBase {

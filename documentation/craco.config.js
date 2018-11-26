@@ -40,7 +40,7 @@ const mdxPlugin = {
     }
     fileLoaderMatch.loader.exclude.push(mdxExtension);
 
-    console.log(JSON.stringify(webpackConfig.module.rules, null, 4));
+    // console.log(JSON.stringify(webpackConfig.module.rules, null, 4));
     // process.exit(0);
 
     // Always return the config object.
