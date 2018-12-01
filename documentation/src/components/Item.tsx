@@ -67,7 +67,6 @@ const FormatFieldValue = ({ type, value }: { type: FieldType, value: any}) => {
     return <div>{value.map((v, i) => <FormatName key={i} name={v} />)}</div>;
   } else if (type === "date") {
     let parts = value['date-parts'];
-    console.log(value);
     if (parts && parts.length > 0 && typeof parts[0] === "number") {
       return <Label outline>{isodate(parts[0], parts[1], parts[2])}</Label>;
     } else if (parts && parts.length > 0 && Array.isArray(parts[0])) {
@@ -109,14 +108,14 @@ export const FieldList = ({ type, fields, hint }: {
       let jurisField = docType.fields[_f.field];
       let content = jurisField && jurisField.jmField || _f.field;
       return (
-        <>{_f.prefix}
+        <span key={i}>{_f.prefix}
           <Label
             bg="gray.2"
             color="gray.9"
-            style={{'font-style': _f['font-style']}}>
+            style={{'fontStyle': _f['font-style']}}>
             { content }
           </Label>
-        {_f.suffix}</>
+        {_f.suffix}</span>
         )
       }) }
   </div>

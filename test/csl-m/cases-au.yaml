@@ -98,7 +98,7 @@
         fields:
           - { prefix: '(', field: 'publisher', suffix: ', ' }
           - { field: 'number', suffix: ', ' }
-          - { field: 'publication-date', suffix: ')' }
+          - { prefix: 'commenced ', field: 'publication-date', suffix: ')' }
 
     - it: "2.3.3 Proceedings > Full citation"
       single: { id: "proceeding" }
