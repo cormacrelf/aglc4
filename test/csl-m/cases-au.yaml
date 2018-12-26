@@ -124,3 +124,9 @@
           - { field: 'number', suffix: ', ' }
           - { field: 'publication-date', suffix: ')' }
 
+- describe: "2.7 Transcripts of Proceedings"
+  tests:
+    - it: "2.7.2 High Court of Australia from July 2003"
+      single: { prefix: "Transcript of Proceedings, "
+              , id: "RuhaniDirectorPolice2005" }
+      expect: "Transcript of Proceedings, <i>Ruhani v Director of Police</i> [2005] HCATrans 205."

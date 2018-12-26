@@ -15,6 +15,7 @@
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
+
   <locale>
     <terms>
       <term name="article">
@@ -40,6 +41,7 @@
       <term name="ibid" form="long">id.</term>
     </terms>
   </locale>
+
   <macro name="juris-pretitle">
     <choose>
       <if>
@@ -56,7 +58,6 @@
       <else-if type="legal_case" variable="author publisher publication-date" match="all">
         <names prefix="Order of " variable="author" suffix=" in">
           <name/>
-          <institution use-last="1" institution-parts="short"/>
         </names>
       </else-if>
       <else-if>
@@ -74,6 +75,7 @@
       </else-if>
     </choose>
   </macro>
+
   <macro name="juris-title">
     <choose>
       <if type="legal_case">
@@ -213,7 +215,7 @@
         </group>
       </else-if>
       <!-- Court Orders -->
-      <else-if type="legal_case" variable="author publisher publication-date" match="all">
+      <else-if type="legal_case" variable="author number publisher publication-date" match="all">
         <!-- in juris-pretitle -->
         <!-- <names prefix="Order of" variable="author" suffix="in"> -->
         <!--   <name/> -->
