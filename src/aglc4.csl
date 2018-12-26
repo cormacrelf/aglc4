@@ -16,7 +16,7 @@
   </info>
 <!-- Introduction
 
-CSL is a madhouse to write. Therefore a number of conventions have been adopted.
+CSL is a madhouse to write. Therefore some conventions have been adopted.
 
 1. All (non-juris-) macro names will be named in UpperCamelCase. This is to
 distinguish macros from every other word on the screen, and allow using * and #
@@ -28,15 +28,15 @@ in Vim or similar jump-to-next-occurrence features in other editors.
     <terms>
       <term name="page">
         <single></single>
-        <multiple></single>
+        <multiple></multiple>
       </term>
       <term name="page" form="short">
         <single></single>
-        <multiple></single>
+        <multiple></multiple>
       </term>
       <term name="note">
         <single>n</single>
-        <multiple>nn</single>
+        <multiple>nn</multiple>
       </term>
       <term name="article">article</term>
       <term form="short" name="article">
@@ -112,16 +112,16 @@ in Vim or similar jump-to-next-occurrence features in other editors.
         <!-- x2013 is en-dash -->
         <date-part name="day" form="numeric" range-delimiter="&#x2013;" suffix=" " />
         <date-part name="month" form="long" range-delimiter=" MONTH_DELIM " suffix=" " />
-        <date-part name="year" form="numeric" range-delimiter=" &#x2013; "/>
+        <date-part name="year" form="long" range-delimiter=" &#x2013; "/>
     </date>
   </locale>
 
   <macro name="SupraNote">
     <!-- (n 3) -->
-    <text prefix="(" term="note" suffix=" " />
-    <!-- you cannot put ) suffix on this, it gets converted to ] (???) -->
-    <text variable="first-reference-note-number"/>
-    <text value=")" />
+    <group prefix="(" delimiter=" " suffix=")" >
+      <text term="note"/>
+      <text variable="first-reference-note-number"/>
+    </group>
   </macro>
 
   <macro name="FullDateIssued">
@@ -135,18 +135,6 @@ in Vim or similar jump-to-next-occurrence features in other editors.
   <macro name="YearIssued">
     <!-- Rule 1.11.1 -->
     <date variable="issued" date-parts="year" form="text" />
-  </macro>
-
-  <!-- CASES -->
-  <macro name="CaseYearRoundOrSquare">
-    <choose>
-      <if variable="volume">
-        <text macro="YearIssued" prefix="(" suffix=")" />
-      </if>
-      <else>
-        <text macro="YearIssued" prefix="[" suffix="]" />
-      </else>
-    </choose>
   </macro>
 
   <!-- INDIGO HOLDOVERS -->
@@ -553,17 +541,7 @@ in Vim or similar jump-to-next-occurrence features in other editors.
         </conditions>
         <group delimiter=", ">
           <text text-case="title" variable="title"/>
-          <choose>
-            <if is-numeric="version">
-              <group delimiter=" ">
-                <text value="ver."/>
-                <text variable="version"/>
-              </group>
-            </if>
-            <else>
-              <text quotes="true" variable="version"/>
-            </else>
-          </choose>
+          <text quotes="true" variable="version"/>
           <text form="short" variable="medium"/>
         </group>
       </else-if>
@@ -1205,9 +1183,9 @@ in Vim or similar jump-to-next-occurrence features in other editors.
         <else-if>
           <conditions match="any">
             <condition position="ibid-with-locator"/>
-            <condition is-numeric="title" match="all" type="book" variable="title"/>
+            <condition match="all" type="book" variable="title"/>
             <condition match="all" type="song" variable="section"/>
-            <condition is-numeric="title" match="all" type="song" variable="title locator"/>
+            <condition match="all" type="song" variable="title locator"/>
           </conditions>
           <text macro="StdLocatorNonPageLabelAt" label-form="symbol" />
         </else-if>
@@ -1379,11 +1357,7 @@ in Vim or similar jump-to-next-occurrence features in other editors.
 
   <macro name="StdLocatorNonPageLabelAt">
     <group delimiter=" ">
-      <choose>
-        <else>
-          <label form="short" variable="locator"/>
-        </else>
-      </choose>
+      <label form="short" variable="locator"/>
       <number variable="locator"/>
     </group>
   </macro>
@@ -1491,11 +1465,7 @@ in Vim or similar jump-to-next-occurrence features in other editors.
         </group>
         <text macro="SupraNote"/>
         <group delimiter=" ">
-          <choose>
-            <else>
-              <label form="short" variable="locator"/>
-            </else>
-          </choose>
+          <label form="short" variable="locator"/>
           <number variable="locator"/>
         </group>
       </group>
