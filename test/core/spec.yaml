@@ -46,15 +46,14 @@
 
     - it: "1.4.1 General Rule > (n FN) for secondary sources"
       format: text
-      # macro: SupraNote
       sequence:
         - [{ id: "PlainCiteA" }]
         - [{ id: "PlainCiteB" }]
         - [{ id: "PlainCiteA" }]
       expect:
-        - "PlainCiteA"
-        - "PlainCiteB"
-        - "PlainCiteA (n 1)"
+        - "PlainCiteA."
+        - "PlainCiteB."
+        - "PlainCiteA (n 1)."
 
     - it: "1.4.1 General Rule > (n FN) for legal_case and legislation"
       format: text
@@ -64,9 +63,9 @@
         - [{ id: "CaseB" }]
         - [{ id: "CaseA" }]
       expect:
-        - "CaseA"
-        - "CaseB"
-        - "CaseA (n 1)"
+        - "CaseA."
+        - "CaseB."
+        - "CaseA (n 1)."
 
     - it: "1.4.1 General Rule > (n FN) for {legal_case or legislation} with short title"
     - it: "1.4.1 General Rule > should include author last name in subsequent for secondary sources"

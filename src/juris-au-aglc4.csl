@@ -18,6 +18,14 @@
 
   <locale>
     <terms>
+      <term name="page">
+        <single></single>
+        <multiple></multiple>
+      </term>
+      <term name="page" form="short">
+        <single></single>
+        <multiple></multiple>
+      </term>
       <term name="article">
         <single>article</single>
         <multiple>articles</multiple>
@@ -55,9 +63,19 @@
           <institution institution-parts="short"/>
         </names>
       </if>
+      <else-if type="legal_case" variable="document-name" match="all">
+        <group delimiter=", ">
+          <names variable="author">
+            <name/>
+            <institution institution-parts="short"/>
+          </names>
+          <text variable="document-name" quotes="true"/>
+        </group>
+      </else-if>
       <else-if type="legal_case" variable="author publisher publication-date" match="all">
         <names prefix="Order of " variable="author" suffix=" in">
           <name/>
+          <institution institution-parts="short"/>
         </names>
       </else-if>
       <else-if>
@@ -79,6 +97,11 @@
   <macro name="juris-title">
     <choose>
       <if type="legal_case">
+        <choose>
+          <if variable="document-name">
+            <text value="Submission in "/>
+          </if>
+        </choose>
         <text variable="title" strip-periods="true" font-style="italic"/>
       </if>
       <else-if match="all" type="bill" variable="event"/>
@@ -187,6 +210,13 @@
 
   <macro name="juris-main">
     <choose>
+      <if match="all" type="legal_case" variable="document-name">
+        <group delimiter=", ">
+          <number variable="number"/>
+          <date variable="submitted" form="text"/>
+        </group>
+      </if>
+
       <!-- Reported cases organised by volume -->
       <if match="all" type="legal_case" variable="container-title volume page-first">
         <group delimiter=" ">
@@ -196,6 +226,7 @@
           <number variable="page-first"/>
         </group>
       </if>
+
       <!-- Reported cases organised by year -->
       <else-if match="all" type="legal_case" variable="container-title page-first">
         <group delimiter=" ">
@@ -206,37 +237,47 @@
           <number variable="page-first"/>
         </group>
       </else-if>
+
       <!-- 2.3.1 Medium Neutral Citations (number = 'docket number') -->
-      <else-if type="legal_case" number="number" variable="container-title number" match="all">
+      <else-if type="legal_case" variable="container-title number" match="all">
         <group delimiter=" ">
           <text macro="YearIssued" prefix="[" suffix="]" />
           <text variable="container-title" form="short"/>
           <number variable="number"/>
         </group>
       </else-if>
-      <!-- Court Orders -->
-      <else-if type="legal_case" variable="author number publisher publication-date" match="all">
-        <!-- in juris-pretitle -->
-        <!-- <names prefix="Order of" variable="author" suffix="in"> -->
-        <!--   <name/> -->
-        <!--   <institution use&#45;last="1" institution&#45;parts="short"/> -->
-        <!-- </names> -->
+
+      <!-- 2.3.2 Court Orders -->
+      <else-if>
+        <conditions match="all">
+          <condition match="all"
+            type="legal_case"
+            variable="author number publisher publication-date" />
+        </conditions>
+        <!-- judges (authors) go in in juris-pretitle -->
         <group prefix="(" delimiter=", " suffix=")">
           <text variable="publisher" form="short"/>
           <number variable="number"/>
           <date variable="publication-date" form="text"/>
         </group>
       </else-if>
+
       <!-- Proceedings -->
-      <else-if type="legal_case" variable="publisher number publication-date" match="all">
+      <else-if type="legal_case" variable="number publisher publication-date" match="all">
         <group prefix="(" delimiter=", " suffix=")">
           <text variable="publisher" form="short"/>
           <number variable="number"/>
           <date prefix="commenced " variable="publication-date" form="text"/>
         </group>
       </else-if>
+
       <!-- 2.3.2 No medium neutral citation -->
-      <else-if type="legal_case" variable="container-title">
+      <else-if>
+        <conditions match="all">
+          <condition match="all"
+            type="legal_case"
+            variable="author container-title" />
+        </conditions>
         <group prefix="(" delimiter=", " suffix=")">
           <text variable="container-title" form="short" />
           <names variable="author">
@@ -246,6 +287,7 @@
           <date variable="issued" form="text"/>
         </group>
       </else-if>
+
       <else-if match="any" type="legislation">
         <choose>
           <if match="all" variable="gazette-flag">
@@ -357,6 +399,7 @@
       </else-if>
     </choose>
   </macro>
+
   <macro name="juris-tail">
     <!-- <group delimiter=" "> -->
     <!--   <choose> -->
@@ -485,8 +528,9 @@
     <!--   </group> -->
     <!-- </group> -->
   </macro>
+
   <macro name="juris-pretitle-short">
-        <choose>
+    <choose>
       <if>
         <conditions match="all">
           <condition match="all" type="report"/>
@@ -515,6 +559,7 @@
       </else-if>
      </choose>
   </macro>
+
   <macro name="juris-title-short">
     <choose>
       <if match="all" type="legal_case" variable="title-short title">
@@ -574,6 +619,7 @@
       </else>
     </choose>
   </macro>
+
   <macro name="juris-main-short">
     <group delimiter=" ">
       <choose>
@@ -675,16 +721,15 @@
       </choose>
     </group>
   </macro>
+
   <macro name="juris-tail-short">
     <text value=""/>
   </macro>
+
   <macro name="juris-locator">
     <group delimiter=" ">
       <choose>
-        <if locator="page" type="report" variable="number" match="all">
-          <text value="at"/>
-        </if>
-        <else-if locator="page"/>
+        <if locator="page" />
         <else>
           <label variable="locator"/>
         </else>

@@ -83,7 +83,7 @@
         fields:
           - { prefix: '(', field: 'container-title', suffix: ', ' }
           - { field: 'author', suffix: ', ' }
-          - { field: 'issued', suffix: ')' }
+          - { field: 'publication-date', suffix: ')' }
 
     - it: "2.3.2 Decisions without a Medium Neutral Citation > full citation"
       single: { id: "hampeljBartonChibber1989" }
@@ -124,9 +124,55 @@
           - { field: 'number', suffix: ', ' }
           - { field: 'publication-date', suffix: ')' }
 
+- describe: "2.5 Case History"
+  tests:
+    - it: "2.5 Case History > identical parties' names, with prefix = 'revd ' or 'affd '"
+      sequence:
+        - [{ id: 'KingPhilcox2014' }, { prefix: 'revd ', id: 'KingPhilcox2015' }]
+      expect:
+        - "<i>King v Philcox</i> (2014) 119 SASR 71, revd (2015) 255 CLR 304."
+      doc:
+        - label: Warning
+          content: |
+            It's not possible under CSL-M as it stands to detect when parties'
+            names were merely reversed and apply subsequent decision grouping.
+            It is also not possible to manually force suppression of parties'
+            names for a single cite.
+
+            So, for now, you should attach a hypothetical `Philcox v King`
+            short citation as a suffix to the first one.
+
 - describe: "2.7 Transcripts of Proceedings"
   tests:
-    - it: "2.7.2 High Court of Australia from July 2003"
+    - it: "2.7.1 General Rule > *"
+    - it: "2.7.2 High Court of Australia from July 2003 > *"
       single: { prefix: "Transcript of Proceedings, "
               , id: "RuhaniDirectorPolice2005" }
       expect: "Transcript of Proceedings, <i>Ruhani v Director of Police</i> [2005] HCATrans 205."
+      doc:
+        - label: Warning
+          content: >
+            You must manually provide "Transcript of Proceedings" when you
+            first reference a proceeding, and if you have a subsequent
+            reference you move before it.
+
+- describe: "2.8 Submissions in Cases"
+  tests:
+    - it: "2.8 Submissions in Cases > full citation"
+      single: { id: "attorney-generalcthHumaneSocietyInternational"
+              , locator: "[10], [20]" }
+      expect: "Attorney-General (Cth), ‘Outline of Submissions of the Attorney-General of the Commonwealth as Amicus Curiae’, Submission in <i>Humane Society International Inc v Kyodo Senpaku Kaisha Ltd</i>, NSD1519/2004, 25 January 2005, [10], [20]."
+      meta:
+        type: legal_case
+        fields:
+          - { field: 'author', suffix: ', ' }
+          - { prefix: '‘', field: 'document-name', suffix: '’, ' }
+          - { prefix: 'Submission in ', field: 'title', suffix: ', ' }
+          - { field: 'number', suffix: ', ' }
+          - { field: 'submitted' }
+      doc:
+        - label: Note
+          content: >
+            The AGLC doesn't appear to have a place to say which court was
+            handling the matter. You can google the docket number and find
+            out it was the FCA, but that's about it.
