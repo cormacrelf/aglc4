@@ -77,11 +77,11 @@ distinguish macros from every other word on the screen, and helps with jump-to-n
         <multiple>paras.</multiple>
       </term>
       <term form="short" name="part">pt.</term>
-      <term form="short" name="section">
-        <single>sec.</single>
-        <multiple>secs.</multiple>
+      <term name="section" form="short">
+        <single>s</single>
+        <multiple>ss</multiple>
       </term>
-      <term form="symbol" name="section">
+      <term name="section" form="symbol">
         <single>&#167;</single>
         <multiple>&#167;&#167;</multiple>
       </term>
@@ -1844,11 +1844,11 @@ distinguish macros from every other word on the screen, and helps with jump-to-n
                   <text macro="SupraNote" />
                   <group delimiter=" ">
                     <group require="empty-label">
-                      <text macro="juris-locator" label-form="symbol"/>
+                      <text macro="juris-locator" label-form="short"/>
                     </group>
                   </group>
                   <group delimiter=" " reject="empty-label">
-                    <text macro="juris-locator" label-form="symbol"/>
+                    <text macro="juris-locator" label-form="short"/>
                   </group>
                 </group>
               </if>
@@ -1881,10 +1881,10 @@ distinguish macros from every other word on the screen, and helps with jump-to-n
           </group>
           <group delimiter=" ">
             <group require="empty-label">
-              <text macro="juris-locator" label-form="symbol"/>
+              <text macro="juris-locator" label-form="short"/>
             </group>
           </group>
-          <text macro="juris-locator" label-form="symbol"/>
+          <text macro="juris-locator" label-form="short"/>
           <text macro="juris-tail-short"/>
         </group>
       </else-if>
@@ -1931,16 +1931,16 @@ distinguish macros from every other word on the screen, and helps with jump-to-n
                     </else>
                   </choose>
                   <group delimiter=" " require="empty-label">
-                    <text macro="juris-locator" label-form="symbol"/>
+                    <text macro="juris-locator" label-form="short"/>
                   </group>
                   <group require="comma-safe">
-                    <text macro="juris-locator" label-form="symbol"/>
+                    <text macro="juris-locator" label-form="short"/>
                   </group>
                 </group>
               </group>
             </group>
             <group reject="comma-safe">
-              <text macro="juris-locator" label-form="symbol"/>
+              <text macro="juris-locator" label-form="short"/>
             </group>
             <choose>
               <if type="legislation" variable="container-title page volume gazette-flag" match="all"/>

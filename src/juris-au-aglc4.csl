@@ -181,7 +181,7 @@
             </else>
           </choose>
           <group delimiter=" ">
-            <label variable="number" form="symbol" text-case="capitalize-first"/>
+            <label variable="number" form="short" text-case="capitalize-first"/>
             <number variable="number"/>
           </group>
         </group>
@@ -203,7 +203,7 @@
         </group>
       </else-if>
       <else>
-        <text variable="title"/>
+        <text variable="title" font-style="italic"/>
       </else>
     </choose>
   </macro>
@@ -300,7 +300,7 @@
               </if>
               <else>
                 <group delimiter=" " suffix=",">
-                  <label variable="number" form="symbol"/>
+                  <label variable="number" form="short"/>
                   <number variable="number"/>
                 </group>
               </else>
@@ -308,8 +308,8 @@
           </if>
           <else>
             <group delimiter=" ">
-              <number variable="volume"/>
-              <text variable="container-title" form="short"/>
+              <text macro="YearIssued" font-style="italic" />
+              <text variable="container-title" form="short" prefix="(" suffix=")"/>
             </group>
           </else>
         </choose>
@@ -392,7 +392,7 @@
             </choose>
           </group>
           <group delimiter=" ">
-            <label variable="number" form="symbol" text-case="capitalize-first"/>
+            <label variable="number" form="short" text-case="capitalize-first"/>
             <number variable="number"/>
           </group>
         </group>
@@ -670,7 +670,7 @@
               </else>
             </choose>
             <group delimiter=" ">
-              <label variable="number" form="symbol" text-case="capitalize-first"/>
+              <label variable="number" form="short" text-case="capitalize-first"/>
               <number variable="number"/>
             </group>
           </group>
