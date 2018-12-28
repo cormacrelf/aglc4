@@ -9,6 +9,7 @@
       <name>Cormac Relf</name>
       <email>web@cormacrelf.net</email>
     </author>
+    <!-- Some parts adapted from jm-indigobook-law-review.csl by Frank Bennett. A large portion is presently unchanged, but ultimately very little will remain. This is mostly so examples of working, parsable CSL-M that don't inexplicably choke `citeproc-js` are ready at hand. -->
     <category citation-format="note"/>
     <category field="law"/>
     <updated>2018-11-08T08:07:23.106844</updated>

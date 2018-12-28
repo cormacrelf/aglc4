@@ -7,30 +7,102 @@ import { Tag } from './Tags';
 import { Rule, OneTest } from './Results';
 import { DemoRule } from './Readme-data';
 
+# Note: Work In Progress
+
+This is extremely not finished. Don't use any of it for actual work.
+
 # How to use this guide
 
+Citing legal materials is complicated, but the days of typing out footnotes
+with fiddly italics, manually managing ibid and footnote numbers and messing up
+by missing a comma are fading fast. This project includes implementations of
+AGLC4 in [CSL][] and [CSL-M][], to be used with Zotero/Mendeley/many others or
+Juris-M respectively. This documentation aims to cover all the different ways
+you can use the styles to automatically produce compliant AGLC4 citations.
+
+[CSL]: https://citationstyles.org/
+[CSL-M]: https://citeproc-js.readthedocs.io/en/latest/csl-m/index.html
+
+This documentation is generated from a *test suite*. Each test in the suite is
+associated with a particular rule with which it is attempting to check
+compliance. It should be presumed that an AGLC rule not found here should be
+entered manually in a footnote. Due to the complexity of the AGLC, it will
+sometimes be necessary to use the tools in an unintuitive or non-standard way
+-- these cases are documented.
+
+Each of the two documentation sets can be navigated using the same table of
+contents as the AGLC4 book itself. Many of the test cases are lifted from the
+book. Each rule can be linked to by clicking the anchor next to the rule title
+and copying the resulting URL.
+
+## CSL? CSL-M? Zotero? Juris-M?
+
+This project works with two closely related but different kinds of citation
+processor. **You can pick which documentation set of CSL or CSL-M to browse at
+the top of the page.** They are:
+
+* CSL: Citation Style Language. It is very widely supported, but lacks a host
+  of features and fields necessary to comply with many of the rules.
+* CSL-M: A variant of CSL built with the sprawling complexity of legal
+  citations in mind. It supports adapting to different jurisdictions and
+  languages, along with many law-specific features and fields. It is less
+  widely supported: it can only be used with the Juris-M reference manager. At
+  present, the only way to use it in a document is with the Juris-M Microsoft
+  Word plugin, however [a project](https://github.com/cormacrelf/citeproc-rs)
+  is under way to rewrite the processor such that CSL-M can be used with Pandoc
+  as well. CSL-M was developed by Frank Bennett of Nagoya University, largely
+  to cover the Bluebook citation system.
+
+Because of the different feature sets, large swathes of the AGLC can only be
+covered by the CSL-M variant. If you are a current, happy CSL user (i.e. you
+only cite Australian reported judgments, legislation, journal articles and
+books), you can proceed as usual. If you find yourself citing parliamentary
+committee hearings, foreign domestic or international materials like treaties,
+reports with institutional authors, the less common unreported case modes, or
+you're generally hitting the edge cases in the AGLC, you may wish to switch. A
+project for a later date is to add a comparison chart based on the test suites.
+
+## Installing
+
+These styles can't really be installed through the standard channels yet. When
+they can be, it will be documented here.
+
+## Rules
+
+Following is an example rule. You will notice it comprises two test cases, one
+of which has failed, because the result was not identical to the expected
+output. Rules might include documentation that explains how to get the style to
+do what you want, or warnings about what you must or mustn't do for correct
+output.
+
 <p>
-    <CiteCluster cites={[{ id: "yeah", locator: "5" }]} />
+  <DemoRule />
 </p>
-
-<DocBlock label="pandoc" doc="yeah" />
-
-<DemoRule />
 
 | Tag                   | Meaning         |
 | --------------------- | --------------- |
-| <Tag type="passed" /> | The CSL produces the correct output, down to italics and curly quotation marks. |
-| <Tag type="failed" /> | The CSL gets it wrong. A diff will be shown. Be careful using the CSL in this way. |
+| <Tag type="passed" /> | The style produces the correct output, down to italics and curly quotation marks. |
+| <Tag type="failed" /> | The style gets it wrong. A diff will be shown. Be careful using the style in this way. |
 | <Tag type="stub" />   | There was an empty test defined. |
 
 ## Cite clusters
 
 <p>
-A cite cluster looks like <CiteCluster cites={[{
-id: "citekey",
-label: 'locator label',
-locator: "locator",
-prefix: 'prefix',
-suffix: 'suffix'
-    }]}/>.
+A cite cluster looks like <CiteCluster cites={[{ id: "citekey", label: 'locator label', locator: "locator", prefix: 'prefix', suffix: 'suffix' }]}/>.
 </p>
+
+You enter these with the Microsoft Word plugin and its cite entry UI, or in
+Pandoc using the `[prefix @citekey label locator suffix]` syntax (see the
+[manual][] for more).
+
+A semicolon in the cluster means there are multiple cites:
+
+<p>
+<CiteCluster cites={[{ id: "citekey", prefix: 'prefix' }, { id: "key2", prefix: "second prefix" }]}/>.
+</p>
+
+[manual]: https://pandoc.org/MANUAL.html#citations
+
+## Acknowledgements
+
+Thanks to the University of Technology Sydney for supporting the development of the CSL-M style.

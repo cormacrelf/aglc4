@@ -1,10 +1,11 @@
 import React from 'react';
 import { AGLCRule, parseTitle } from '../titles';
 import { Rule } from './Results';
-import { LibraryContext } from './LibraryContext';
+import { LibraryContext, IsJurisMContext } from './LibraryContext';
 import { Library } from '../types';
 export const demoLibrary: Library = {
   'citekey': {
+    type: 'book',
     author: { first: 'John', last: 'Doe' },
     title: "Miscellaneous Writings",
     issued: { "year": 2001 }
@@ -26,7 +27,7 @@ export const demoRule: AGLCRule = {
         result: 'Expected result',
         passed: true,
         slug: 'slug',
-        doc: [""]
+        doc: [{ label: "Note", content: "Some notes on using this rule." }]
       }
     },
     {
@@ -34,7 +35,7 @@ export const demoRule: AGLCRule = {
       content: {
         it: '1.2.3 Rule Title > Second test case ',
         type: 'single',
-        single: { id: 'citekey' },
+        single: { id: 'citekey', locator: '53' },
         expect: 'Expected result',
         result: 'Actual result',
         passed: false,
@@ -47,6 +48,8 @@ export const demoRule: AGLCRule = {
 
 export const DemoRule = () => (
   <LibraryContext.Provider value={demoLibrary}>
-    <Rule rule={demoRule} />
+      <IsJurisMContext.Provider value={false}>
+        <Rule rule={demoRule} />
+      </IsJurisMContext.Provider>
   </LibraryContext.Provider>
 )

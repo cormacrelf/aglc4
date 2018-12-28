@@ -48,7 +48,7 @@ const App = () => {
       <div className="App">
         <Flex is="header" className="App-header" color="gray.0" p={3} alignItems={'center'}>
           <img width={100} src={aglcLogo} />
-          <h1>AGLC 4 Automated Citation Guide</h1>
+          <h1>AGLC4 Automated Citation Guide</h1>
         </Flex>
         <Box is="header" bg={"#e6edfb"}>
           <UnderlineNav
@@ -72,7 +72,7 @@ const App = () => {
         </Box>
         <div className="App-body">
           <Switch>
-            <Redirect exact from="/" to="/csl" />
+              <Redirect exact from="/" to="/readme" />
             <Route exact path="/csl" component={CSLResults} />
             <Route exact path="/csl-m" component={JurisMResults} />
             <Route exact path="/readme" component={Readme} />
