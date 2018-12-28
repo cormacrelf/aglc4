@@ -6,7 +6,7 @@ import { TitlePortal } from './TitlePortal';
 import { unitsToTree } from '../titles';
 import { TestResults } from '../types';
 
-export class TestResultsView extends Component<{ results: TestResults, title: string }, { filterNames: Set<string>, search: string }> {
+export class TestResultsView extends React.PureComponent<{ results: TestResults, title: string }, { filterNames: Set<string>, search: string }> {
 
   constructor(props: { results: TestResults, title: string }) {
     super(props);

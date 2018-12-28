@@ -31,6 +31,7 @@ export function parseRule(rule: string) {
 
 export type Parsed<T> = { parsed: ParsedTitle; content: T };
 export interface AGLCPart { // Part III
+  partNumber: number;
   partTitle: string;
   slug: string;
   chapters: AGLCChapter[];
@@ -67,12 +68,13 @@ export function unitsToTree(flatUnits: TestUnit[]) {
 }
 
 export function coalesceParts(flatChapters: AGLCChapter[]): AGLCPart[] {
-  let gs: Map<string, AGLCChapter[]> =
-    groupBy(flatChapters, (c: AGLCChapter) => chapterToPart(c.chapterNumber));
-  return [...gs.entries()].map(([partTitle, chapters]) => {
+  let gs: Map<number, AGLCChapter[]> =
+    groupBy(flatChapters, (c: AGLCChapter) => chapterToPartNumber(c.chapterNumber));
+  return [...gs.entries()].map(([partNumber, chapters]) => {
+    let partTitle = getPartTitle(partNumber);
     const slug = slugify(partTitle);
-    return { partTitle, chapters, slug, }
-  });
+    return { partTitle, partNumber, chapters, slug, }
+  }).sort((a, b) => a.partNumber - b.partNumber);
 }
 
 export function coalesceChapters(flatUnits: AGLCUnit[]): AGLCChapter[] {
@@ -87,7 +89,7 @@ export function coalesceChapters(flatUnits: AGLCUnit[]): AGLCChapter[] {
       slug,
       units,
     };
-  });
+  }).sort((a, b) => a.chapterNumber - b.chapterNumber);
 }
 
 export function coalesceRules(tests: TestCase[]): AGLCRule[] {
@@ -140,12 +142,21 @@ export const chapterMap: {[k: number]: string} = {
   26: "Other Foreign Domestic Materials",
 }
 
-function chapterToPart(chapter: number) {
-  if (chapter < 1) { return "" }
-  if (chapter < 2) { return "Part I – General Rules" };
-  if (chapter < 4) { return "Part II – Domestic Sources" };
-  if (chapter < 8) { return "Part III – Secondary Sources" };
-  if (chapter < 15) { return "Part IV – International Materials" };
-  if (chapter < 27) { return "Part V – Foreign Domestic Sources" };
+
+function chapterToPartNumber(chapter: number): number {
+  if (chapter < 1) { return 0 }
+  if (chapter < 2) { return 1 };
+  if (chapter < 4) { return 2 };
+  if (chapter < 8) { return 3 };
+  if (chapter < 15) { return 4 };
+  if (chapter < 27) { return 5 };
+  return 0;
+}
+function getPartTitle(partNumber: number) {
+  if (partNumber === 1) { return "Part I – General Rules" };
+  if (partNumber === 2) { return "Part II – Domestic Sources" };
+  if (partNumber === 3) { return "Part III – Secondary Sources" };
+  if (partNumber === 4) { return "Part IV – International Materials" };
+  if (partNumber === 5) { return "Part V – Foreign Domestic Sources" };
   return "";
 }
