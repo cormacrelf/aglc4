@@ -1,6 +1,6 @@
 module.exports = {
   csl: "./src/aglc3.csl",
-  libraries: ["./corpus.json"],
+  libraries: ["./test/*.json", "./test/core/*.json"],
   suites: ["./test/core/*.yaml"],
   output: "./documentation/src/results-csl.json"
 }

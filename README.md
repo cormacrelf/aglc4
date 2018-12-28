@@ -1,8 +1,23 @@
 # AGLC4 in CSL and CSL-M
 
-## Build instructions
+## Reference library
 
-Setup:
+The references are either stored directly in CSL-JSON files, or in a 
+Zotero/Juris-M collection with a copy of the output also stored in git as 
+CSL-JSON such that the test suite can be run on Netlify and Travis.
+
+The ones in `corpus.json` are currently sourced from my own Juris-M library. 
+When the great unification into the [shared 
+group](https://www.zotero.org/groups/684844) occurs, it will be built from 
+there.
+
+At the moment, my own library's output is built using [Zotero Better 
+BibTex](https://retorque.re/zotero-better-bibtex/installation/) in 'Better CSL 
+JSON' mode. This is because some entries are using the citekey pinning feature, 
+but that dependency may be removed. Exporting is much faster using ZBB's 
+caching, so it's definitely worth using.
+
+## Build instructions
 
 ### 1. Install `node` v10+ and `yarn`.
 
@@ -13,17 +28,22 @@ Setup:
     yarn
     (cd documentation && yarn)
 
-### To run the tests on the command line
+Do not use `npm install` for this. The dependency lockfiles are specific to 
+Yarn.
+
+### 3. Then
+
+#### To run the tests on the command line
 
     yarn test
 
-### To preview the documentation site
+#### To preview the documentation site
 
     yarn doc-results && (cd documentation && yarn start)
 
 Then open `http://localhost:3000` in your browser.
 
-### To preview the documentation site in watch mode
+#### To preview the documentation site in watch mode
 
 Relies on [`entr(1)`](http://entrproject.org/) to watch files for changes.
 

@@ -26,5 +26,9 @@
   {"id":"tapkingHorizontalVerticalIntegration2004","type":"report","title":"Horizontal and vertical integration in securities trading and settlement","genre":"Working Paper","number":"No 245","author":[{"family":"Tapking","given":"Jens"},{"family":"Yang","given":"Jing"}],"issued":{"date-parts":[[2004]]}},
   {"id":"frenchNativeTitleConstitutional2009","type":"speech","title":"Native Title — A constitutional shift?","genre":"Speech delivered","event":"JD Lecture Series","URL":"http://www.hcourt.gov.au/publications_05.html","author":[{"family":"French","given":"Chief Justice Robert"}],"issued":{"date-parts":[[2009,3,24]]},"event-place":"The University of Melbourne"},
   {"id":"deloittetouchetohmatsumelbourne2008","type":"personal_communication","genre":"Letter","URL":"http://www.deloitte.com.au/media/docs/ OpesPrime_groupcircular.pdf","author":[{"literal":"Deloitte Touche Tohmatsu, Melbourne,"}],"recipient":[{"literal":"Opes Prime Clients","multi":{"_key":{}}}],"issued":{"date-parts":[[2008,4,1]]}},
-  {"id":"barrington2001","type":"personal_communication","genre":"Email","author":[{"family":"Barrington","given":"Jonathon"}],"recipient":[{"family":"Horowitz","given":"Deborah","multi":{"_key":{}}}],"issued":{"date-parts":[[2001,5,17]]}}
+  {"id":"barrington2001","type":"personal_communication","genre":"Email","author":[{"family":"Barrington","given":"Jonathon"}],"recipient":[{"family":"Horowitz","given":"Deborah","multi":{"_key":{}}}],"issued":{"date-parts":[[2001,5,17]]}},
+  {"id":"ReJudiciaryNavigation1921","type":"legal_case","title":"Re Judiciary and Navigation Acts","container-title":"CLR","page":"257","volume":"29","issued":{"date-parts":[[1921]]}},
+  {"id":"MomentumProductionsPty2009","type":"legal_case","title":"Momentum Productions Pty Ltd v Lewarne","container-title":"FCR","page":"268","volume":"174","issued":{"date-parts":[[2009]]}},
+  {"id":"BakkerStewart1980","type":"legal_case","title":"Bakker v Stewart","container-title":"VR","page":"17","issued":{"date-parts":[[1980]]}},
+  {"id":"Tang2008","type":"legal_case","title":"R v Tang","container-title":"CLR","page":"1","volume":"237","issued":{"date-parts":[[2008]]}}
 ]
