@@ -63,7 +63,7 @@
           <institution institution-parts="short"/>
         </names>
       </if>
-      <else-if type="legal_case" variable="document-name" match="all">
+      <else-if type="legal_case" variable="author document-name" match="all">
         <group delimiter=", ">
           <names variable="author">
             <name/>
@@ -71,6 +71,9 @@
           </names>
           <text variable="document-name" quotes="true"/>
         </group>
+      </else-if>
+      <else-if type="legal_case" variable="genre" match="all">
+        <text value="Transcript of Proceedings" suffix=", " />
       </else-if>
       <else-if type="legal_case" variable="author publisher publication-date" match="all">
         <names prefix="Order of " variable="author" suffix=" in">
@@ -247,9 +250,29 @@
         </group>
       </else-if>
 
+      <!-- 2.7.1 Transcripts of Proceedings -->
+      <else-if>
+        <conditions match="all">
+          <condition match="all"
+            type="legal_case"
+            variable="author genre publisher publication-date" />
+        </conditions>
+        <!-- judges (authors) go in in juris-pretitle -->
+        <group prefix="(" delimiter=", " suffix=")">
+          <text variable="publisher" form="short"/>
+          <number variable="number"/>
+          <names variable="author">
+            <name/>
+            <institution use-last="1" institution-parts="short"/>
+          </names>
+          <date variable="publication-date" form="text"/>
+        </group>
+      </else-if>
+
       <!-- 2.3.2 Court Orders -->
       <else-if>
         <conditions match="all">
+          <!-- docket number is optional -->
           <condition match="all"
             type="legal_case"
             variable="author publisher publication-date" />

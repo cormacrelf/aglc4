@@ -155,17 +155,32 @@
 
 - describe: "2.7 Transcripts of Proceedings"
   tests:
-    - it: "2.7.1 General Rule > *"
-    - it: "2.7.2 High Court of Australia from July 2003 > *"
-      single: { prefix: "Transcript of Proceedings, "
-              , id: "RuhaniDirectorPolice2005" }
+    - it: "2.7.1 General Rule > no docket number"
+      single: { id: "croftjNorthEastSolution", locator: "31 (PJ Bick QC)" }
+      expect: >
+        Transcript of Proceedings, <i>North East Solution Pty Ltd v Masters Home Improvement Australia Pty Ltd</i> (Supreme Court of Victoria, Croft J, Second J, 18 May 2015) 31 (PJ Bick QC).
+      doc:
+      - label: Note
+        content: |
+          To make something a transcript, add ANY content to the "Supp. Name" field. A good idea for content to add would be a link to this very piece of documentation. Hover on the rule's title to reveal a targeted link.
+      - content: |
+          Why? The bracketed portion is subtly different from other case
+          citation types; it includes both authors and a docket number (if
+          present). Therefore you can't achieve this with only a prefix.
+          Without a checkbox for 'transcript' in Juris-M, the next best option
+          is to use the presence of an otherwise useless field as a marker.
+    - it: "2.7.1 General Rule > with a docket number"
+      single: { id: "croftjNorthEastSolutionWithNum" }
+      expect: >
+        Transcript of Proceedings, <i>North East Solution Pty Ltd v Masters Home Improvement Australia Pty Ltd</i> (Supreme Court of Victoria, D1234/567, Croft J, Second J, 18 May 2015).
+
+    - it: "2.7.2 High Court of Australia from July 2003 > HCATrans"
+      single: { id: "RuhaniDirectorPolice2005" }
       expect: "Transcript of Proceedings, <i>Ruhani v Director of Police</i> [2005] HCATrans 205."
       doc:
-        - label: Warning
-          content: >
-            You must manually provide "Transcript of Proceedings" when you
-            first reference a proceeding, and if you have a subsequent
-            reference you move before it.
+      - label: Note
+        content: |
+          To make something a transcript, add ANY content to the "Supp. Name" field. A good idea for content to add would be a link to this very piece of documentation. Hover on the rule's title to reveal a targeted link.
 
 - describe: "2.8 Submissions in Cases"
   tests:
