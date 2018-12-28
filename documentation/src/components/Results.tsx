@@ -6,7 +6,7 @@ import { AGLCPart, AGLCChapter, AGLCUnit, AGLCRule } from '../titles';
 
 import { Cite } from './Cite';
 import { Diff } from './Diff';
-import { Item } from './Item';
+import { Items } from './Item';
 import { Meta } from './Meta';
 import { Tags } from './Tags';
 
@@ -29,9 +29,6 @@ const testBg = (test: TestCase) => {
 
 export const OneTest = ({ title, test }: { title: string, test: TestCase }) => {
   let hint = test && test.meta && test.meta.jmHint || undefined;
-  const item = test.type === 'single'
-    ? <Item citeId={test.single.id} hint={hint} />
-    : null;
   if (test.type === 'stub') {
     return <div className="Box-body spacer">
         <h4>{title} <Tags test={test}/></h4>
@@ -43,7 +40,7 @@ export const OneTest = ({ title, test }: { title: string, test: TestCase }) => {
       <Cite test={test} />
       <Diff test={test} />
       <Meta test={test} />
-      { item }
+      <Items test={test} hint={hint} />
     </Box>
   )
 }

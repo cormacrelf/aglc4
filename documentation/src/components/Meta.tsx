@@ -17,18 +17,24 @@ export const DocBlock = ({doc, label, isJurisM }: { doc?: string, label?: string
       <Markdown source={doc} />
     </Box>
   }
+  let bgtop= "blue.1";
+  let bg= "gray.0";
+  if (label === 'Warning') {
+    bgtop = "orange.2";
+    bg = "orange.0";
+  }
   if (label === 'word') {
     label = isJurisM ? "Juris-M Word Plugin" : "Zotero Word Plugin";
   }
   if (label.length >= 1) {
     label = label[0].toUpperCase() + label.slice(1);
   }
-  return <Box bg="gray.0">
+  return <Box bg={bg}>
     { label &&
       <Label m={0}
         style={{display: "block"}}
         className="doc-label"
-        bg="blue.1" color="gray.9">
+        bg={bgtop} color="gray.9">
         {label}
       </Label> }
     <Box p={2}>

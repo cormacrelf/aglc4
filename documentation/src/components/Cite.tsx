@@ -21,12 +21,15 @@ const RenderCite = ({cite}: {cite: CiteItem}) => {
   );
 }
 
-// export function intersperse <T, I>(arr: T[], sep: I): (T | I)[] {
-//   return arr.reduce((a:(T | I)[],v:T) => [...a,v,sep],[]).slice(0,-1)
-// }
+export function intersperse <T, I>(arr: T[], sep: I): (T | I)[] {
+  return arr.reduce((a:(T | I)[],v:T) => [...a,v,sep],[]).slice(0,-1)
+}
 
 const renderCluster = (cites: CiteItem[]) => {
-  return cites.map((x, i) => <RenderCite cite={x} key={i} />);
+    return intersperse(cites, ' ; ')
+        .map((x, i) => typeof x === 'string'
+            ? <span key={i}>{x}</span>
+            : <RenderCite cite={x} key={i} />);
 }
 
 export const CiteCluster = ({ cites }: { cites: CiteItem[] }) => {

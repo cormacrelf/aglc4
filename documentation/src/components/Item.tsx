@@ -1,6 +1,7 @@
 import React from 'react';
-import { Box, Details, Button, Label } from '@primer/components';
+import { Box, Details, Button, Label, Tooltip } from '@primer/components';
 import { LibraryContext, ZoteroOrJurisM } from './LibraryContext';
+import { TestCase } from '../types';
 
 import _inverted from '../inverted.json';
 const { docTypes } = _inverted as any;
@@ -87,6 +88,19 @@ type FieldMod = {
   field: string;
 }
 
+export const FieldLabel = ({ field, content }: { field: string, content: string }) => {
+  return (
+      <Label
+        bg="gray.2"
+        color="gray.9"
+        >
+        <Tooltip zIndex={999} text={"csl: " + field}>
+            { content }
+        </Tooltip>
+      </Label>
+  )
+}
+
 export const FieldList = ({ type, fields, hint }: {
   type: string,
   fields: Array<string | FieldMod>,
@@ -109,12 +123,9 @@ export const FieldList = ({ type, fields, hint }: {
       let content = jurisField && jurisField.jmField || _f.field;
       return (
         <span key={i}>{_f.prefix}
-          <Label
-            bg="gray.2"
-            color="gray.9"
-            style={{'fontStyle': _f['font-style']}}>
-            { content }
-          </Label>
+          <span style={{'fontStyle': _f['font-style']}} >
+            <FieldLabel field={_f.field} content={content} />
+          </span>
         {_f.suffix}</span>
         )
       }) }
@@ -126,27 +137,31 @@ const ItemJSON = React.memo(({obj, hint}:{obj: any, hint?: string}) => {
   let { filtered, docType } = getDocType(obj.type, keys, hint);
   if (!docType) {return <></>};
   return <div className="markdown-body">
-    <table>
+    <table style={{overflow: "visible"}} /* so that the tooltips aren't clipped*/ >
       <tbody>
-        <tr><td><Label bg="gray.2" color="gray.9">Document Type</Label></td><td>{docType.jmDoc}</td></tr>
+        <tr>
+          <td><FieldLabel field="type" content="Document Type" /></td>
+          <td>{docType.jmDoc}</td>
+        </tr>
         { filtered.filter(k => k !== 'type').map((k) => {
           if (!docType.fields[k]) return <tr key={k}></tr>
           const field = docType.fields[k];
-          return <tr key={k}><td><Label bg="gray.2" color="gray.9">{field.jmField}</Label></td>
-              <td><FormatFieldValue value={obj[k]} type={field.type} /></td></tr>
+          return <tr key={k}>
+            <td><FieldLabel field={k} content={field.jmField} /></td>
+            <td><FormatFieldValue value={obj[k]} type={field.type} /></td>
+          </tr>
         })}
       </tbody>
     </table>
   </div>
 })
 
-export const Item = ({citeId, hint}: {citeId: string, hint?: string}) => {
+export const Item = ({citeId, show, hint}: {citeId: string, show?: boolean, hint?: string}) => {
   return (
     <Details mt={3} render={ ({open, toggle} : { open: boolean, toggle: Function }) => (
       <LibraryContext.Consumer>
         { library => (<>
-          <Button is="summary" onClick={toggle}>
-            {open ? 'Hide' : 'Show'} <ZoteroOrJurisM /> Entry
+          <Button is="summary" onClick={toggle}> {open ? 'Hide' : 'Show'} <ZoteroOrJurisM /> Entry { show && 'for @' + citeId }
           </Button>
           <Box mt={3} className="markdown-body">
             <ItemJSON obj={library[citeId]} hint={hint} />
@@ -155,5 +170,16 @@ export const Item = ({citeId, hint}: {citeId: string, hint?: string}) => {
       </LibraryContext.Consumer>
     )} />
   )
+}
+
+export const Items = ({test, hint} : {test: TestCase, hint: string}) => {
+    let items: JSX.Element[] = [];
+    if (test.type === 'single') {
+        items = [test.single.id].map(id => <Item key={id} citeId={id} hint={hint} />);
+    } else if (test.type === 'sequence') {
+        items = [...new Set(test.sequence.reduce((acc, cs) => acc.concat(cs.map(c => c.id)), new Array<string>()))]
+            .map(id => <Item key={id} show={true} citeId={id} hint={hint} />);
+    }
+    return <>{ items }</>
 }
 
