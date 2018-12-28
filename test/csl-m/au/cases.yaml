@@ -124,6 +124,17 @@
           - { field: 'number', suffix: ', ' }
           - { field: 'publication-date', suffix: ')' }
 
+    - it: "2.3.4 Court Orders > Docket number not appearing on the order"
+      single: { id: "burleyjSeikoEpsonCorporationNoNum" }
+      expect: "Order of Burley J in <i>Seiko Epson Corporation v Calidad Pty Ltd</i> (Federal Court of Australia, 21 December 2016)."
+      meta:
+        type: legal_case
+        fields:
+          - { prefix: 'Order of ', field: 'author', suffix: ' in ' }
+          - { field: 'title', suffix: ' ', font-style: 'italic' }
+          - { prefix: '(', field: 'publisher', suffix: ', ' }
+          - { field: 'publication-date', suffix: ')' }
+
 - describe: "2.5 Case History"
   tests:
     - it: "2.5 Case History > identical parties' names, with prefix = 'revd ' or 'affd '"

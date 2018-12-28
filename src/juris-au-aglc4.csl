@@ -252,7 +252,7 @@
         <conditions match="all">
           <condition match="all"
             type="legal_case"
-            variable="author number publisher publication-date" />
+            variable="author publisher publication-date" />
         </conditions>
         <!-- judges (authors) go in in juris-pretitle -->
         <group prefix="(" delimiter=", " suffix=")">

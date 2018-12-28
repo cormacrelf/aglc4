@@ -38,5 +38,6 @@
   {"id":"croftjNorthEastSolution","type":"legal_case","title":"North East Solution Pty Ltd v Masters Home Improvement Australia Pty Ltd","container-title":"TODO - make this a transcript","publisher":"Supreme Court of Victoria","jurisdiction":"au","author":[{"literal":"Croft J"}],"publication-date":{"date-parts":[["2015",5,18]]}},
   {"id":"attorney-generalcthHumaneSocietyInternational","type":"legal_case","title":"Humane Society International Inc v Kyodo Senpaku Kaisha Ltd","document-name":"Outline of Submissions of the Attorney-General of the Commonwealth as Amicus Curiae","number":"NSD1519/2004","jurisdiction":"au","author":[{"literal":"Attorney-General (Cth)"}],"submitted":{"date-parts":[["2005",1,25]]}},
   {"id":"KingPhilcox2014","type":"legal_case","title":"King v Philcox","container-title":"SASR","page":"71","volume":"119","jurisdiction":"au","issued":{"date-parts":[[2014]]}},
-  {"id":"KingPhilcox2015","type":"legal_case","title":"King v Philcox","container-title":"CLR","page":"304","volume":"255","jurisdiction":"au","issued":{"date-parts":[[2015]]}}
+  {"id":"KingPhilcox2015","type":"legal_case","title":"King v Philcox","container-title":"CLR","page":"304","volume":"255","jurisdiction":"au","issued":{"date-parts":[[2015]]}},
+  {"id":"burleyjSeikoEpsonCorporationNoNum","type":"legal_case","title":"Seiko Epson Corporation v Calidad Pty Ltd","publisher":"Federal Court of Australia","jurisdiction":"au","author":[{"literal":"Burley J"}],"publication-date":{"date-parts":[["2016",12,21]]}}
 ]
