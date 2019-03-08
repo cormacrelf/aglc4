@@ -15,6 +15,22 @@
     <updated>2018-11-08T08:07:23.106844</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
+
+  <features>
+    <feature name="cslm-legal-types" />
+    <feature name="var-available-date" />
+    <feature name="term-legal-locators" />
+    <feature name="institutions" />
+    <feature name="hereinafter" />
+    <feature name="conditions" />
+    <feature name="condition-date-parts" />
+    <feature name="condition-context" />
+    <feature name="locator-extras" />
+    <feature name="multiple-locators" />
+    <feature name="far-note" />
+    <!-- TODO: and="none" -->
+  </features>
+
 <!-- Introduction
 
 CSL is a madhouse to write. Therefore some conventions have been adopted.
@@ -27,7 +43,12 @@ distinguish macros from every other word on the screen, and helps with jump-to-n
     <style-options skip-words="parte,about,above,across,afore,after,against,along,alongside,amid,amidst,among,amongst,anenst,apropos,apud,around,as,aside,astride,at,athwart,atop,barring,before,behind,below,beneath,beside,besides,between,beyond,but,by,circa,despite,down,during,except,for,forenenst,from,given,in,inside,into,lest,like,modulo,near,next,notwithstanding,of,off,on,onto,out,over,per,plus,pro,qua,sans,since,than,through,thru,throughout,thruout,till,to,toward,towards,under,underneath,until,unto,up,upon,versus,vs.,v.,vs,v,via,vis-à-vis,with,within,without,according to,ahead of,apart from,as for,as of,as per,as regards,aside from,back to,because of,close to,due to,except for,far from,inside of,instead of,near to,next to,on to,out from,out of,outside of,prior to,pursuant to,rather than,regardless of,such as,that of,up to,where as,or,yet,so,for,and,nor,a,an,the,de,d',von,van,c,et,ca,is,this,that" punctuation-in-quote="false" jurisdiction-preference="aglc4"/>
     <terms>
       <term name="page">
-        https://github.com/Juris-M/citeproc-js/issues/94
+        <single></single>
+        <multiple></multiple>
+      </term>
+      <term name="page" form="short">
+        <single></single>
+        <multiple></multiple>
       </term>
       <term name="note">
         <single>n</single>

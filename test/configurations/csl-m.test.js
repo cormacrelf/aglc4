@@ -1,5 +1,5 @@
 module.exports = {
-  csl: "./src/aglc4.csl",
+  csl: "./src/aglc4-csl-m.csl",
   jurisdictionDirs: ["./src"],
   libraries: ["./test/*.json", "./test/csl-m/*.json"],
   suites: ["./test/core/*.yaml", "./test/csl-m/*.yaml", "./test/csl-m/*/*.yaml"],
