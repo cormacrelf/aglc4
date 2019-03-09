@@ -88,7 +88,6 @@
   tests:
     - it: "4.1.1 General Rule > should join initials with no spaces or full stops"
       single: { id: "ellicott2008" }
-      mode: skip
       expect: >
         RJ Ellicott, ‘The Autochthonous Expedient and the Federal Court’
         (2008) 82(10) <i>Australian Law Journal</i> 700.

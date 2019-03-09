@@ -1,0 +1,203 @@
+- describe: "2.1 Case Names"
+  tests:
+    - it: "2.1.1 Parties' Names: General Rule > should strip periods"
+      single: { id: "PeriodsNoPeriods" }
+      expect: "<i>Periods v No Periods</i>."
+
+    - it: "2.1.1 Parties' Names: General Rule >  should capitalise"
+      doc: >
+        CSL-M does not title-case anything with a Jurisdiction value. You must
+        keep your library capitalised correctly.
+
+- describe: "2.2 Reported Decisions"
+  tests:
+    - it: "2.2.1 Year and Volume > round braces if organised by volume"
+      single: { id: 'HotHoldings2002' }
+      expect: "<i>Hot Holdings Pty Ltd v Creasy</i> (2002) 210 CLR 438."
+      meta:
+        type: legal_case
+        fields:
+          - title
+          - { prefix: ' (', field: 'issued', suffix: ') ' }
+          - volume
+          - container-title
+          - page
+    - it: "2.2.1 Year and Volume > square braces if organised by year"
+      single: { id: 'KingKing1974' }
+      expect: "<i>King v King</i> [1974] Qd R 253."
+      meta:
+        type: legal_case
+        fields:
+          - title
+          - { prefix: '[', field: 'issued', suffix: ']' }
+          - container-title
+          - page
+    - it: "2.2.1 Year and Volume > square braces AND volume if more than one report published for a year"
+      single: { id: 'RoweMcCartney1976' }
+      expect: "<i>Rowe v McCartney</i> [1976] 2 NSWLR 72."
+      meta:
+        type: legal_case
+        fields:
+          - title
+          - { prefix: '[', field: 'issued', suffix: ']' }
+          - collection-number
+          - container-title
+          - page
+      doc:
+        - label: Note
+          content: "That's not a volume number. That's a `Year as Vol.`!"
+
+# TODO:
+#
+# Unreported is using 'container-title' and 'publisher' as a replacement for 'authority'.
+# Because Juris-M needs to have all its courts predefined at
+# https://github.com/fbennett/legal-resource-registry
+#
+# nvim citeproc-js/src/util_names_render.js +997
+
+- describe: "2.3 Unreported Cases"
+  tests:
+    - it: "2.3.1 Decisions with a Medium Neutral Citation > looks like reported"
+      macro: juris-main
+      single: { id: "QuarmbyKeating2009" }
+      expect: "[2009] TASCC 80"
+      meta:
+        type: legal_case
+        fields:
+          - { prefix: '[', field: 'issued', suffix: ']' }
+          - container-title
+          - number
+
+    - it: "2.3.1 Decisions with a Medium Neutral Citation > Full citation"
+      single: { id: "QuarmbyKeating2009" }
+      expect: "<i>Quarmby v Keating</i> [2009] TASCC 80."
+
+    - it: "2.3.2 Decisions without a Medium Neutral Citation > looks like reported"
+      macro: juris-main
+      single: { id: "hampeljBartonChibber1989" }
+      expect: "(Supreme Court of Victoria, Hampel J, 29 June 1989)"
+      meta:
+        type: legal_case
+        fields:
+          - { prefix: '(', field: 'container-title', suffix: ', ' }
+          - { field: 'author', suffix: ', ' }
+          - { field: 'publication-date', suffix: ')' }
+
+    - it: "2.3.2 Decisions without a Medium Neutral Citation > full citation"
+      single: { id: "hampeljBartonChibber1989" }
+      expect: "<i>Barton v Chibber</i> (Supreme Court of Victoria, Hampel J, 29 June 1989)."
+
+    - it: "2.3.3 Proceedings > 'commenced'"
+      macro: juris-main
+      single: { id: "proceeding" }
+      expect: "(Federal Court of Australia, VID725/2014, commenced 3 December 2014)"
+      meta:
+        type: legal_case
+        fields:
+          - { prefix: '(', field: 'publisher', suffix: ', ' }
+          - { field: 'number', suffix: ', ' }
+          - { prefix: 'commenced ', field: 'publication-date', suffix: ')' }
+
+    - it: "2.3.3 Proceedings > Full citation"
+      single: { id: "proceeding" }
+      expect: >
+        <i>Australian Competition and Consumer Commission v Olex Australia Pty
+        Ltd</i> (Federal Court of Australia, VID725/2014, commenced 3 December
+        2014).
+
+    - it: "2.3.4 Court Orders > 'Order of ... in'"
+      macro: juris-pretitle
+      single: { id: "burleyjSeikoEpsonCorporation" }
+      expect: "Order of Burley J in"
+
+    - it: "2.3.4 Court Orders > Full citation"
+      single: { id: "burleyjSeikoEpsonCorporation" }
+      expect: "Order of Burley J in <i>Seiko Epson Corporation v Calidad Pty Ltd</i> (Federal Court of Australia, NSD1519/2004, 21 December 2016)."
+      meta:
+        type: legal_case
+        fields:
+          - { prefix: 'Order of ', field: 'author', suffix: ' in ' }
+          - { field: 'title', suffix: ' ', font-style: 'italic' }
+          - { prefix: '(', field: 'publisher', suffix: ', ' }
+          - { field: 'number', suffix: ', ' }
+          - { field: 'publication-date', suffix: ')' }
+
+    - it: "2.3.4 Court Orders > Docket number not appearing on the order"
+      single: { id: "burleyjSeikoEpsonCorporationNoNum" }
+      expect: "Order of Burley J in <i>Seiko Epson Corporation v Calidad Pty Ltd</i> (Federal Court of Australia, 21 December 2016)."
+      meta:
+        type: legal_case
+        fields:
+          - { prefix: 'Order of ', field: 'author', suffix: ' in ' }
+          - { field: 'title', suffix: ' ', font-style: 'italic' }
+          - { prefix: '(', field: 'publisher', suffix: ', ' }
+          - { field: 'publication-date', suffix: ')' }
+
+- describe: "2.5 Case History"
+  tests:
+    - it: "2.5 Case History > identical parties' names, with prefix = 'revd ' or 'affd '"
+      sequence:
+        - [{ id: 'KingPhilcox2014' }, { prefix: 'revd ', id: 'KingPhilcox2015' }]
+      expect:
+        - "<i>King v Philcox</i> (2014) 119 SASR 71, revd (2015) 255 CLR 304."
+      doc:
+        - label: Warning
+          content: |
+            It's not possible under CSL-M as it stands to detect when parties'
+            names were merely reversed and apply subsequent decision grouping.
+            It is also not possible to manually force suppression of parties'
+            names for a single cite.
+
+            So, for now, you should attach a hypothetical `Philcox v King`
+            short citation as a suffix to the first one.
+
+- describe: "2.7 Transcripts of Proceedings"
+  tests:
+    # this works in sebastian's CSL if you use "issued" instead of "publication-date", add a prefix and an authority
+    - it: "2.7.1 General Rule > no docket number"
+      single: { prefix: "Transcript of Proceedings, ", id: "croftjNorthEastSolution", locator: "31 (PJ Bick QC)" }
+      expect: >
+        Transcript of Proceedings, <i>North East Solution Pty Ltd v Masters Home Improvement Australia Pty Ltd</i> (Supreme Court of Victoria, Croft J, Second J, 18 May 2015) 31 (PJ Bick QC).
+      doc:
+      - label: Note
+        content: |
+          To make something a transcript, add ANY content to the "Supp. Name" field. A good idea for content to add would be a link to this very piece of documentation. Hover on the rule's title to reveal a targeted link.
+      - content: |
+          Why? The bracketed portion is subtly different from other case
+          citation types; it includes both authors and a docket number (if
+          present). Therefore you can't achieve this with only a prefix.
+          Without a checkbox for 'transcript' in Juris-M, the next best option
+          is to use the presence of an otherwise useless field as a marker.
+    - it: "2.7.1 General Rule > with a docket number"
+      single: { id: "croftjNorthEastSolutionWithNum" }
+      expect: >
+        Transcript of Proceedings, <i>North East Solution Pty Ltd v Masters Home Improvement Australia Pty Ltd</i> (Supreme Court of Victoria, D1234/567, Croft J, Second J, 18 May 2015).
+
+    - it: "2.7.2 High Court of Australia from July 2003 > HCATrans"
+      single: { id: "RuhaniDirectorPolice2005" }
+      expect: "Transcript of Proceedings, <i>Ruhani v Director of Police</i> [2005] HCATrans 205."
+      doc:
+      - label: Note
+        content: |
+          To make something a transcript, add ANY content to the "Supp. Name" field. A good idea for content to add would be a link to this very piece of documentation. Hover on the rule's title to reveal a targeted link.
+
+- describe: "2.8 Submissions in Cases"
+  tests:
+    - it: "2.8 Submissions in Cases > full citation"
+      single: { id: "attorney-generalcthHumaneSocietyInternational"
+              , locator: "[10], [20]" }
+      expect: "Attorney-General (Cth), ‘Outline of Submissions of the Attorney-General of the Commonwealth as Amicus Curiae’, Submission in <i>Humane Society International Inc v Kyodo Senpaku Kaisha Ltd</i>, NSD1519/2004, 25 January 2005, [10], [20]."
+      meta:
+        type: legal_case
+        fields:
+          - { field: 'author', suffix: ', ' }
+          - { prefix: '‘', field: 'document-name', suffix: '’, ' }
+          - { prefix: 'Submission in ', field: 'title', suffix: ', ' }
+          - { field: 'number', suffix: ', ' }
+          - { field: 'submitted' }
+      doc:
+        - label: Note
+          content: >
+            AGLC4 doesn't appear to have a place to say which court was
+            handling the matter. You can google the docket number and find
+            out, but that's about it.
