@@ -41,8 +41,28 @@
       <term name="editor" form="verb-short">ed.</term>
       <term name="translator" form="verb-short">tr.</term>
       <term name="editortranslator" form="verb-short">ed. and tr.</term>
+      <!-- <term name="page" form="long"></term> -->
+      <!-- <term name="page" form="short"></term> -->
+      <!-- <term name="page" form="symbol"></term> -->
+      <term name="section" form="short">
+        <single>s</single>
+        <multiple>ss</multiple>
+      </term>
     </terms>
   </locale>
+
+  <macro name="Locator">
+    <choose>
+      <if locator="page">
+        <text variable="locator"/>
+      </if>
+      <else-if variable="locator">
+        <label variable="locator" form="short" />
+        <text variable="locator"/>
+      </else-if>
+    </choose>
+  </macro>
+
   <!--Authors and Persons-->
   <macro name="author-note">
     <!--for bills & hearing this should start with jurisdiction once available-->
@@ -76,6 +96,7 @@
       </else>
     </choose>
   </macro>
+
   <macro name="author-short">
     <choose>
       <if type="interview">
@@ -128,6 +149,7 @@
       </else>
     </choose>
   </macro>
+
   <macro name="author">
     <!--for bills & hearing this should start with jurisdiction once available-->
     <choose>
@@ -160,6 +182,7 @@
       </else>
     </choose>
   </macro>
+
   <macro name="editor">
     <group>
       <names variable="editor translator" delimiter=", ">
@@ -168,6 +191,7 @@
       </names>
     </group>
   </macro>
+
   <!--For books as a whole-->
   <macro name="editor-translator">
     <choose>
@@ -179,6 +203,7 @@
       </if>
     </choose>
   </macro>
+
   <!-- Titles -->
   <macro name="title">
     <choose>
@@ -196,33 +221,44 @@
       </else>
     </choose>
   </macro>
+
   <macro name="title-short-flag">
     <choose>
-      <if type="book legislation webpage motion_picture manuscript legal_case report" match="any">
-        <text variable="title-short" font-style="italic" text-case="title"/>
+      <if type="legislation legal_case" match="any">
+        <text variable="title-short" font-style="italic" text-case="title" strip-periods="true"/>
       </if>
+      <else-if type="book webpage motion_picture manuscript report" match="any">
+        <text variable="title-short" font-style="italic" text-case="title"/>
+      </else-if>
       <else>
         <text variable="title-short" text-case="title" form="short"/>
       </else>
     </choose>
   </macro>
+
   <macro name="title-short">
     <choose>
-      <if type="book legislation webpage thesis motion_picture manuscript legal_case" match="any">
-        <text variable="title-short" font-style="italic" text-case="title"/>
+      <if type="legislation legal_case" match="any">
+        <text variable="title-short" font-style="italic" text-case="title" strip-periods="true"/>
       </if>
+      <else-if type="book webpage thesis motion_picture manuscript" match="any">
+        <text variable="title-short" font-style="italic" text-case="title"/>
+      </else-if>
       <else>
         <text variable="title" quotes="true" text-case="title" form="short"/>
       </else>
     </choose>
   </macro>
+
   <!--Dates-->
   <macro name="issued-year">
     <date variable="issued" form="text" date-parts="year"/>
   </macro>
+
   <macro name="issued-full">
     <date variable="issued" form="text"/>
   </macro>
+
   <macro name="date-comma">
     <choose>
       <if type="personal_communication manuscript" match="any">
@@ -230,6 +266,7 @@
       </if>
     </choose>
   </macro>
+
   <macro name="date-parenthesis">
     <choose>
       <if type="legal_case article-journal" match="any">
@@ -260,6 +297,7 @@
       </else-if>
     </choose>
   </macro>
+
   <!--publication info -->
   <macro name="status-article-patent">
     <choose>
@@ -290,6 +328,7 @@
       </else-if>
     </choose>
   </macro>
+
   <macro name="patent">
     <choose>
       <if type="patent">
@@ -303,6 +342,7 @@
       </if>
     </choose>
   </macro>
+
   <macro name="letter">
     <choose>
       <if type="personal_communication">
@@ -327,6 +367,7 @@
       </if>
     </choose>
   </macro>
+
   <macro name="publisher">
     <choose>
       <if type="article book bill broadcast chapter paper-conference article-newspaper report legislation motion_picture speech interview thesis" match="any">
@@ -398,6 +439,7 @@
       </if>
     </choose>
   </macro>
+
   <macro name="looseleaf">
     <choose>
       <if type="book">
@@ -418,6 +460,7 @@
       </if>
     </choose>
   </macro>
+
   <macro name="volume-book">
     <choose>
       <if type="book report" match="any">
@@ -428,6 +471,7 @@
       </if>
     </choose>
   </macro>
+
   <macro name="edition">
     <choose>
       <if is-numeric="edition">
@@ -441,6 +485,7 @@
       </else>
     </choose>
   </macro>
+
   <macro name="book-container">
     <choose>
       <if type="chapter paper-conference" match="any">
@@ -452,6 +497,7 @@
       </if>
     </choose>
   </macro>
+
   <macro name="broadcast-container">
     <choose>
       <if type="broadcast" match="any">
@@ -459,6 +505,7 @@
       </if>
     </choose>
   </macro>
+
   <macro name="case-medium-neutral">
     <choose>
       <if variable="authority number issued" type="legal_case" match="all">
@@ -469,6 +516,7 @@
       </if>
     </choose>
   </macro>
+
   <macro name="newspaper-container">
     <choose>
       <if type="article-newspaper" match="any">
@@ -476,12 +524,14 @@
       </if>
     </choose>
   </macro>
+
   <macro name="article-case-info">
     <choose>
-      <if type="article-journal  article-magazine legal_case" match="any">
+      <if type="article-journal article-magazine legal_case" match="any">
         <group delimiter=" ">
           <group>
             <text variable="volume"/>
+            <!-- TODO: collection-number for medium netural citations -->
             <text variable="issue" prefix="(" suffix=")"/>
           </group>
           <choose>
@@ -491,7 +541,7 @@
                   <text variable="container-title" form="short"/>
                 </if>
                 <!--Assume that only cases with a Medium Neutral Citation have a docket number -->
-                <else-if variable="authority number issued" match="all"/>
+                <else-if variable="authority number issued" match="all" />
                 <!--Unreported cases w/o medium neutral and proceedings-->
                 <else>
                   <group delimiter=", " prefix="(" suffix=")">
@@ -514,16 +564,18 @@
       </if>
     </choose>
   </macro>
+
   <macro name="page-first">
     <choose>
       <if is-numeric="page">
-        <text variable="page-first"/>
+        <number variable="page-first"/>
       </if>
       <else>
-        <text variable="page"/>
+        <number variable="page"/>
       </else>
     </choose>
   </macro>
+
   <!--Others -->
   <macro name="manuscript-catchall">
     <choose>
@@ -532,6 +584,7 @@
       </if>
     </choose>
   </macro>
+
   <macro name="blog-info">
     <choose>
       <if type="post-weblog webpage" match="any">
@@ -539,6 +592,7 @@
       </if>
     </choose>
   </macro>
+
   <macro name="URL">
     <choose>
       <if type="legal_case legislation bill" match="none">
@@ -546,6 +600,7 @@
       </if>
     </choose>
   </macro>
+
   <macro name="sort-type">
     <choose>
       <if type="book chapter paper-conference article-magazine article-newspaper article-journal report speech" match="any">
@@ -553,7 +608,7 @@
       </if>
       <else-if type="legal_case">
         <text value="2"/>
-        <text variable="title"/>
+        <text variable="title" strip-periods="true"/>
       </else-if>
       <else-if type="bill legislation" match="any">
         <text value="3"/>
@@ -572,6 +627,7 @@
       </else>
     </choose>
   </macro>
+
   <citation et-al-min="4" et-al-use-first="1">
     <layout suffix="." delimiter="; ">
       <choose>
@@ -593,9 +649,9 @@
               </if>
             </choose>
           </group>
-          <group prefix=" (" suffix=")" delimiter=" ">
-            <text variable="first-reference-note-number" prefix="n "/>
-            <text variable="locator"/>
+          <group prefix=" (" delimiter=" ">
+            <text variable="first-reference-note-number" prefix="n " suffix=")"/>
+            <text macro="Locator" />
           </group>
         </else-if>
         <else>
