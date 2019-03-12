@@ -12,7 +12,7 @@
 - describe: "2.2 Reported Decisions"
   tests:
     - it: "2.2.1 Year and Volume > round braces if organised by volume"
-      single: { id: 'HotHoldings2002' }
+      single: { id: 'HotHoldingsPty2002' }
       expect: "<i>Hot Holdings Pty Ltd v Creasy</i> (2002) 210 CLR 438."
       meta:
         type: legal_case
@@ -89,7 +89,7 @@
 
     - it: "2.3.3 Proceedings > 'commenced'"
       macro: juris-main
-      single: { id: "proceeding" }
+      single: { id: "AustralianCompetitionConsumer" }
       expect: "(Federal Court of Australia, VID725/2014, commenced 3 December 2014)"
       meta:
         type: legal_case
@@ -99,7 +99,7 @@
           - { prefix: 'commenced ', field: 'publication-date', suffix: ')' }
 
     - it: "2.3.3 Proceedings > Full citation"
-      single: { id: "proceeding" }
+      single: { id: "AustralianCompetitionConsumer" }
       expect: >
         <i>Australian Competition and Consumer Commission v Olex Australia Pty
         Ltd</i> (Federal Court of Australia, VID725/2014, commenced 3 December
@@ -123,7 +123,7 @@
           - { field: 'publication-date', suffix: ')' }
 
     - it: "2.3.4 Court Orders > Docket number not appearing on the order"
-      single: { id: "burleyjSeikoEpsonCorporationNoNum" }
+      single: { id: "burleyjSeikoEpsonCorporationa" }
       expect: "Order of Burley J in <i>Seiko Epson Corporation v Calidad Pty Ltd</i> (Federal Court of Australia, 21 December 2016)."
       meta:
         type: legal_case
@@ -169,7 +169,7 @@
           Without a checkbox for 'transcript' in Juris-M, the next best option
           is to use the presence of an otherwise useless field as a marker.
     - it: "2.7.1 General Rule > with a docket number"
-      single: { id: "croftjNorthEastSolutionWithNum" }
+      single: { id: "croftjNorthEastSolutiona" }
       expect: >
         Transcript of Proceedings, <i>North East Solution Pty Ltd v Masters Home Improvement Australia Pty Ltd</i> (Supreme Court of Victoria, D1234/567, Croft J, Second J, 18 May 2015).
 

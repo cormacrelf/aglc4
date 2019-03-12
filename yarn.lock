@@ -1768,7 +1768,7 @@ jest-config@^23.6.0:
     micromatch "^2.3.11"
     pretty-format "^23.6.0"
 
-jest-csl@^0.2.8:
+jest-csl@^0.2.9:
   version "0.2.9"
   resolved "https://registry.yarnpkg.com/jest-csl/-/jest-csl-0.2.9.tgz#c0f5ce32ea587b613a1703699aa8e7089ab61e2f"
   integrity sha512-4CCoqV2Gf4X5wAu39AgmMzWWKcJRPdxFgiWyaqRAB7UsWXs+knjNyKYT674rtAt1Iq6OswYyUMbmIV9khTW4sQ==

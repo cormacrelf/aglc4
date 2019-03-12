@@ -74,25 +74,13 @@
     - it: "1.4.3 Ibid > for immediately subsequent legislation"
       mode: skip
       sequence:
-        - [{ prefix: "See, eg, ", id: "criminalCode1995", label: "section", locator: "123", suffix: " suffix" }]
-        - [{ id: "criminalCode1995", label: "section", locator: "123" }]
-        - [{ id: "criminalCode1995", label: "section", locator: "189" }]
+        - [{ prefix: "See, eg, ", id: "CriminalCodeAct1995", label: "section", locator: "123", suffix: " suffix" }]
+        - [{ id: "CriminalCodeAct1995", label: "section", locator: "123" }]
+        - [{ id: "CriminalCodeAct1995", label: "section", locator: "189" }]
       expect:
         - See, eg, <i>Criminal Code Act 1995</i> (Cth) s 123 (‘<i>Criminal Code</i>’) suffix.
         - Ibid.
         - Ibid s 189.
-
-# General Secondary
-
-- describe: "4.1 Author"
-  tests:
-    - it: "4.1.1 General Rule > should join initials with no spaces or full stops"
-      single: { id: "ellicott2008" }
-      expect: >
-        RJ Ellicott, ‘The Autochthonous Expedient and the Federal Court’
-        (2008) 82(10) <i>Australian Law Journal</i> 700.
-
-# - describe: "5. Journal Articles"
 
 # - <i>He Kaw Teh v The Queen</i> (1985) 157 CLR 523; <i>Smith v The Queen</i> (2001) 206 CLR 650.
 

@@ -1,3 +1,68 @@
+# General Secondary
+
+- describe: "4.1 Author"
+  tests:
+    - it: "4.1.1 General Rule > should join initials with no spaces or full stops"
+      single: { id: "ellicottAutochthonousExpedientFederal2008" }
+      expect: >
+        RJ Ellicott, ‘The Autochthonous Expedient and the Federal Court’
+        (2008) 82(10) <i>Australian Law Journal</i> 700.
+
+- describe: "4.3 Short Title and Subsequent References"
+  tests:
+
+    - it: "4.3 x > Without a Short Title: Ibid, see 1.4.3"
+      sequence: 
+        - [{ id: "ellicottAutochthonousExpedientFederal2008" }]
+        - [{ id: "ellicottAutochthonousExpedientFederal2008" }]
+        - [{ id: "ellicottAutochthonousExpedientFederal2008", locator: "123" }]
+      expect: 
+        - >
+          RJ Ellicott, ‘The Autochthonous Expedient and the Federal Court’
+          (2008) 82(10) <i>Australian Law Journal</i> 700.
+        - Ibid.
+        - Ibid 123.
+
+    - it: "4.3 x > Without a Short Title: Subsequent References, see 1.4.1"
+      sequence: 
+        - [{ id: "ellicottAutochthonousExpedientFederal2008" }]
+        - [{ id: "PlainCiteA" }]
+        - [{ id: "ellicottAutochthonousExpedientFederal2008" }]
+        - [{ id: "PlainCiteB" }]
+        - [{ id: "ellicottAutochthonousExpedientFederal2008", locator: "123" }]
+      expect: 
+        - >
+          RJ Ellicott, ‘The Autochthonous Expedient and the Federal Court’
+          (2008) 82(10) <i>Australian Law Journal</i> 700.
+        - <i>PlainCiteA</i>.
+        - Ellicott (n 1).
+        - <i>PlainCiteB</i>.
+        - Ellicott (n 1) 123.
+
+    - it: "4.3 x > Short title: Ibid, see 1.4.3"
+      sequence: 
+        - [{ id: "jonesJournalArticleLong1999" }]
+        - [{ id: "jonesJournalArticleLong1999" }]
+        - [{ id: "jonesJournalArticleLong1999", locator: "123" }]
+      expect: 
+        - Author Jones, ‘Journal Article Long Title’ (1999) 23(1) <i>Imaginary Law Review</i> (‘JA Short Title’).
+        - Ibid.
+        - Ibid 123.
+
+    - it: "4.3 x > Short title: Subsequent references, see 1.4.1"
+      sequence: 
+        - [{ id: "jonesJournalArticleLong1999" }]
+        - [{ id: "PlainCiteA" }]
+        - [{ id: "jonesJournalArticleLong1999" }]
+        - [{ id: "PlainCiteB" }]
+        - [{ id: "jonesJournalArticleLong1999", locator: "123" }]
+      expect: 
+        - Author Jones, ‘Journal Article Long Title’ (1999) 23(1) <i>Imaginary Law Review</i> (‘JA Short Title’).
+        - <i>PlainCiteA</i>.
+        - <i>JA Short Title</i> (n 1).
+        - <i>PlainCiteB</i>.
+        - <i>JA Short Title</i> (n 1) 123.
+
 - describe: "7.16 Social Media Posts"
   tests:
     - it: "7.16 Social Media Posts > Tweet"

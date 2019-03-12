@@ -1,10 +1,10 @@
 - describe: "3.1 Statutes"
   tests:
   - it: "3.1 Generally > title year jurisdiction"
-    single: { id: "EvidenceActCth" }
+    single: { id: "EvidenceAct1995" }
     expect: "<i>Evidence Act 1995</i> (Cth)."
 
   - it: "3.1.4 Pinpoint references > section"
-    single: { id: "EvidenceActCth", label: "section", locator: "60(1)" }
+    single: { id: "EvidenceAct1995", label: "section", locator: "60(1)" }
     expect: "<i>Evidence Act 1995</i> (Cth) s 60(1)."
 

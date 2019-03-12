@@ -57,8 +57,10 @@
         <text variable="locator"/>
       </if>
       <else-if variable="locator">
-        <label variable="locator" form="short" />
-        <text variable="locator"/>
+        <group delimiter=" " >
+          <label variable="locator" form="short" />
+          <text variable="locator"/>
+        </group>
       </else-if>
     </choose>
   </macro>
@@ -634,7 +636,7 @@
         <if position="ibid-with-locator">
           <group delimiter=" ">
             <text term="ibid" strip-periods="true"/>
-            <text variable="locator"/>
+            <text macro="Locator"/>
           </group>
         </if>
         <else-if position="ibid">
@@ -689,7 +691,7 @@
                 <text macro="page-first"/>
                 <group delimiter=" ">
                   <text macro="status-article-patent"/>
-                  <text variable="locator"/>
+                  <text macro="Locator"/>
                 </group>
               </group>
               <text variable="references"/>

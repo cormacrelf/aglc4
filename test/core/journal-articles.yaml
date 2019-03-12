@@ -1,32 +1,62 @@
 - describe: "5.1 Author"
   tests:
-    - it: "5.1 Author > See Rule 4.1"
-      mode: skip
+  - it: "5.1 Author > See Rule 4.1"
+    mode: skip
 
 - describe: "4.1 Author"
   tests:
-    - it: "4.1.1 General Rule > should join initials with no spaces or full stops"
-      single: { id: "ellicott2008" }
-      mode: skip
-      expect: >
-        RJ Ellicott, ‘The Autochthonous Expedient and the Federal Court’
-        (2008) 82(10) <i>Australian Law Journal</i> 700.
+  - it: "4.1.1 General Rule > should join initials with no spaces or full stops"
+    single: { id: "ellicottAutochthonousExpedientFederal2008" }
+    mode: skip
+    expect: >
+      RJ Ellicott, ‘The Autochthonous Expedient and the Federal Court’
+      (2008) 82(10) <i>Australian Law Journal</i> 700.
 
 - describe: "5.2 Title"
   tests:
-    - it: "5.2 Title > Single quotation marks, no italics except for rule 4.2 (cases, etc)"
-      single: { id: "mccutcheonCuringAuthorlessVoid2013" }
-      expect: >
-        Jani McCutcheon, ‘Curing the Authorless Void: Protecting Computer-Generated Works Following <i>IceTV</i> and <i>Phone Directories</i>’ (2013) 37(1) <i>Melbourne University Law Review</i> 46.
+  - it: "5.2 Title > Single quotation marks, no italics except for rule 4.2 (cases, etc)"
+    single: { id: "mccutcheonCuringAuthorlessVoid2013" }
+    mode: skip
+    expect: >
+      Jani McCutcheon, ‘Curing the Authorless Void: Protecting Computer-Generated Works Following <i>IceTV</i> and <i>Phone Directories</i>’ (2013) 37(1) <i>Melbourne University Law Review</i> 46.
 
 - describe: "5.4 Volume and Issue"
   tests:
-    - it: "5.4 Volume and Issue > Both volume and issue provided (round year)"
-      single: { id: "luntzPersonalJourneyLaw2005" }
-      expect: >
-        Harold Luntz, ‘A Personal Journey through the Law of Torts’ (2005) 27(3) <i>Sydney Law Review</i> 393.
+  - it: "5.4 Volume and Issue > Both volume and issue provided (round year)"
+    single: { id: "luntzPersonalJourneyLaw2005" }
+    expect: >
+      Harold Luntz, ‘A Personal Journey through the Law of Torts’ (2005) 27(3) <i>Sydney Law Review</i> 393.
 
-    - it: "5.4 Volume and Issue > Multiple issues in a single bound edition"
-      single: { id: "boyleSecondEnclosureMovement2003" }
-      expect: >
-        James Boyle, ‘The Second Enclosure Movement and the Construction of the Public Domain’ (2003) 66(1–2) <i>Law and Contemporary Problems</i> 33.
+  - it: "5.4 Volume and Issue > Multiple issues in a single bound edition"
+    single: { id: "boyleSecondEnclosureMovement2003" }
+    expect: >
+      James Boyle, ‘The Second Enclosure Movement and the Construction of the Public Domain’ (2003) 66(1–2) <i>Law and Contemporary Problems</i> 33.
+
+- describe: "5.9 Symposia"
+  tests:
+  - it: "5.9 Symposia > 'Symposium' as author name, title of symposium, start page"
+    single: { id: "symposiumContemporaryHumanRights2002" }
+    expect: >
+      Symposium, ‘Contemporary Human Rights in Australia’ (2002) 26(2) <i>Melbourne University Law Review</i> 251.
+
+- describe: "5.10 Online Journals"
+  tests:
+  - it: "5.10 Articles Published in Online Journals > PDF page ranges"
+    single: { id: "annunziataConsumersWantMore2016" }
+    expect: >
+      Azzurra Annunziata et al, ‘Do Consumers Want More Nutritional and Health Information on Wine Labels? Insights from the EU and USA’ (2016) 8(7) <i>Nutrients</i> 416:1–19 (‘Do Consumers Want More Nutritional and Health Information on Wine Labels?’).
+
+- describe: "5.11 Forthcoming and Advance Journal Articles"
+  tests:
+  - it: "5.11 Forthcoming and Advance  Journal Articles > Replace starting page with '(forthcoming)'"
+    single: { id: "helleringerEuropeanConsumerProtection2017" }
+    expect: >
+      Geneviève Helleringer and Anne-Lise Sibony, ‘European Consumer Protection through the Behavioral Lens’ (2017) 23 <i>Columbia Journal of European Law</i> (forthcoming).
+    doc:
+      - label: Zotero
+        content: >
+          Zotero does not natively support the 'status' field for a journal
+          article. You must use the Extra field with the syntax `status: forthcoming`.
+
+  - it: "5.11 Forthcoming and Advance  Journal Articles > Replace starting page with '(advance)'"
+    mode: stub
