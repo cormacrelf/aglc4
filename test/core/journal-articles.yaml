@@ -3,15 +3,6 @@
   - it: "5.1 Author > See Rule 4.1"
     mode: skip
 
-- describe: "4.1 Author"
-  tests:
-  - it: "4.1.1 General Rule > should join initials with no spaces or full stops"
-    single: { id: "ellicottAutochthonousExpedientFederal2008" }
-    mode: skip
-    expect: >
-      RJ Ellicott, ‘The Autochthonous Expedient and the Federal Court’
-      (2008) 82(10) <i>Australian Law Journal</i> 700.
-
 - describe: "5.2 Title"
   tests:
   - it: "5.2 Title > Single quotation marks, no italics except for rule 4.2 (cases, etc)"

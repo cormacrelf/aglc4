@@ -48,6 +48,13 @@
         <single>s</single>
         <multiple>ss</multiple>
       </term>
+      <term name="volume" form="short">
+        <single>vol</single>
+        <multiple>vols</multiple>
+      </term>
+      <!-- citeproc-js still can't handle empty terms. -->
+      <!-- <term name="page" form="long"></term> -->
+      <!-- <term name="page" form="short"></term> -->
     </terms>
   </locale>
 

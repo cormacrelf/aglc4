@@ -1,0 +1,56 @@
+- describe: "6.1 Author"
+  tests:
+  - it: "6.1 Author > See Rule 4.1"
+    mode: skip
+
+- describe: "6.5 Multi-Volume Books"
+  tests:
+  - it: "6.5 Multi-Volume Books > Volume embedded in reference"
+    single: { id: "feinbergMoralLimitsCriminal1984", locator: "45" }
+    expect: >
+      Joel Feinberg, <i>The Moral Limits of the Criminal Law</i> (Oxford University Press, 1984–88) vol 4, 45.
+    # this is a different reference
+  - it: "6.5 Multi-Volume Books > Both volume and page as locators (hack)"
+    single: { id: "feinbergMoralLimitsCriminal", label: "page", locator: "vol 4, 45" }
+    expect: >
+      Joel Feinberg, <i>The Moral Limits of the Criminal Law</i> (Oxford University Press, 1984–88) vol 4, 45.
+    doc:
+      - Either way, a year range like 1984-88 can only be produced with a new CSL feature like [year-range-format](https://citeproc-js.readthedocs.io/en/latest/csl-m/index.html#year-range-format-extension).
+
+- describe: "6.6 Edited Books"
+  tests:
+  - it: "6.6.1 Chapters in Edited Books > Single Editor"
+    single: { id: "waldronJudgesReasonMorally2008" }
+    expect: >
+      Jeremy Waldron, ‘Do Judges Reason Morally?’ in Grant Huscroft (ed), <i>Expounding the Constitution: Essays in Constitutional Theory</i> (Cambridge University Press, 2008) 38.
+  - it: "6.6.1 Edited Books > Multiple Editors"
+    single: { id: "russelReformHouseLords2008" }
+    expect: >
+      Meg Russel, ‘Reform of the House of Lords: Lessons for Bicameralism’ in Nicholas Aroney, Scott Prasser and JR Nethercote (eds), <i>Restraining Elective Dictatorship: The Upper House Solution?</i> (University of Western Australia Press, 2008) 119.
+
+  - it: "6.6.2 Books with an Author and Editor > *"
+    single: { id: "millUtilitarianism1998" }
+    expect: >
+      JS Mill, <i>Utilitarianism</i>, ed Roger Crisp (Oxford University Press, 1998).
+
+- describe: "6.7 Translated Books"
+  tests:
+    - it: "6.7 Translated Books > tr Translator"
+      single: { id: "sartreBeingNothingnessEssay1969" }
+      expect: >
+        Jean-Paul Sartre, <i>Being and Nothingness: An Essay on Phenomenological Ontology</i>, tr Hazel E Barns (Methuen, 1969) (‘<i>Being and Nothingness</i>’).
+
+- describe: "6.8 Forthcoming Books"
+  tests:
+    - it: "6.8 Forthcoming Books > (Publisher, forthcoming)"
+      single: { id: "bryceDearQuentinLetters" }
+      expect: >
+        Quentin Bryce, <i>Dear Quentin: Letters of a Governor-General</i> (The Miegunyah Press, forthcoming) (‘<i>Dear Quentin</i>’).
+
+- describe: "6.9 Audiobooks"
+  tests:
+    - it: "6.9 Audiobooks > Described as audiobook; pinpoint according to 1.11.3-1.11.4"
+      single: { id: "fisherGettingYesNegotiating2012", locator: "11:15:05" }
+      # are these names correctly ordered?
+      expect: >
+        Roger Fisher, William Ury and Bruce Patton, <i>Getting to Yes: Negotiating an Agreement without Giving In</i> (Audiobook, Random House, 2012) 11:15:05 (‘<i>Getting to Yes</i>’).

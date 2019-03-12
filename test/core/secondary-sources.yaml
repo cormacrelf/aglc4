@@ -11,7 +11,7 @@
 - describe: "4.3 Short Title and Subsequent References"
   tests:
 
-    - it: "4.3 x > Without a Short Title: Ibid, see 1.4.3"
+    - it: "4.3 Short Title and Subsequent References > Ibid, see 1.4.3"
       sequence: 
         - [{ id: "ellicottAutochthonousExpedientFederal2008" }]
         - [{ id: "ellicottAutochthonousExpedientFederal2008" }]
@@ -23,7 +23,7 @@
         - Ibid.
         - Ibid 123.
 
-    - it: "4.3 x > Without a Short Title: Subsequent References, see 1.4.1"
+    - it: "4.3 x > Subsequent References (journal article), see 1.4.1"
       sequence: 
         - [{ id: "ellicottAutochthonousExpedientFederal2008" }]
         - [{ id: "PlainCiteA" }]
@@ -38,18 +38,10 @@
         - Ellicott (n 1).
         - <i>PlainCiteB</i>.
         - Ellicott (n 1) 123.
+      doc:
+        - Use author's name.
 
-    - it: "4.3 x > Short title: Ibid, see 1.4.3"
-      sequence: 
-        - [{ id: "jonesJournalArticleLong1999" }]
-        - [{ id: "jonesJournalArticleLong1999" }]
-        - [{ id: "jonesJournalArticleLong1999", locator: "123" }]
-      expect: 
-        - Author Jones, ‘Journal Article Long Title’ (1999) 23(1) <i>Imaginary Law Review</i> (‘JA Short Title’).
-        - Ibid.
-        - Ibid 123.
-
-    - it: "4.3 x > Short title: Subsequent references, see 1.4.1"
+    - it: "4.3 x > Short title: Subsequent references (journal article with a short title), see 1.4.1"
       sequence: 
         - [{ id: "jonesJournalArticleLong1999" }]
         - [{ id: "PlainCiteA" }]
@@ -57,11 +49,30 @@
         - [{ id: "PlainCiteB" }]
         - [{ id: "jonesJournalArticleLong1999", locator: "123" }]
       expect: 
-        - Author Jones, ‘Journal Article Long Title’ (1999) 23(1) <i>Imaginary Law Review</i> (‘JA Short Title’).
+        - Author Jones, ‘Journal Article Long Title’ (1999) 23(1) <i>Imaginary Law Review</i> 109 (‘JA Short Title’).
         - <i>PlainCiteA</i>.
-        - <i>JA Short Title</i> (n 1).
+        - Jones (n 1).
         - <i>PlainCiteB</i>.
-        - <i>JA Short Title</i> (n 1) 123.
+        - Jones (n 1) 123.
+      doc:
+        - Still use the author name.
+
+    - it: "4.3 x > Several works by the same author; include the title or short title"
+      sequence: 
+        - [{ id: "jonesJournalArticleLong1999" }]
+        - [{ id: "jonesSecondWork2001" }]
+        - [{ id: "jonesJournalArticleLong1999" }]
+        - [{ id: "jonesSecondWork2001" }]
+      expect: 
+        - Author Jones, ‘Journal Article Long Title’ (1999) 23(1) <i>Imaginary Law Review</i> 109 (‘JA Short Title’).
+        - Author Jones, <i>A Second Work</i> (Comet Press, 2001).
+        - Jones, ‘JA Short Title’ (n 1).
+        - Jones, <i>A Second Work</i> (n 2).
+      doc:
+        - >
+          The different kinds of sources' titles or short titles in subsequent references should match the source.
+        - This may or may not be possible in CSL at the moment.
+
 
 - describe: "7.16 Social Media Posts"
   tests:
