@@ -47,7 +47,7 @@
           - page
       doc:
         - label: Warning
-          content: "That's not a volume number. That's a `Year As Vol.`! It doesn't exist yet in CSL."
+          content: "That's not a volume number. That's a `Year As Vol.`! It is not mapped yet in Zotero, but you can enter it in the Extra field as `collection-number: 2`."
 
 # TODO:
 #
