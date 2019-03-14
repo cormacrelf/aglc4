@@ -43,5 +43,6 @@
   {"id":"UnsignedJournalArticle2018","type":"article-journal","title":"Unsigned Journal Article","container-title":"Journal","page":"1","volume":"2","issue":"1","issued":{"date-parts":[[2018]]}},
   {"id":"jonesJournalArticleLong1999","type":"article-journal","title":"Journal Article Long Title","container-title":"Imaginary Law Review","page":"109","volume":"23","issue":"1","author":[{"family":"Jones","given":"Author"}],"issued":{"date-parts":[[1999]]},"title-short":"JA Short Title"},
   {"id":"feinbergMoralLimitsCriminal1984","type":"book","title":"The moral limits of the criminal law","publisher":"Oxford University Press","volume":"4","source":"Open WorldCat","ISBN":"978-0-19-503746-3","language":"English","author":[{"family":"Feinberg","given":"Joel"}],"issued":{"date-parts":[[1984],[1988]]},"publisher-place":"New York; Oxford"},
-  {"id":"jonesSecondWork2001","type":"book","title":"A Second Work","publisher":"Comet Press","author":[{"family":"Jones","given":"Author"}],"issued":{"date-parts":[[2001]]}}
+  {"id":"jonesSecondWork2001","type":"book","title":"A Second Work","publisher":"Comet Press","author":[{"family":"Jones","given":"Author"}],"issued":{"date-parts":[[2001]]}},
+  {"id":"RoweMcCartney1976a","type":"legal_case","title":"Rowe v McCartney","container-title":"NSWLR","page":"72","volume":"2","issued":{"date-parts":[[1976]]}}
 ]

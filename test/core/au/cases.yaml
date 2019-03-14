@@ -5,9 +5,9 @@
       expect: "<i>Periods v No Periods</i>."
 
     - it: "2.1.1 Parties' Names: General Rule >  should capitalise"
-      doc: >
-        CSL-M does not title-case anything with a Jurisdiction value. You must
-        keep your library capitalised correctly.
+      mode: skip
+      single: { id: "LowerCaseTitle" }
+      expect: "<i>Lower Case v Title Case ABC</i>."
 
 - describe: "2.2 Reported Decisions"
   tests:
@@ -32,8 +32,10 @@
           - { prefix: '[', field: 'issued', suffix: ']' }
           - container-title
           - page
+
     - it: "2.2.1 Year and Volume > square braces AND volume if more than one report published for a year"
-      single: { id: 'RoweMcCartney1976' }
+      single: { id: 'RoweMcCartney1976a' }
+      mode: known
       expect: "<i>Rowe v McCartney</i> [1976] 2 NSWLR 72."
       meta:
         type: legal_case
@@ -44,8 +46,8 @@
           - container-title
           - page
       doc:
-        - label: Note
-          content: "That's not a volume number. That's a `Year as Vol.`!"
+        - label: Warning
+          content: "That's not a volume number. That's a `Year As Vol.`! It doesn't exist yet in CSL."
 
 # TODO:
 #
@@ -57,8 +59,10 @@
 
 - describe: "2.3 Unreported Cases"
   tests:
+
     - it: "2.3.1 Decisions with a Medium Neutral Citation > looks like reported"
       macro: juris-main
+      mode: skip
       single: { id: "QuarmbyKeating2009" }
       expect: "[2009] TASCC 80"
       meta:
@@ -70,10 +74,12 @@
 
     - it: "2.3.1 Decisions with a Medium Neutral Citation > Full citation"
       single: { id: "QuarmbyKeating2009" }
+      mode: skip
       expect: "<i>Quarmby v Keating</i> [2009] TASCC 80."
 
     - it: "2.3.2 Decisions without a Medium Neutral Citation > looks like reported"
       macro: juris-main
+      mode: skip
       single: { id: "hampeljBartonChibber1989" }
       expect: "(Supreme Court of Victoria, Hampel J, 29 June 1989)"
       meta:
@@ -84,11 +90,13 @@
           - { field: 'publication-date', suffix: ')' }
 
     - it: "2.3.2 Decisions without a Medium Neutral Citation > full citation"
+      mode: skip
       single: { id: "hampeljBartonChibber1989" }
       expect: "<i>Barton v Chibber</i> (Supreme Court of Victoria, Hampel J, 29 June 1989)."
 
     - it: "2.3.3 Proceedings > 'commenced'"
       macro: juris-main
+      mode: skip
       single: { id: "AustralianCompetitionConsumer" }
       expect: "(Federal Court of Australia, VID725/2014, commenced 3 December 2014)"
       meta:
@@ -99,6 +107,7 @@
           - { prefix: 'commenced ', field: 'publication-date', suffix: ')' }
 
     - it: "2.3.3 Proceedings > Full citation"
+      mode: skip
       single: { id: "AustralianCompetitionConsumer" }
       expect: >
         <i>Australian Competition and Consumer Commission v Olex Australia Pty
@@ -107,10 +116,12 @@
 
     - it: "2.3.4 Court Orders > 'Order of ... in'"
       macro: juris-pretitle
+      mode: skip
       single: { id: "burleyjSeikoEpsonCorporation" }
       expect: "Order of Burley J in"
 
     - it: "2.3.4 Court Orders > Full citation"
+      mode: skip
       single: { id: "burleyjSeikoEpsonCorporation" }
       expect: "Order of Burley J in <i>Seiko Epson Corporation v Calidad Pty Ltd</i> (Federal Court of Australia, NSD1519/2004, 21 December 2016)."
       meta:
@@ -123,6 +134,7 @@
           - { field: 'publication-date', suffix: ')' }
 
     - it: "2.3.4 Court Orders > Docket number not appearing on the order"
+      mode: skip
       single: { id: "burleyjSeikoEpsonCorporationa" }
       expect: "Order of Burley J in <i>Seiko Epson Corporation v Calidad Pty Ltd</i> (Federal Court of Australia, 21 December 2016)."
       meta:
@@ -155,6 +167,7 @@
   tests:
     # this works in sebastian's CSL if you use "issued" instead of "publication-date", add a prefix and an authority
     - it: "2.7.1 General Rule > no docket number"
+      mode: skip
       single: { prefix: "Transcript of Proceedings, ", id: "croftjNorthEastSolution", locator: "31 (PJ Bick QC)" }
       expect: >
         Transcript of Proceedings, <i>North East Solution Pty Ltd v Masters Home Improvement Australia Pty Ltd</i> (Supreme Court of Victoria, Croft J, Second J, 18 May 2015) 31 (PJ Bick QC).
@@ -169,11 +182,13 @@
           Without a checkbox for 'transcript' in Juris-M, the next best option
           is to use the presence of an otherwise useless field as a marker.
     - it: "2.7.1 General Rule > with a docket number"
+      mode: skip
       single: { id: "croftjNorthEastSolutiona" }
       expect: >
         Transcript of Proceedings, <i>North East Solution Pty Ltd v Masters Home Improvement Australia Pty Ltd</i> (Supreme Court of Victoria, D1234/567, Croft J, Second J, 18 May 2015).
 
     - it: "2.7.2 High Court of Australia from July 2003 > HCATrans"
+      mode: skip
       single: { id: "RuhaniDirectorPolice2005" }
       expect: "Transcript of Proceedings, <i>Ruhani v Director of Police</i> [2005] HCATrans 205."
       doc:
@@ -184,6 +199,7 @@
 - describe: "2.8 Submissions in Cases"
   tests:
     - it: "2.8 Submissions in Cases > full citation"
+      mode: skip
       single: { id: "attorney-generalcthHumaneSocietyInternational"
               , locator: "[10], [20]" }
       expect: "Attorney-General (Cth), ‘Outline of Submissions of the Attorney-General of the Commonwealth as Amicus Curiae’, Submission in <i>Humane Society International Inc v Kyodo Senpaku Kaisha Ltd</i>, NSD1519/2004, 25 January 2005, [10], [20]."

@@ -63,11 +63,11 @@ const App = () => {
                 CSL
               </Tooltip>
             </UnderlineNav.Link>
-            <UnderlineNav.Link is={NavLink} to="/csl-m">
-              <Tooltip direction="ne" text="Extended; for use with Juris-M">
-                CSL-M
-              </Tooltip>
-            </UnderlineNav.Link>
+            {/* <UnderlineNav.Link is={NavLink} to="/csl-m"> */}
+            {/*   <Tooltip direction="ne" text="Extended; for use with Juris-M"> */}
+            {/*     CSL-M */}
+            {/*   </Tooltip> */}
+            {/* </UnderlineNav.Link> */}
           </UnderlineNav>
         </Box>
         <div className="App-body">
