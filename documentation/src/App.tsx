@@ -27,7 +27,7 @@ const AsyncResults = ({ title, results }: { title: string, results: Promise<{ de
 
 const CSLResults = () => {
   return <AsyncResults
-    title="Basic CSL for use with Zotero and Mendeley"
+    title=""
     results={ import('./results-csl.json') }
     />;
 }
