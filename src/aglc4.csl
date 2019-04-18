@@ -52,6 +52,7 @@
         <single>vol</single>
         <multiple>vols</multiple>
       </term>
+      <term name="paragraph" form="short"></term>
       <!-- citeproc-js still can't handle empty terms. -->
       <!-- <term name="page" form="long"></term> -->
       <!-- <term name="page" form="short"></term> -->
@@ -99,7 +100,7 @@
           <substitute>
             <names variable="editor"/>
             <names variable="translator"/>
-            <text macro="title"/>
+            <text macro="Title"/>
           </substitute>
         </names>
       </else>
@@ -146,13 +147,15 @@
       <else-if type="patent">
         <text macro="patent"/>
       </else-if>
+      <else-if type="legal_case legislation bill">
+      </else-if>
       <else>
         <names variable="author">
           <name delimiter-precedes-last="never" and="text" delimiter=", " initialize="false" initialize-with="" form="short"/>
           <substitute>
             <names variable="editor"/>
             <names variable="translator"/>
-            <text macro="title"/>
+            <text macro="Title"/>
           </substitute>
         </names>
       </else>
@@ -185,7 +188,7 @@
           <substitute>
             <names variable="editor"/>
             <names variable="translator"/>
-            <text macro="title"/>
+            <text macro="Title"/>
           </substitute>
         </names>
       </else>
@@ -214,7 +217,7 @@
   </macro>
 
   <!-- Titles -->
-  <macro name="title">
+  <macro name="Title">
     <choose>
       <if type="book legislation motion_picture manuscript report" match="any">
         <text variable="title" font-style="italic" text-case="title"/>
@@ -233,9 +236,12 @@
 
   <macro name="title-short-flag">
     <choose>
-      <if type="legislation legal_case" match="any">
-        <text variable="title-short" font-style="italic" text-case="title" strip-periods="true"/>
+      <if type="legal_case" match="any">
+        <text variable="title-short" font-style="italic" strip-periods="true"/>
       </if>
+      <else-if type="legislation" match="any">
+        <text variable="title-short" font-style="italic" text-case="title" strip-periods="true"/>
+      </else-if>
       <else-if type="book webpage motion_picture manuscript report" match="any">
         <text variable="title-short" font-style="italic" text-case="title"/>
       </else-if>
@@ -245,11 +251,14 @@
     </choose>
   </macro>
 
-  <macro name="title-short">
+  <macro name="TitleShort">
     <choose>
-      <if type="legislation legal_case" match="any">
-        <text variable="title-short" font-style="italic" text-case="title" strip-periods="true"/>
+      <if type="legal_case" match="any">
+        <text variable="title-short" font-style="italic" strip-periods="true"/>
       </if>
+      <else-if type="legislation" match="any">
+        <text variable="title-short" font-style="italic" text-case="title" strip-periods="true"/>
+      </else-if>
       <else-if type="book webpage thesis motion_picture manuscript" match="any">
         <text variable="title-short" font-style="italic" text-case="title"/>
       </else-if>
@@ -434,7 +443,7 @@
                   <text variable="event-place"/>
                   <text macro="issued-full"/>
                 </if>
-                <else-if type="article broadcast interview motion_picture report" match="any">
+                <else-if type="article broadcast interview motion_picture report thesis" match="any">
                   <text macro="issued-full"/>
                 </else-if>
                 <else>
@@ -577,10 +586,10 @@
   <macro name="page-first">
     <choose>
       <if is-numeric="page">
-        <number variable="page-first"/>
+        <text variable="page-first"/>
       </if>
       <else>
-        <number variable="page"/>
+        <text variable="page"/>
       </else>
     </choose>
   </macro>
@@ -651,11 +660,25 @@
         </else-if>
         <else-if position="subsequent">
           <group delimiter=", ">
-            <text macro="author-short"/>
             <choose>
-              <if disambiguate="true">
-                <text macro="title-short"/>
+              <if match="none" type="legal_case legislation bill">
+                <text macro="author-short"/>
               </if>
+            </choose>
+            <choose>
+              <if match="any" type="legal_case legislation bill">
+                <choose>
+                  <if variable="title-short">
+                    <text macro="TitleShort" />
+                  </if>
+                  <else>
+                    <text macro="Title" />
+                  </else>
+                </choose>
+              </if>
+              <else-if disambiguate="true">
+                <text macro="TitleShort"/>
+              </else-if>
             </choose>
           </group>
           <group prefix=" (" delimiter=" ">
@@ -670,7 +693,7 @@
               <group delimiter=" ">
                 <group delimiter=", ">
                   <text macro="author-note"/>
-                  <text macro="title"/>
+                  <text macro="Title"/>
                   <text macro="broadcast-container"/>
                   <text macro="newspaper-container"/>
                   <text macro="editor-translator"/>
@@ -722,7 +745,7 @@
           <group delimiter=" ">
             <group delimiter=", ">
               <text macro="author"/>
-              <text macro="title"/>
+              <text macro="Title"/>
               <text macro="broadcast-container"/>
               <text macro="newspaper-container"/>
               <text macro="editor-translator"/>
