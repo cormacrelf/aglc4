@@ -88,14 +88,14 @@
             </else>
           </choose>
           <names variable="author" prefix="with ">
-            <name delimiter-precedes-last="never" and="text" delimiter=", " initialize="false" initialize-with=""/>
+            <name delimiter-precedes-last="never" and="text" delimiter=", " initialize="false" initialize-with="" strip-periods="true" />
           </names>
         </group>
       </if>
       <else-if type="legal_case legislation patent personal_communication" match="any"/>
       <else>
         <names variable="author">
-          <name delimiter-precedes-last="never" and="text" delimiter=", " initialize="false" initialize-with=""/>
+          <name delimiter-precedes-last="never" and="text" delimiter=", " initialize="false" initialize-with="" strip-periods="true" />
           <label form="short" prefix=" (" suffix=")" strip-periods="true"/>
           <substitute>
             <names variable="editor"/>
@@ -120,7 +120,7 @@
             </else>
           </choose>
           <names variable="author" prefix="with ">
-            <name delimiter-precedes-last="never" and="text" delimiter=", " initialize="false" initialize-with=""/>
+            <name delimiter-precedes-last="never" and="text" delimiter=", " initialize="false" initialize-with="" strip-periods="true" />
           </names>
         </group>
       </if>
@@ -136,11 +136,11 @@
               </else>
             </choose>
             <names variable="author">
-              <name delimiter-precedes-last="never" and="text" delimiter=", " form="short" initialize="false" initialize-with=""/>
+              <name delimiter-precedes-last="never" and="text" delimiter=", " form="short" initialize="false" initialize-with="" strip-periods="true" />
             </names>
           </group>
           <names variable="recipient" prefix="to ">
-            <name delimiter-precedes-last="never" and="text" delimiter=", " initialize="false" form="short" initialize-with=""/>
+            <name delimiter-precedes-last="never" and="text" delimiter=", " initialize="false" form="short" initialize-with="" strip-periods="true" />
           </names>
         </group>
       </else-if>
@@ -151,7 +151,7 @@
       </else-if>
       <else>
         <names variable="author">
-          <name delimiter-precedes-last="never" and="text" delimiter=", " initialize="false" initialize-with="" form="short"/>
+          <name delimiter-precedes-last="never" and="text" delimiter=", " initialize="false" initialize-with="" strip-periods="true" form="short"/>
           <substitute>
             <names variable="editor"/>
             <names variable="translator"/>
@@ -176,14 +176,15 @@
             </else>
           </choose>
           <names variable="author" prefix="with ">
-            <name delimiter-precedes-last="never" and="text" delimiter=", " initialize="false" initialize-with=""/>
+            <name delimiter-precedes-last="never" and="text" delimiter=", " initialize="false" initialize-with="" strip-periods="true" />
           </names>
         </group>
       </if>
       <else-if type="legal_case legislation patent personal_communication" match="any"/>
       <else>
         <names variable="author">
-          <name delimiter-precedes-last="never" name-as-sort-order="first" and="text" delimiter=", " initialize="false" initialize-with=""/>
+          <!-- pandoc-citeproc apparently doesn't remove dots in initials when you supply initialize-with="" -->
+          <name delimiter-precedes-last="never" name-as-sort-order="first" and="text" delimiter=", " initialize="false" initialize-with="" strip-periods="true" />
           <label form="short" prefix=" (" suffix=")" strip-periods="true"/>
           <substitute>
             <names variable="editor"/>
@@ -198,7 +199,8 @@
   <macro name="editor">
     <group>
       <names variable="editor translator" delimiter=", ">
-        <name delimiter-precedes-last="never" and="text" delimiter=", " initialize="false" initialize-with=""/>
+        <!-- pandoc-citeproc apparently doesn't remove dots in initials when you supply initialize-with="" -->
+        <name delimiter-precedes-last="never" and="text" delimiter=", " initialize="false" initialize-with="" strip-periods="true" />
         <label form="short" strip-periods="true" prefix=" (" suffix=")"/>
       </names>
     </group>
@@ -210,7 +212,7 @@
       <if type="chapter paper-conference" match="none">
         <names variable="editor translator" delimiter=", ">
           <label form="verb-short" strip-periods="true" suffix=" "/>
-          <name delimiter-precedes-last="never" and="text" delimiter=", " initialize="false" initialize-with=""/>
+          <name delimiter-precedes-last="never" and="text" delimiter=", " initialize="false" initialize-with="" strip-periods="true" />
         </names>
       </if>
     </choose>
@@ -375,11 +377,11 @@
               </else>
             </choose>
             <names variable="author">
-              <name delimiter-precedes-last="never" and="text" delimiter=", " initialize="false" initialize-with=""/>
+              <name delimiter-precedes-last="never" and="text" delimiter=", " initialize="false" initialize-with="" strip-periods="true" />
             </names>
           </group>
           <names variable="recipient" prefix="to ">
-            <name delimiter-precedes-last="never" and="text" delimiter=", " initialize="false" initialize-with=""/>
+            <name delimiter-precedes-last="never" and="text" delimiter=", " initialize="false" initialize-with="" strip-periods="true" />
           </names>
         </group>
       </if>
@@ -388,33 +390,53 @@
 
   <macro name="publisher">
     <choose>
-      <if type="article book bill broadcast chapter paper-conference article-newspaper report legislation motion_picture speech interview thesis" match="any">
+      <if type="paper-conference">
+        <group delimiter=", " prefix="(" suffix=")">
+          <text value="Conference Paper" />
+          <text variable="event" />
+          <text macro="issued-full" />
+        </group>
+      </if>
+      <else-if type="speech">
+        <group delimiter=", " prefix="(" suffix=")">
+          <!-- You should omit "The" from any named lecture -->
+          <choose>
+            <if variable="genre">
+              <text variable="genre"/>
+            </if>
+            <else>
+              <text value="Speech" />
+            </else>
+          </choose>
+          <text variable="event" />
+          <text variable="event-place"/>
+          <text macro="issued-full" />
+        </group>
+      </else-if>
+      <else-if type="article book bill broadcast chapter article-newspaper report legislation motion_picture interview thesis" match="any">
         <group prefix="(" suffix=")" delimiter=", ">
           <choose>
-            <if type="article report thesis speech" match="any">
+            <if type="article report thesis" match="any">
               <group delimiter=" ">
                 <text variable="genre"/>
                 <group delimiter=" ">
                   <text term="issue" form="short" strip-periods="true" text-case="capitalize-first"/>
                   <text variable="number"/>
                 </group>
-                <text variable="event" prefix="at the "/>
+                <text variable="event" />
               </group>
             </if>
           </choose>
           <choose>
             <if type="article-newspaper">
-              <group delimiter=" ">
+              <group delimiter=", ">
                 <choose>
                   <if variable="URL">
                     <text term="online"/>
-                    <text term="at"/>
                   </if>
                 </choose>
-                <group delimiter=", ">
-                  <text variable="publisher-place"/>
-                  <text macro="issued-full"/>
-                </group>
+                <text variable="publisher-place"/>
+                <text macro="issued-full"/>
               </group>
             </if>
             <else-if type="legislation bill" match="any">
@@ -425,10 +447,10 @@
               <!--this won't work in Zotero yet, but does no harm -->
               <names variable="director">
                 <label form="verb" text-case="capitalize-first" suffix=" "/>
-                <name delimiter-precedes-last="never" and="text" delimiter=", " initialize="false" initialize-with=""/>
+                <name delimiter-precedes-last="never" and="text" delimiter=", " initialize="false" initialize-with="" strip-periods="true" />
               </names>
               <names variable="interviewer">
-                <name delimiter-precedes-last="never" and="text" delimiter=", " initialize="false" initialize-with=""/>
+                <name delimiter-precedes-last="never" and="text" delimiter=", " initialize="false" initialize-with="" strip-periods="true" />
               </names>
               <text variable="medium" text-case="capitalize-first"/>
               <text variable="publisher"/>
@@ -440,8 +462,6 @@
               </choose>
               <choose>
                 <if type="speech">
-                  <text variable="event-place"/>
-                  <text macro="issued-full"/>
                 </if>
                 <else-if type="article broadcast interview motion_picture report thesis" match="any">
                   <text macro="issued-full"/>
@@ -454,7 +474,7 @@
           </choose>
           <text variable="status"/>
         </group>
-      </if>
+      </else-if>
     </choose>
   </macro>
 
@@ -506,7 +526,7 @@
 
   <macro name="book-container">
     <choose>
-      <if type="chapter paper-conference" match="any">
+      <if type="chapter" match="any">
         <text term="in" suffix=" "/>
         <group delimiter=", ">
           <text macro="editor"/>

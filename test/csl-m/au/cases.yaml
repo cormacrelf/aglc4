@@ -109,11 +109,11 @@
 
     - it: "2.3.4 Court Orders > 'Order of ... in'"
       macro: juris-pretitle
-      single: { id: "burleyjSeikoEpsonCorporation" }
+      single: { id: "burleyjSeikoEpsonCorporationa" }
       expect: "Order of Burley J in"
 
     - it: "2.3.4 Court Orders > Full citation"
-      single: { id: "burleyjSeikoEpsonCorporation" }
+      single: { id: "burleyjSeikoEpsonCorporationa" }
       expect: "Order of Burley J in <i>Seiko Epson Corporation v Calidad Pty Ltd</i> (Federal Court of Australia, NSD1519/2004, 21 December 2016)."
       meta:
         type: legal_case
